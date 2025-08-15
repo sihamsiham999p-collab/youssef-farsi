@@ -3,10 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="الموقع الرسمي لفارسي يوسف، خبير معلومات ودراسات إلكترونية من الشريعة تبسة الجزائر.">
-    <meta name="keywords" content="يوسف فارسي, فارسي يوسف, يوسف فارسي تبسة, يوسف فارسي الشريعة, خبير معلومات, هكرز, الجزائر, دراسات إلكترونية, أمن المعلومات, تقنيات الهاكرز">
+    <meta name="description" content="فارسي يوسف | الموقع الرسمي | خبير أمن المعلومات من الشريعة تبسة الجزائر.">
+    <meta name="keywords" content="يوسف فارسي, فارسي يوسف, يوسف فارسي تبسة, خبير أمن المعلومات, الجزائر, الشريعة">
     <meta name="author" content="Farssi Youcef">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="يوسف فارسي - خبير معلومات وأمن إلكتروني">
-    <meta property="og:description" content="فارسي يوسف، خبير معلومات ودراسات إلكترونية من الشريعة تبسة الجزائر. الموقع الرسمي بمظهر الهكرز المحترفين.">
-    <meta property="og:type" content="
+    <meta property="og:title" content="فارسي يوسف - الموقع الرسمي">
+    <meta property="og:description" content="فارسي يوسف، خبير أمن المعلومات والتقنيات من الشريعة ولاية تبسة الجزائر.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+    <title>فارسي يوسف | الموقع الرسمي</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: black;
+            color: #00ff00;
+            text-align: center;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .content {
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="content">
+    <h1>فارسي يوسف</h1>
+    <p>
+        أنا <strong>فارسي يوسف</strong> من الشريعة ولاية تبسة الجزائر.  
+        خبير في <strong>أمن المعلومات</strong> وتقنيات الحماية الإلكترونية.  
+        هذا هو موقعي الرسمي المخصص لعرض خبراتي وأعمالي في مجال التكنولوجيا والأمن السيبراني.
+    </p>
+    <p>
+        إذا كنت تبحث عن "فارسي يوسف" على الإنترنت، فأنت في المكان الصحيح.  
+        هنا ستجد كل ما يخصني من أعمال ومشاريعي في مجال التقنية.
+    </p>
+    <a href="https://www.facebook.com/yy.yy.883602" target="_blank">تابعني على فيسبوك</a>
+</div>
+
+<script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        drops.forEach((y, index) => {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, index * fontSize, y * fontSize);
+            drops[index] = (y * fontSize > canvas.height && Math.random() > 0.975) ? 0 : y + 1;
+        });
+    }
+
+    setInterval(draw, 35);
+</script>
+
+</body>
+</html>
+``
