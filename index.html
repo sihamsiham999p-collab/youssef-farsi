@@ -1,62 +1,53 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>يوسف فارسي - خبير معلوماتية</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #ff8a00, #e52e71, #009fff, #00ff88);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Tahoma', sans-serif;
-            margin: 0;
-            text-align: center;
-            color: white;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>يوسف فارسي | خبير معلومات ودراسات إلكترونية</title>
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+  <!-- وصف وكلمات مفتاحية بسيطة لتحسين الظهور -->
+  <meta name="description" content="يوسف فارسي - خبير معلومات ودراسات إلكترونية. الشريعة، تبسة، الجزائر. خلفية أكواد متحركة بطابع هاكرز.">
+  <meta name="keywords" content="يوسف فارسي, خبير معلومات, دراسات إلكترونية, تبسة, الجزائر, هاكرز">
 
-        img {
-            margin-top: 30px;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0px 4px 20px rgba(0,0,0,0.5);
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-top: 20px;
-        }
-
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-
-        a.button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 15px 40px;
-            background-color: #007BFF;
-            color: white;
-            font-size: 1.5em;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        a.button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <img src
-        
+  <!-- خلفية الأكواد المتحركة -->
+  <canvas id="matrix"></canvas>
+
+  <!-- تراكب داكن لإبراز المحتوى -->
+  <div class="overlay"></div>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="container">
+    <div class="card">
+      <img src="hacker.jpg" alt="صورة هاكرز/صورة شخصية" class="avatar"/>
+
+      <h1 class="name">فارسي يوسف</h1>
+
+      <div class="titles">
+        <span class="title-chip">خبير معلومات</span>
+        <span class="title-chip">ودراسات إلكترونية</span>
+      </div>
+
+      <div class="info">
+        <p><strong>تاريخ الميلاد:</strong> 10 نوفمبر 1988</p>
+        <p><strong>مكان الولادة:</strong> الشريعة - تبسة - الجزائر</p>
+      </div>
+
+      <a class="follow-btn" href="https://www.facebook.com/yy.yy.883602" target="_blank" rel="noopener">متابعة</a>
+    </div>
+
+    <!-- سطر نص متحرك بطابع هاكرز -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>&lt;code&gt; اتصال آمن… مصادقة… تحميل الوحدات… تحليل الأنظمة… &lt;/code&gt;</span>
+        <span>&lt;script&gt; initializing... decrypting... compiling… &lt;/script&gt;</span>
+        <span>0xFA 0xR5I 0xYOUCEF 0xH4CK &mdash; READY</span>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
