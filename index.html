@@ -2,96 +2,120 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="الموقع الرسمي لفارسي يوسف">
-  <meta name="keywords" content="فارسي يوسف, Youssef Farsi, يوسف فارسي, خبير معلومات, دراسات إلكترونية">
-  <meta name="author" content="Youssef Farsi">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فارسي يوسف - الموقع الرسمي</title>
+  <title>فارسي يوسف - خبير معلومات</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Tahoma', Arial, sans-serif;
+      padding: 0;
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      overflow: hidden;
       text-align: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
     }
-    header { padding: 30px; }
-    h1 { font-size: 2.5em; margin-bottom: 10px; }
-    p { font-size: 1.2em; }
-    img {
-      border-radius: 50%;
-      border: 5px solid #fff;
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
+
+    h1 {
+      font-size: 2.5em;
+      margin-top: 50px;
+      color: #0f0;
+    }
+
+    h2 {
+      color: #0f0;
+      font-size: 1.5em;
       margin-top: 20px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
     }
-    .buttons { margin-top: 30px; }
+
+    p {
+      font-size: 1.2em;
+      margin: 10px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      color: #0f0;
+      font-size: 1em;
+    }
+
+    /* الخلفية المتحركة Matrix */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
     .btn {
       display: inline-block;
+      margin-top: 20px;
       padding: 12px 25px;
-      margin: 10px;
-      font-size: 1.1em;
-      border-radius: 8px;
-      text-decoration: none;
+      background: #007bff;
       color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 1.1em;
       transition: 0.3s;
     }
-    .btn-whatsapp { background-color: #25D366; }
-    .btn-whatsapp:hover { background-color: #1ebe57; }
-    .btn-email { background-color: #0078d7; }
-    .btn-email:hover { background-color: #005bb5; }
-    .btn-about { background-color: #ff9800; }
-    .btn-about:hover { background-color: #e68900; }
-    footer {
-      margin-top: 50px;
-      padding: 20px;
-      background: rgba(0,0,0,0.3);
+
+    .btn:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
 
-  <header>
-    <h1>الموقع الرسمي لفارسي يوسف</h1>
-    <p>خبير معلومات و دراسات إلكترونية</p>
-  </header>
+  <h1>فارسي يوسف</h1>
+  <h2>خبير معلومات و دراسات إلكترونية</h2>
+  <p>تاريخ الميلاد: 10 نوفمبر 1988</p>
+  <p>مكان الولادة: الشريعة - تبسة - الجزائر</p>
 
-  <section>
-    <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" 
-         alt="Youssef Farsi">
-    <div class="buttons">
-      <a href="https://wa.me/213559263922" target="_blank" class="btn btn-whatsapp">تواصل عبر واتساب</a>
-      <a href="mailto:sihamsiham999p@gmail.com" class="btn btn-email">تواصل عبر الإيميل</a>
-      <a href="about.html" class="btn btn-about">عن التكنولوجيا</a>
-    </div>
-  </section>
+  <a class="btn" href="about.html">عن التكنولوجيا</a>
 
-  <footer>
-    <p>© 2025 - جميع الحقوق محفوظة لفارسي يوسف</p>
-  </footer>
+  <div class="footer">
+    تم برمجة هذا الموقع سنة 2015 من قبل Farsi Youcef<br>
+    جميع الحقوق محفوظة © فارسي يوسف - 2015
+  </div>
 
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موقعي الأول</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>مرحباً بك في موقعي الأول 🚀</h1>
-  </header>
+  <script>
+    // تأثير Matrix
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
-  <main>
-    <p>هذا مثال لموقع بسيط باستخدام GitHub Pages.</p>
-    
-    <!-- الزر الذي يفتح الصفحة الثانية -->
-    <a href="about.html" class="btn">تعرف على أهمية التكنولوجيا</a>
-  </main>
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+      drops[i] = 1;
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+  </script>
 </body>
 </html>
