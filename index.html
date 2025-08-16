@@ -1,84 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>فارسي يوسف</title>
+  <title>موقعي الشخصي</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
       margin: 0;
       padding: 0;
-      background: black;
-      color: #00ff00;
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      overflow-x: hidden;
     }
 
-    /* خلفية الماتريكس */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://i.ibb.co/3C2Z2Gg/matrix-bg.gif') repeat;
-      opacity: 0.2;
-      z-index: -1;
+    header {
+      padding: 20px;
+      background-color: #222;
+      font-size: 24px;
     }
 
-    h1 {
-      color: lime;
+    img {
       margin-top: 20px;
+      width: 300px;
+      border-radius: 12px;
+      border: 2px solid #fff;
     }
 
-    p {
-      font-size: 18px;
-      margin: 5px;
-    }
-
-    /* الصورة في المنتصف */
-    .profile-img {
-      margin: 20px auto;
-      display: block;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 3px solid lime;
-    }
-
-    /* زر */
     .btn {
       display: inline-block;
-      margin: 20px;
-      padding: 12px 25px;
-      background: #007bff;
-      color: white;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #0f0;
+      color: #000;
       text-decoration: none;
+      font-weight: bold;
       border-radius: 8px;
-      font-size: 18px;
-    }
-    .btn:hover {
-      background: #0056b3;
     }
 
-    /* الفوتر */
     footer {
-      position: fixed;
+      margin-top: 50px;
+      background: #000;
+      padding: 10px;
+      font-size: 14px;
+      color: #0f0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hacker-text {
+      position: absolute;
       bottom: 0;
       width: 100%;
-      background: black;
-      color: lime;
-      font-size: 14px;
-      padding: 5px;
-    }
-
-    /* نصوص الهكرز تتحرك */
-    .hacker-text {
       white-space: nowrap;
-      overflow: hidden;
-      box-sizing: border-box;
       animation: move 15s linear infinite;
+      font-family: monospace;
+      font-size: 12px;
+      color: #0f0;
     }
 
     @keyframes move {
@@ -88,21 +65,19 @@
   </style>
 </head>
 <body>
-  <h1>فارسي يوسف</h1>
-  <p>خبير معلومات و دراسات إلكترونية</p>
-  <p>تاريخ الميلاد: 10 نوفمبر 1988</p>
-  <p>مكان الولادة: الشريعة – تبسة – الجزائر</p>
+  <header>
+    مرحبا بكم في موقعي الشخصي
+  </header>
 
-  <!-- صورتك هنا -->
-  <img src="profile.jpg" alt="صورتي" class="profile-img">
+  <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="صورتي">
 
-  <a href="tech.html" class="btn">عن التكنولوجيا</a>
+  <br>
+  <a href="about.html" class="btn">إذهب إلى الصفحة الثانية</a>
 
   <footer>
-    <p>جميع الحقوق محفوظة © فارسي يوسف - 2015</p>
-    <p>تم برمجة هذا الموقع سنة 2015</p>
+    <p>جميع الحقوق محفوظة © فارسي يوسف 2015</p>
     <div class="hacker-text">
-      HTML • CSS • JavaScript • Python • C++ • Java • PHP • SQL • Ruby • Go • Kotlin
+      HTML • CSS • JavaScript • Python • C++ • PHP • Java • SQL • Ruby • Go • Rust • Assembly
     </div>
   </footer>
 </body>
