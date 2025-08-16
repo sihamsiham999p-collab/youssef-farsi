@@ -1,31 +1,104 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>أهمية التكنولوجيا والمعلومات</title>
-  <link rel="stylesheet" href="style.css">
+  <title>أهمية التكنولوجيا</title>
+  <style>
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    h1 { color: #0f0; font-size: 28px; margin-bottom: 20px; }
+    p { font-size: 18px; line-height: 1.8; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 18px;
+      background: #0072c6;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #ccc;
+    }
+    .languages {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    #hacker-canvas {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: black;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>أهمية التكنولوجيا والمعلومات في عصرنا</h1>
-  </header>
+  <h1>أهمية التكنولوجيا والمعلومات</h1>
+  <p>
+    في عصرنا الحديث، أصبحت التكنولوجيا والمعلومات هي العمود الفقري لتطور البشرية.  
+    فهي التي تفتح لنا أبواب الابتكار، وتمنحنا القدرة على التواصل الفوري، وتساعدنا في
+    البحث العلمي، الاقتصاد، وحتى في حياتنا اليومية.  
+    المعرفة الرقمية لم تعد مجرد خيار، بل أصبحت ضرورة لكل فرد ومجتمع.
+  </p>
 
-  <main>
-    <section>
-      <p>
-        لقد أصبحت التكنولوجيا والمعلومات العمود الفقري للحياة الحديثة. 
-        فهي تسهّل التواصل بين الناس في جميع أنحاء العالم، وتدعم التعليم عبر الإنترنت،
-        وتساعد على تطوير الاقتصاد من خلال التجارة الإلكترونية والخدمات الرقمية.
-      </p>
+  <a href="index.html">🔙 الرجوع للصفحة الرئيسية</a>
 
-      <p>
-        المعلومات أصبحت قوة، والدول والشركات التي تستثمر في التكنولوجيا 
-        هي الأقدر على المنافسة والابتكار في المستقبل.
-      </p>
-    </section>
+  <footer>
+    <p>تم برمجة هذا الموقع في 2015</p>
+    <p>© جميع الحقوق محفوظة لفارسي يوسف - 2015</p>
+    <p class="languages">لغات البرمجة: HTML, CSS, JavaScript, Python, C++, Java</p>
+  </footer>
 
-    <a href="index.html">🔙 العودة للصفحة الرئيسية</a>
-  </main>
+  <canvas id="hacker-canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("hacker-canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = 150;
+
+    const letters = "01HTMLCSSJAVASCRIPTPYTHONC++JAVA";
+    const matrix = letters.split("");
+
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+  </script>
 </body>
 </html>
