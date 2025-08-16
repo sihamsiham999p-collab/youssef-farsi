@@ -26,32 +26,20 @@
       margin-bottom: 20px;
     }
 
-    h1 {
-      font-size: 26px;
+    .typing {
+      font-size: 22px;
       border-right: 2px solid #00ff00;
       white-space: nowrap;
       overflow: hidden;
       width: 0;
-      animation: typing 5s steps(40, end) forwards, blink 0.7s infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+      margin: 10px 0;
+      animation: blink 0.7s infinite;
     }
 
     @keyframes blink {
       0% { border-color: transparent }
       50% { border-color: #00ff00 }
       100% { border-color: transparent }
-    }
-
-    .info {
-      margin-top: 15px;
-      font-size: 18px;
-      color: #fff;
-      line-height: 1.6;
-      max-width: 600px;
     }
 
     .buttons {
@@ -79,18 +67,44 @@
 <body>
   <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="Youssef Farsi">
   
-  <h1>يوسف فارسي - مبرمج عصامي</h1>
-
-  <div class="info">
-    <p>مواليد 10 نوفمبر 1988 بالشريعة - ولاية تبسة</p>
-    <p>الهواية: برمجة تطبيقات و برمجة ويب</p>
-    <p>خبرة في الشبكات، الاتصالات، والأمن المعلوماتي</p>
-    <p>المستوى الدراسي: أولى ثانوي - تعليم عصامي</p>
+  <div id="text-container">
+    <div class="typing"></div>
   </div>
 
   <div class="buttons">
     <a href="mailto:sihamsiham999p@gmail.com">📧 إيميل</a>
     <a href="https://www.facebook.com/yy.yy.883602" target="_blank">📘 فيسبوك</a>
   </div>
+
+  <script>
+    const texts = [
+      "يوسف فارسي - مبرمج عصامي",
+      "مواليد 10 نوفمبر 1988 بالشريعة - ولاية تبسة",
+      "الهواية: برمجة تطبيقات و برمجة ويب",
+      "خبرة في الشبكات، الاتصالات، والأمن المعلوماتي",
+      "المستوى الدراسي: أولى ثانوي - تعليم عصامي"
+    ];
+
+    const container = document.querySelector('.typing');
+    let textIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+      if (charIndex < texts[textIndex].length) {
+        container.textContent += texts[textIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(type, 80); // سرعة الكتابة
+      } else {
+        setTimeout(() => {
+          container.textContent = "";
+          charIndex = 0;
+          textIndex = (textIndex + 1) % texts.length;
+          type();
+        }, 2000); // الانتظار قبل مسح النص
+      }
+    }
+
+    type();
+  </script>
 </body>
 </html>
