@@ -3,147 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>يوسف فارسي</title>
+  <title>Youssef Farsi</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: #00ff00;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #0a0a0a;
       font-family: 'Courier New', monospace;
+      color: #00ff00;
       text-align: center;
-      overflow-x: hidden;
     }
 
-    /* خلفية الماتريكس */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .container {
-      position: relative;
-      top: 50px;
-      padding: 20px;
-    }
-
-    .profile-img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 3px solid #00ff00;
-      margin-bottom: 15px;
+    img {
+      max-width: 350px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 25px #00ff00;
+      margin-bottom: 20px;
     }
 
     h1 {
-      margin: 10px 0;
-      font-size: 28px;
-      color: #00ff00;
+      font-size: 26px;
+      border-right: 2px solid #00ff00;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 5s steps(40, end) forwards, blink 0.7s infinite;
     }
 
-    p {
-      margin: 5px 0;
-      font-size: 16px;
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      0% { border-color: transparent }
+      50% { border-color: #00ff00 }
+      100% { border-color: transparent }
+    }
+
+    .info {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #fff;
       line-height: 1.6;
+      max-width: 600px;
     }
 
-    /* أزرار الأيقونات */
-    .socials {
-      margin-top: 20px;
+    .buttons {
+      margin-top: 25px;
     }
 
-    .icon-btn {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      margin: 0 10px;
-      border-radius: 50%;
-      background: transparent;
-      border: 2px solid #00ff00;
-      color: #00ff00;
-      font-size: 22px;
-      line-height: 46px;
-      cursor: pointer;
-      transition: 0.3s;
+    .buttons a {
       text-decoration: none;
-    }
-
-    .icon-btn:hover {
+      margin: 0 10px;
+      padding: 12px 25px;
       background: #00ff00;
-      color: black;
+      color: #000;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
-    footer {
-      margin-top: 40px;
-      font-size: 13px;
-      color: #00ff00;
-      opacity: 0.7;
+    .buttons a:hover {
+      background: #fff;
+      color: #000;
+      box-shadow: 0px 0px 15px #00ff00;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
+  <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="Youssef Farsi">
+  
+  <h1>يوسف فارسي - مبرمج عصامي</h1>
 
-  <div class="container">
-    <img src="your-photo.jpg" alt="صورة شخصية" class="profile-img">
-    <h1>يوسف فارسي</h1>
-    <p>مواليد 10 نوفمبر 1988 باشيرية – ولاية تبسة</p>
-    <p>الهوايات: برمجة التطبيقات، برمجة الويب</p>
+  <div class="info">
+    <p>مواليد 10 نوفمبر 1988 بالشريعة - ولاية تبسة</p>
+    <p>الهواية: برمجة تطبيقات و برمجة ويب</p>
     <p>خبرة في الشبكات، الاتصالات، والأمن المعلوماتي</p>
-    <p>المستوى الدراسي: أولى ثانوي</p>
-
-    <div class="socials">
-      <a href="https://www.facebook.com/yy.yy.883602" target="_blank" class="icon-btn">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="mailto:sihamsiham999p@gmail.com" class="icon-btn">
-        <i class="fas fa-envelope"></i>
-      </a>
-    </div>
-
-    <footer>
-      جميع الحقوق محفوظة © يوسف فارسي 2015 – تمت البرمجة بـ HTML, CSS, JavaScript
-    </footer>
+    <p>المستوى الدراسي: أولى ثانوي - تعليم عصامي</p>
   </div>
 
-  <!-- سكريبت الماتريكس -->
-  <script>
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
-    const letters = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-
-    for (let x = 0; x < columns; x++) drops[x] = 1;
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#0F0";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 35);
-  </script>
-
-  <!-- أيقونات FontAwesome -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <div class="buttons">
+    <a href="mailto:sihamsiham999p@gmail.com">📧 إيميل</a>
+    <a href="https://www.facebook.com/yy.yy.883602" target="_blank">📘 فيسبوك</a>
+  </div>
 </body>
 </html>
