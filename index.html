@@ -26,20 +26,22 @@
       margin-bottom: 20px;
     }
 
-    .typing {
-      font-size: 22px;
+    .typewriter {
+      font-size: 26px;
       border-right: 2px solid #00ff00;
       white-space: nowrap;
       overflow: hidden;
-      width: 0;
-      margin: 10px 0;
-      animation: blink 0.7s infinite;
+      display: inline-block;
+      margin-bottom: 20px;
     }
 
-    @keyframes blink {
-      0% { border-color: transparent }
-      50% { border-color: #00ff00 }
-      100% { border-color: transparent }
+    .info {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #fff;
+      line-height: 1.6;
+      max-width: 600px;
+      min-height: 120px; /* لتفادي القفز عند الطباعة */
     }
 
     .buttons {
@@ -67,9 +69,9 @@
 <body>
   <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="Youssef Farsi">
   
-  <div id="text-container">
-    <div class="typing"></div>
-  </div>
+  <h1 class="typewriter" id="main-title"></h1>
+
+  <div class="info" id="info"></div>
 
   <div class="buttons">
     <a href="mailto:sihamsiham999p@gmail.com">📧 إيميل</a>
@@ -77,34 +79,49 @@
   </div>
 
   <script>
-    const texts = [
-      "يوسف فارسي - مبرمج عصامي",
+    // النصوص اللي راح تطبع حرف بحرف
+    const titleText = "يوسف فارسي - مبرمج عصامي";
+    const infoText = [
       "مواليد 10 نوفمبر 1988 بالشريعة - ولاية تبسة",
       "الهواية: برمجة تطبيقات و برمجة ويب",
       "خبرة في الشبكات، الاتصالات، والأمن المعلوماتي",
       "المستوى الدراسي: أولى ثانوي - تعليم عصامي"
     ];
 
-    const container = document.querySelector('.typing');
-    let textIndex = 0;
-    let charIndex = 0;
-
-    function type() {
-      if (charIndex < texts[textIndex].length) {
-        container.textContent += texts[textIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(type, 80); // سرعة الكتابة
-      } else {
-        setTimeout(() => {
-          container.textContent = "";
-          charIndex = 0;
-          textIndex = (textIndex + 1) % texts.length;
-          type();
-        }, 2000); // الانتظار قبل مسح النص
+    function typeWriter(element, text, speed = 70, callback = null) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else if (callback) {
+          callback();
+        }
       }
+      typing();
     }
 
-    type();
+    // طباعة العنوان أولا
+    const titleEl = document.getElementById("main-title");
+    typeWriter(titleEl, titleText, 80, () => {
+      // بعد الانتهاء من العنوان نطبع المعلومات سطر سطر
+      const infoEl = document.getElementById("info");
+      let index = 0;
+
+      function printNextLine() {
+        if (index < infoText.length) {
+          const p = document.createElement("p");
+          infoEl.appendChild(p);
+          typeWriter(p, infoText[index], 40, () => {
+            index++;
+            setTimeout(printNextLine, 500);
+          });
+        }
+      }
+
+      printNextLine();
+    });
   </script>
 </body>
 </html>
