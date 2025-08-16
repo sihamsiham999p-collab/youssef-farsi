@@ -1,121 +1,109 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فارسي يوسف - خبير معلومات</title>
+  <title>فارسي يوسف</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       background: black;
       color: #00ff00;
-      font-family: monospace;
-      overflow: hidden;
+      font-family: 'Courier New', monospace;
       text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* خلفية الماتريكس */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.ibb.co/3C2Z2Gg/matrix-bg.gif') repeat;
+      opacity: 0.2;
+      z-index: -1;
     }
 
     h1 {
-      font-size: 2.5em;
-      margin-top: 50px;
-      color: #0f0;
-    }
-
-    h2 {
-      color: #0f0;
-      font-size: 1.5em;
+      color: lime;
       margin-top: 20px;
     }
 
     p {
-      font-size: 1.2em;
-      margin: 10px;
+      font-size: 18px;
+      margin: 5px;
     }
 
-    .footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      color: #0f0;
-      font-size: 1em;
+    /* الصورة في المنتصف */
+    .profile-img {
+      margin: 20px auto;
+      display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 3px solid lime;
     }
 
-    /* الخلفية المتحركة Matrix */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
+    /* زر */
     .btn {
       display: inline-block;
-      margin-top: 20px;
+      margin: 20px;
       padding: 12px 25px;
       background: #007bff;
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-size: 1.1em;
-      transition: 0.3s;
+      border-radius: 8px;
+      font-size: 18px;
     }
-
     .btn:hover {
       background: #0056b3;
+    }
+
+    /* الفوتر */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: black;
+      color: lime;
+      font-size: 14px;
+      padding: 5px;
+    }
+
+    /* نصوص الهكرز تتحرك */
+    .hacker-text {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+      animation: move 15s linear infinite;
+    }
+
+    @keyframes move {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-
   <h1>فارسي يوسف</h1>
-  <h2>خبير معلومات و دراسات إلكترونية</h2>
+  <p>خبير معلومات و دراسات إلكترونية</p>
   <p>تاريخ الميلاد: 10 نوفمبر 1988</p>
-  <p>مكان الولادة: الشريعة - تبسة - الجزائر</p>
+  <p>مكان الولادة: الشريعة – تبسة – الجزائر</p>
 
-  <a class="btn" href="about.html">عن التكنولوجيا</a>
+  <!-- صورتك هنا -->
+  <img src="profile.jpg" alt="صورتي" class="profile-img">
 
-  <div class="footer">
-    تم برمجة هذا الموقع سنة 2015 من قبل Farsi Youcef<br>
-    جميع الحقوق محفوظة © فارسي يوسف - 2015
-  </div>
+  <a href="tech.html" class="btn">عن التكنولوجيا</a>
 
-  <script>
-    // تأثير Matrix
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
-    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-
-    const drops = [];
-    for (let i = 0; i < columns; i++) {
-      drops[i] = 1;
-    }
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#0f0";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 35);
-  </script>
+  <footer>
+    <p>جميع الحقوق محفوظة © فارسي يوسف - 2015</p>
+    <p>تم برمجة هذا الموقع سنة 2015</p>
+    <div class="hacker-text">
+      HTML • CSS • JavaScript • Python • C++ • Java • PHP • SQL • Ruby • Go • Kotlin
+    </div>
+  </footer>
 </body>
 </html>
