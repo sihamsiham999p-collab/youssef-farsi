@@ -1,130 +1,181 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فارسي يوسف</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>فارسي يوسف — الموقع الشخصي</title>
+  <meta name="description" content="فارسي يوسف — خبير معلوماتية وإلكترونيات، أبحاث ومعارف واسعة. مواليد 10 نوفمبر 1988 بالشريعة، تبسة، الجزائر." />
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #0f0;
-      font-family: monospace;
-      overflow-x: hidden;
-      text-align: center;
+    :root{
+      --neon:#00ff66;
+      --bg:#000;
+      --fg:#eaffea;
+      --blue:#0d6efd;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--fg);
+      font-family: "Cairo", Tahoma, Arial, sans-serif; overflow-x:hidden;
     }
 
-    header {
-      padding: 40px 20px;
+    /* خلفية Matrix */
+    .matrix{position:fixed; inset:0; z-index:-1}
+    .matrix canvas{width:100%;height:100%;display:block}
+
+    header{padding:28px 16px 8px; text-align:center}
+    h1{margin:0 0 6px; font-size:clamp(26px,4vw,40px); color:#b7ffcf}
+    .subtitle{opacity:.9;margin:2px 0 10px}
+
+    /* الصورة الشخصية */
+    .avatar-wrap{
+      display:flex; justify-content:center; margin:14px 0 6px;
+    }
+    .avatar{
+      width:min(320px,85vw); aspect-ratio:1/1; object-fit:cover;
+      border-radius:16px; border:4px solid var(--neon);
+      box-shadow:0 0 26px var(--neon);
     }
 
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
+    /* معلومات */
+    .card{
+      width:min(880px,92vw); margin:16px auto; padding:18px 16px;
+      background:rgba(0,255,100,.06); border:1.5px solid var(--neon);
+      border-radius:14px; box-shadow:0 0 18px rgba(0,255,100,.35);
     }
+    .card h2{margin:0 0 12px; color:#9dffd1; text-align:center}
+    .info p{
+      margin:6px 0; font-size:18px; line-height:1.7;
+      white-space:nowrap; overflow:hidden; border-inline-end:2px solid var(--neon);
+      display:inline-block; padding-inline-end:6px;
+      animation:caret .8s steps(1) infinite;
+    }
+    @keyframes caret{50%{border-color:transparent}}
 
-    p {
-      font-size: 18px;
+    /* أزرار */
+    .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:14px 0}
+    .btn{
+      background:var(--blue); color:#fff; text-decoration:none;
+      padding:12px 18px; border-radius:10px; font-weight:700; border:none; cursor:pointer;
+      box-shadow:0 0 14px rgba(13,110,253,.35);
     }
+    .btn:hover{filter:brightness(1.08)}
 
-    .button {
-      display: inline-block;
-      margin: 20px 10px;
-      padding: 12px 24px;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
+    /* مشغل الصوت */
+    .audio-box{
+      display:flex; gap:10px; justify-content:center; align-items:center; margin:12px 0 6px;
+      flex-wrap:wrap;
     }
+    .audio-hint{font-size:14px; opacity:.8}
+    .vol{accent-color:var(--neon); width:min(220px,60vw)}
 
-    .button:hover {
-      background-color: #0056b3;
+    footer{
+      text-align:center; padding:18px 10px; margin-top:14px;
+      color:#c9ffdf; font-size:14px
     }
-
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      background: #111;
-      font-size: 14px;
-      position: relative;
-    }
-
-    /* حركة أكواد برمجية في الخلفية */
-    .matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      z-index: -1;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
-    }
+    .langs{color:#86ffc0; margin-top:4px}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="matrix">
-    <canvas id="matrixCanvas"></canvas>
-  </div>
+
+  <!-- خلفية أكواد متحركة -->
+  <div class="matrix"><canvas id="matrix"></canvas></div>
 
   <header>
     <h1>فارسي يوسف</h1>
-    <p>مواليد 10 نوفمبر 1988 - الشريعة ولاية تبسة</p>
-    <p>الهواية: برمجة تطبيقات | برمجة ويب | خبرة في الشبكات والاتصالات والأمن المعلوماتي</p>
-    <p>عصامي التعليم - المستوى الدراسي: أولى ثانوي</p>
-    <a href="https://www.facebook.com/yy.yy.883602" target="_blank" class="button">متابعة</a>
-    <a href="page2.html" class="button">أهمية التكنولوجيا</a>
+    <div class="subtitle">خبير معلوماتية وإلكترونيات — أبحاث ومعارف واسعة</div>
   </header>
 
-  <!-- مشغل الصوت -->
-  <div>
-    <audio id="player" src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/denial-of-service-sci-fi-hacker-instrumental-267766.mp3"></audio>
-    <button onclick="document.getElementById('player').play()">▶ تشغيل الصوت</button>
-    <button onclick="document.getElementById('player').pause()">⏸ إيقاف مؤقت</button>
+  <!-- الصورة -->
+  <div class="avatar-wrap">
+    <img class="avatar"
+         src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/IMG_20250807_192531_664.jpg"
+         alt="صورة فارسي يوسف"
+         onerror="this.src='https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/IMG_20250807_192531_664.jpg?raw=1'">
   </div>
 
+  <!-- البطاقة -->
+  <section class="card">
+    <h2>نبذة مختصرة</h2>
+    <div class="info" id="info">
+      <p data-text="الاسم: يوسف"></p>
+      <p data-text="اللقب: فارسي"></p>
+      <p data-text="تاريخ الميلاد: 10 نوفمبر 1988"></p>
+      <p data-text="مكان الولادة: الشريعة — ولاية تبسة — الجزائر"></p>
+      <p data-text="الهوايات: برمجة التطبيقات • برمجة الويب"></p>
+      <p data-text="الخبرة: معلومات الشبكة والاتصالات والأمن المعلوماتي"></p>
+      <p data-text="التعليم: عصامي — المستوى الدراسي: أولى ثانوي"></p>
+    </div>
+
+    <!-- أزرار -->
+    <div class="actions">
+      <a class="btn" href="https://www.facebook.com/yy.yy.883602" target="_blank" rel="noopener">متابعة</a>
+      <a class="btn" href="page2.html">أهمية التكنولوجيا</a>
+    </div>
+
+    <!-- الصوت -->
+    <div class="audio-box">
+      <button class="btn" id="playBtn">🔊 تشغيل/إيقاف</button>
+      <input class="vol" id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
+      <span class="audio-hint">ملاحظة: يبدأ الصوت بعد الضغط (سياسة المتصفح).</span>
+      <audio id="bg" preload="auto" loop playsinline
+        src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/denial-of-service-sci-fi-hacker-instrumental-267766.mp3"></audio>
+    </div>
+  </section>
+
   <footer>
-    <p>تمت برمجة هذا الموقع سنة 2015 | جميع الحقوق محفوظة © فارسي يوسف</p>
-    <p>لغات البرمجة: HTML, CSS, JavaScript</p>
+    <div>تمت برمجة هذا الموقع سنة 2015 — جميع الحقوق محفوظة © فارسي يوسف</div>
+    <div class="langs">HTML • CSS • JavaScript • Python • C++ • Java • PHP</div>
   </footer>
 
   <script>
-    // خلفية أكواد متحركة (matrix)
-    const canvas = document.getElementById('matrixCanvas');
-    const ctx = canvas.getContext('2d');
+    /* تأثير الكتابة حرفًا حرفًا */
+    const lines = document.querySelectorAll('.info p');
+    let delay = 0;
+    lines.forEach(p=>{
+      const text = p.getAttribute('data-text')||'';
+      p.textContent = '';
+      setTimeout(()=>{
+        let i=0;
+        const t = setInterval(()=>{
+          p.textContent = text.slice(0, i++);
+          if(i>text.length){ clearInterval(t); p.style.borderInlineEnd='none'; }
+        }, 60);
+      }, delay);
+      delay += text.length*60 + 350;
+    });
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
-    const letters = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#0f0";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
+    /* خلفية Matrix */
+    const cvs = document.getElementById('matrix'), ctx = cvs.getContext('2d');
+    function resize(){ cvs.width = innerWidth; cvs.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+    const fontSize = 16, cols = ()=>Math.floor(cvs.width/fontSize);
+    let drops = Array(cols()).fill(1);
+    setInterval(()=>{
+      ctx.fillStyle = 'rgba(0,0,0,0.06)';
+      ctx.fillRect(0,0,cvs.width,cvs.height);
+      ctx.fillStyle = '#00ff66';
+      ctx.font = fontSize+'px monospace';
+      for(let i=0;i<drops.length;i++){
+        const char = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}<>=+-*/'.charAt(Math.floor(Math.random()*44));
+        ctx.fillText(char, i*fontSize, drops[i]*fontSize);
+        if(drops[i]*fontSize > cvs.height && Math.random() > 0.975) drops[i]=0;
         drops[i]++;
       }
-    }
+    }, 33);
 
-    setInterval(draw, 33);
+    /* الصوت */
+    const bg = document.getElementById('bg');
+    const playBtn = document.getElementById('playBtn');
+    const vol = document.getElementById('vol');
+    vol.addEventListener('input', ()=> bg.volume = +vol.value);
+    playBtn.addEventListener('click', async ()=>{
+      try{
+        if(bg.paused){ bg.volume = +vol.value || 0.5; await bg.play(); playBtn.textContent='⏸ إيقاف'; }
+        else { bg.pause(); playBtn.textContent='🔊 تشغيل/إيقاف'; }
+      }catch(e){ /* تجاهل أي منع من المتصفح */ }
+    });
   </script>
 </body>
 </html>
