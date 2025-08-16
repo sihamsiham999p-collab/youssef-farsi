@@ -1,161 +1,117 @@
-@font-face{
-  font-family: "CairoUI";
-  src: local("Tahoma"); /* بديل آمن للغة العربية */
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقعي الشخصي</title>
+  <style>
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-top: 20px;
+      border: 4px solid #fff;
+    }
+    h1 { margin: 20px 0 10px; font-size: 26px; }
+    p { font-size: 18px; margin: 5px 0; }
+    .button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .whatsapp { background: #25d366; }
+    .email { background: #0072c6; }
+    .about { background: #ff9800; }
 
-:root{
-  --green: #00ff88;
-  --green-dim: #00d46c;
-  --bg-dark: #0a0f0b;
-  --glass: rgba(0, 0, 0, 0.5);
-  --glass-border: rgba(0, 255, 136, 0.25);
-  --white: #ffffff;
-  --blue: #1677ff;
-}
+    footer {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #ccc;
+    }
+    .languages {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #aaa;
+    }
 
-*{ box-sizing: border-box; }
+    /* شاشة الهكرز */
+    #hacker-canvas {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: black;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <img src="profile.jpg" alt="صورتي" class="profile-img">
 
-html, body{
-  height: 100%;
-  margin: 0;
-}
+  <h1>مرحباً بك في موقعي 🌐</h1>
+  <p>أنا فارسي يوسف</p>
 
-body{
-  font-family: "CairoUI", Arial, sans-serif;
-  background: #000; /* احتياطي تحت الكانفس */
-  color: var(--white);
-  overflow-x: hidden;
-}
+  <a href="https://wa.me/213559263922" class="button whatsapp">تواصل عبر واتساب</a>
+  <a href="mailto:sihamsiham999p@gmail.com" class="button email">تواصل عبر الإيميل</a>
+  <a href="about.html" class="button about">عن التكنولوجيا</a>
 
-/* كانفس الماتريكس يغطي الشاشة */
-#matrix{
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  display: block;
-}
+  <footer>
+    <p>تم برمجة هذا الموقع في 2015</p>
+    <p>© جميع الحقوق محفوظة لفارسي يوسف - 2015</p>
+    <p class="languages">لغات البرمجة: HTML, CSS, JavaScript, Python, C++, Java</p>
+  </footer>
 
-/* تراكب خفيف للتباين */
-.overlay{
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 100%);
-  z-index: 1;
-}
+  <canvas id="hacker-canvas"></canvas>
 
-.container{
-  position: relative;
-  z-index: 2;
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
+  <script>
+    const canvas = document.getElementById("hacker-canvas");
+    const ctx = canvas.getContext("2d");
 
-/* بطاقة زجاجية */
-.card{
-  width: min(880px, 92vw);
-  backdrop-filter: blur(8px);
-  background: linear-gradient(180deg, rgba(10,15,11,0.65), rgba(10,15,11,0.35));
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,255,136,0.08);
-  text-align: center;
-  outline: 1px solid rgba(0,255,136,0.10);
-}
+    canvas.width = window.innerWidth;
+    canvas.height = 150;
 
-.avatar{
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--green);
-  box-shadow: 0 0 30px rgba(0,255,136,0.35);
-  margin: 8px auto 12px;
-}
+    const letters = "01HTMLCSSJAVASCRIPTPYTHONC++JAVA";
+    const matrix = letters.split("");
 
-.name{
-  font-size: clamp(28px, 4.5vw, 48px);
-  margin: 8px 0 12px;
-  line-height: 1.1;
-  text-shadow: 0 0 18px rgba(0,255,136,0.35);
-  color: var(--white);
-}
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
 
-.titles{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 12px;
-}
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
-.title-chip{
-  border: 1px solid var(--green);
-  color: var(--green);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 15px;
-  background: rgba(0,255,136,0.08);
-}
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-.info{
-  font-size: clamp(16px, 2.4vw, 20px);
-  line-height: 1.9;
-  color: #d7ffe9;
-  margin: 10px 0 18px;
-}
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
 
-.follow-btn{
-  display: inline-block;
-  background: var(--blue);
-  color: #fff;
-  text-decoration: none;
-  padding: 14px 28px;
-  border-radius: 14px;
-  font-size: clamp(16px, 2.6vw, 20px);
-  font-weight: 700;
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 10px 26px rgba(22,119,255,0.35);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-}
-.follow-btn:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(22,119,255,0.55);
-  background: #0f66e6;
-}
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-/* شريط نص متحرك سفلي */
-.ticker{
-  width: min(880px, 92vw);
-  margin: 14px auto 0;
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  background: rgba(0,0,0,0.35);
-  overflow: hidden;
-  position: relative;
-}
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
 
-.ticker__track{
-  display: inline-block;
-  white-space: nowrap;
-  padding: 10px 0;
-  animation: tickerMove 20s linear infinite;
-  color: var(--green);
-  text-shadow: 0 0 12px rgba(0,255,136,0.4);
-}
-.ticker__track span{
-  margin-inline: 30px;
-}
-
-@keyframes tickerMove{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(-50%); }
-}
-
-/* تحسينات موبايل */
-@media (max-width: 480px){
-  .avatar{ width: 130px; height: 130px; }
-  .card{ padding: 22px; }
-}
+    setInterval(draw, 33);
+  </script>
+</body>
+</html>
