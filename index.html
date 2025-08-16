@@ -1,134 +1,130 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>موقعي الشخصي</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فارسي يوسف</title>
   <style>
-    body{
-      margin:0;padding:0;background:#000;color:#00ff00;
-      font-family:monospace;text-align:center;
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      overflow-x: hidden;
+      text-align: center;
     }
-    /* الصورة */
-    img{
-      margin:20px auto 10px;
-      max-width:90%;height:auto;display:block;
-      border:4px solid #00ff00;border-radius:12px;
-      box-shadow:0 0 22px #00ff00;
+
+    header {
+      padding: 40px 20px;
     }
-    /* صندوق التعريف */
-    .intro{
-      margin:28px auto;max-width:720px;padding:20px;
-      border:2px solid #00ff00;border-radius:12px;
-      background:rgba(0,255,0,.06);text-align:right;direction:rtl;
-      box-shadow:0 0 16px #00ff00;
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
     }
-    .intro h2{color:#00ffcc;margin:0 0 14px;text-align:center;}
-    .intro p{
-      margin:8px 0;line-height:1.7;white-space:nowrap;overflow:hidden;
-      border-right:2px solid #00ff00;display:inline-block;
-      animation:caret .8s steps(1) infinite;
+
+    p {
+      font-size: 18px;
     }
-    @keyframes caret{50%{border-color:transparent}}
-    /* الفوتر */
-    .footer{margin-top:26px;padding:10px;color:#fff}
-    .langs{margin-top:8px;color:#00ffcc}
-    /* شاشة الهكرز السفلية */
-    .hacker-screen{
-      margin-top:26px;height:120px;overflow:hidden;background:#000;
-      border-top:2px solid #00ff00;padding:10px;
+
+    .button {
+      display: inline-block;
+      margin: 20px 10px;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
     }
-    .line{white-space:nowrap;animation:move 10s linear infinite;font-size:12px}
-    @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
-    /* زر الصوت */
-    #soundBtn{
-      position:fixed;top:10px;right:10px;background:#00ff00;color:#000;
-      border:none;padding:8px 14px;border-radius:6px;cursor:pointer;
-      font-weight:bold;box-shadow:0 0 10px #00ff00;z-index:10;
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: #111;
+      font-size: 14px;
+      position: relative;
+    }
+
+    /* حركة أكواد برمجية في الخلفية */
+    .matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: -1;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <!-- زر الصوت -->
-  <button id="soundBtn">🔇 تشغيل الصوت</button>
-
-  <!-- صورتك -->
-  <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="صورتي"/>
-
-  <!-- التعريف -->
-  <div class="intro" id="introBox">
-    <h2>من أنا؟</h2>
-    <p data-text="الاسم: يوسف"></p>
-    <p data-text="اللقب: فارسي"></p>
-    <p data-text="تاريخ الميلاد: 10 نوفمبر 1988"></p>
-    <p data-text="المكان: الشريعة - ولاية تبسة"></p>
-    <p data-text="الهوايات: برمجة التطبيقات، برمجة الويب"></p>
-    <p data-text="الخبرة: معلومات الشبكة والاتصالات والأمن المعلوماتي"></p>
-    <p data-text="المستوى الدراسي: أولى ثانوي"></p>
-    <p data-text="التعليم: عصامي – لم أتلق أي تعليم أكاديمي رسمي"></p>
+  <div class="matrix">
+    <canvas id="matrixCanvas"></canvas>
   </div>
 
-  <!-- الحقوق -->
-  <div class="footer">
-    <p>تم برمجة هذا الموقع في 2015</p>
-    <p>© جميع الحقوق محفوظة فارسي يوسف 2015</p>
-    <div class="langs">HTML • CSS • JavaScript • Python • C++ • Java • PHP</div>
+  <header>
+    <h1>فارسي يوسف</h1>
+    <p>مواليد 10 نوفمبر 1988 - الشريعة ولاية تبسة</p>
+    <p>الهواية: برمجة تطبيقات | برمجة ويب | خبرة في الشبكات والاتصالات والأمن المعلوماتي</p>
+    <p>عصامي التعليم - المستوى الدراسي: أولى ثانوي</p>
+    <a href="https://www.facebook.com/yy.yy.883602" target="_blank" class="button">متابعة</a>
+    <a href="page2.html" class="button">أهمية التكنولوجيا</a>
+  </header>
+
+  <!-- مشغل الصوت -->
+  <div>
+    <audio id="player" src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/denial-of-service-sci-fi-hacker-instrumental-267766.mp3"></audio>
+    <button onclick="document.getElementById('player').play()">▶ تشغيل الصوت</button>
+    <button onclick="document.getElementById('player').pause()">⏸ إيقاف مؤقت</button>
   </div>
 
-  <!-- شاشة الهكرز -->
-  <div class="hacker-screen">
-    <div class="line">[ACCESS GRANTED] >> تحميل مكتبات النظام... تشغيل الأكواد...</div>
-    <div class="line">root@hacker:~$ echo "Hello World"</div>
-    <div class="line">>>> Compiling... Running... Injecting...</div>
-    <div class="line">[INFO] لغات البرمجة: HTML | CSS | JS | Python | C++</div>
-  </div>
-
-  <!-- الصوت (يعمل بعد الضغط على الزر) -->
-  <audio id="bgSound" preload="auto" loop playsinline>
-    <source src="https://www.soundjay.com/mechanical/sounds/keyboard-1.mp3" type="audio/mpeg">
-    متصفحك لا يدعم تشغيل الصوت
-  </audio>
+  <footer>
+    <p>تمت برمجة هذا الموقع سنة 2015 | جميع الحقوق محفوظة © فارسي يوسف</p>
+    <p>لغات البرمجة: HTML, CSS, JavaScript</p>
+  </footer>
 
   <script>
-    // زر الصوت
-    const soundBtn = document.getElementById("soundBtn");
-    const bgSound  = document.getElementById("bgSound");
+    // خلفية أكواد متحركة (matrix)
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
 
-    soundBtn.addEventListener("click", async () => {
-      try{
-        if (bgSound.paused){
-          bgSound.volume = 0.5;           // مستوى الصوت
-          await bgSound.play();           // تشغيل بعد تفاعل المستخدم
-          soundBtn.textContent = "🔊 إيقاف الصوت";
-        }else{
-          bgSound.pause();
-          soundBtn.textContent = "🔇 تشغيل الصوت";
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
-      }catch(e){
-        // إذا منع المتصفح التشغيل، لن تظهر رسالة مزعجة للمستخدم
-        soundBtn.textContent = "🔇 تشغيل الصوت";
+        drops[i]++;
       }
-    });
+    }
 
-    // تأثير الكتابة حرف بحرف
-    const paragraphs = document.querySelectorAll(".intro p");
-    let delay = 0;
-    paragraphs.forEach(p => {
-      const text = p.getAttribute("data-text") || "";
-      p.textContent = "";
-      setTimeout(() => {
-        let i = 0;
-        const typing = setInterval(() => {
-          p.textContent = text.slice(0, i);
-          i++;
-          if (i > text.length){
-            clearInterval(typing);
-            p.style.borderRight = "none";  // إخفاء المؤشر بعد اكتمال السطر
-          }
-        }, 80);
-      }, delay);
-      delay += (text.length * 80) + 400;   // انتظار قبل السطر التالي
-    });
+    setInterval(draw, 33);
   </script>
 </body>
 </html>
