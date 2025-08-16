@@ -22,6 +22,33 @@
       box-shadow: 0 0 20px #00ff00;
     }
 
+    .intro {
+      margin: 30px auto;
+      max-width: 700px;
+      padding: 20px;
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      background: rgba(0, 255, 0, 0.05);
+      text-align: right;
+      direction: rtl;
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    .intro h2 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .intro p {
+      margin: 8px 0;
+      line-height: 1.6;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      width: 0;
+    }
+
     .footer {
       margin-top: 30px;
       padding: 10px;
@@ -56,11 +83,42 @@
       from { transform: translateX(100%); }
       to { transform: translateX(-100%); }
     }
+
+    /* زر الصوت */
+    #soundBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #00ff00;
+      color: black;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ff00;
+    }
   </style>
 </head>
 <body>
+  <!-- زر تشغيل/إيقاف الصوت -->
+  <button id="soundBtn">🔊 إيقاف الصوت</button>
+
   <!-- صورتك -->
   <img src="https://github.com/sihamsiham999p-collab/youssef-farsi/blob/main/IMG_20250807_192531_664.jpg?raw=true" alt="صورتي">
+
+  <!-- التعريف -->
+  <div class="intro" id="introBox">
+    <h2>من أنا؟</h2>
+    <p data-text="الاسم: يوسف"></p>
+    <p data-text="اللقب: فارسي"></p>
+    <p data-text="تاريخ الميلاد: 10 نوفمبر 1988"></p>
+    <p data-text="المكان: الشريعة - ولاية تبسة"></p>
+    <p data-text="الهوايات: برمجة التطبيقات، برمجة الويب"></p>
+    <p data-text="الخبرة: معلومات الشبكة والاتصالات والأمن المعلوماتي"></p>
+    <p data-text="المستوى الدراسي: أولى ثانوي"></p>
+    <p data-text="التعليم: عصامي – لم أتلق أي تعليم أكاديمي رسمي"></p>
+  </div>
 
   <!-- الحقوق -->
   <div class="footer">
@@ -78,9 +136,44 @@
   </div>
 
   <!-- الصوت -->
-  <audio autoplay loop>
+  <audio id="bgSound" autoplay loop>
     <source src="https://www.soundjay.com/mechanical/sounds/keyboard-1.mp3" type="audio/mpeg">
     متصفحك لا يدعم تشغيل الصوت
   </audio>
+
+  <script>
+    const soundBtn = document.getElementById("soundBtn");
+    const bgSound = document.getElementById("bgSound");
+
+    soundBtn.addEventListener("click", () => {
+      if (bgSound.paused) {
+        bgSound.play();
+        soundBtn.textContent = "🔊 إيقاف الصوت";
+      } else {
+        bgSound.pause();
+        soundBtn.textContent = "🔇 تشغيل الصوت";
+      }
+    });
+
+    // تأثير الكتابة حرف بحرف
+    const paragraphs = document.querySelectorAll(".intro p");
+    let delay = 0;
+
+    paragraphs.forEach((p, index) => {
+      const text = p.getAttribute("data-text");
+      setTimeout(() => {
+        let i = 0;
+        const typing = setInterval(() => {
+          p.textContent = text.slice(0, i);
+          i++;
+          if (i > text.length) {
+            clearInterval(typing);
+            p.style.borderRight = "none";
+          }
+        }, 80); // سرعة الكتابة
+      }, delay);
+      delay += (text.length * 80) + 500; // كل سطر بعد الآخر
+    });
+  </script>
 </body>
 </html>
