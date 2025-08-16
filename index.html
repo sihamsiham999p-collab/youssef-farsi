@@ -2,111 +2,127 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>موقعي الشخصي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>يوسف فارسي</title>
   <style>
     body {
-      margin:0;
-      font-family: Arial, sans-serif;
-      color: #00ff00;
+      margin: 0;
+      padding: 0;
       background: black;
-      text-align:center;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      overflow-x: hidden;
     }
 
-    /* خلفية ماتريكس */
-    .matrix {
+    /* خلفية الماتريكس */
+    canvas {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1;
     }
-    .matrix canvas {
-      position:absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      display:block;
-    }
 
-    /* المحتوى */
-    .content {
+    .container {
       position: relative;
-      z-index: 1;
+      top: 50px;
       padding: 20px;
     }
 
-    img {
-      width: 200px;
+    .profile-img {
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       border: 3px solid #00ff00;
-      margin: 20px 0;
+      margin-bottom: 15px;
     }
 
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    h1 {
+      margin: 10px 0;
+      font-size: 28px;
+      color: #00ff00;
+    }
+
+    p {
+      margin: 5px 0;
       font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* أزرار الأيقونات */
+    .socials {
+      margin-top: 20px;
+    }
+
+    .icon-btn {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      font-size: 22px;
+      line-height: 46px;
       cursor: pointer;
-      border: none;
-      border-radius: 8px;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .icon-btn:hover {
       background: #00ff00;
       color: black;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #009900;
-      color: white;
     }
 
     footer {
-      margin-top: 20px;
-      font-size: 14px;
+      margin-top: 40px;
+      font-size: 13px;
       color: #00ff00;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
-  <!-- خلفية الماتريكس -->
-  <div class="matrix"><canvas id="matrix"></canvas></div>
+  <canvas id="matrix"></canvas>
 
-  <!-- المحتوى -->
-  <div class="content">
+  <div class="container">
+    <img src="your-photo.jpg" alt="صورة شخصية" class="profile-img">
     <h1>يوسف فارسي</h1>
-    <img src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/IMG_20250807_192531_664.jpg?raw=1" alt="صورتي">
-
-    <p>مواليد 10 نوفمبر 1988 بالشريعة – ولاية تبسة</p>
-    <p>الهواية: برمجة التطبيقات، برمجة الويب</p>
+    <p>مواليد 10 نوفمبر 1988 باشيرية – ولاية تبسة</p>
+    <p>الهوايات: برمجة التطبيقات، برمجة الويب</p>
     <p>خبرة في الشبكات، الاتصالات، والأمن المعلوماتي</p>
-    <p>عصامي التعليم، المستوى الدراسي: أولى ثانوي</p>
+    <p>المستوى الدراسي: أولى ثانوي</p>
 
-    <!-- زر الصوت -->
-    <audio id="bg-music" src="https://raw.githubusercontent.com/sihamsiham999p-collab/youssef-farsi/main/denial-of-service-sci-fi-hacker-instrumental-267766.mp3?raw=1"></audio>
-    <button onclick="document.getElementById('bg-music').play()">تشغيل الموسيقى</button>
-
-    <!-- أزرار تواصل -->
-    <div>
-      <button onclick="window.location.href='mailto:sihamsiham999p@gmail.com'">📧 إيميل</button>
-      <button onclick="window.open('https://www.facebook.com/yy.yy.883602','_blank')">📘 فيسبوك</button>
+    <div class="socials">
+      <a href="https://www.facebook.com/yy.yy.883602" target="_blank" class="icon-btn">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="mailto:sihamsiham999p@gmail.com" class="icon-btn">
+        <i class="fas fa-envelope"></i>
+      </a>
     </div>
+
+    <footer>
+      جميع الحقوق محفوظة © يوسف فارسي 2015 – تمت البرمجة بـ HTML, CSS, JavaScript
+    </footer>
   </div>
 
-  <!-- الحقوق -->
-  <footer>
-    جميع الحقوق محفوظة © فارسي يوسف 2015 – تم برمجة هذا الموقع بلغة HTML, CSS, JavaScript
-  </footer>
-
-  <!-- سكربت الماتريكس -->
+  <!-- سكريبت الماتريكس -->
   <script>
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
-
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "01".split("");
-    const fontSize = 16;
+    const letters = "01";
+    const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = [];
 
-    for(let i = 0; i < columns; i++)
-      drops[i] = 1;
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -115,23 +131,19 @@
       ctx.fillStyle = "#0F0";
       ctx.font = fontSize + "px monospace";
 
-      for(let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-          drops[i] = 0;
-
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
       }
     }
 
     setInterval(draw, 35);
-
-    window.addEventListener("resize", () => {
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-    });
   </script>
+
+  <!-- أيقونات FontAwesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
