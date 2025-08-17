@@ -1,264 +1,173 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Youcef Farsi Search</title>
   <style>
-    /* إعدادات الصفحة */
     body {
+      background: #000;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      text-align: center;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #000000, #1a1a1a);
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
     }
 
-    /* الشعار */
+    /* الشعار الكبير */
     .logo {
-      font-size: 12vw;
+      font-size: 60px;
       font-weight: bold;
-      color: #00fff2;
-      text-shadow: 0 0 20px #00fff2, 0 0 40px #00fff2;
-      margin-bottom: 20px;
-      font-family: 'Trebuchet MS', sans-serif;
-      letter-spacing: 3px;
+      color: #ff0033;
+      text-shadow: 0 0 15px #ff0033, 0 0 30px #ff0033;
+      margin-top: 60px;
+    }
+
+    /* الكتابة البيضاء */
+    .subtext {
+      font-size: 28px;
+      color: white;
+      margin: 20px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #fff;
+      display: inline-block;
+      animation: typing 6s steps(40, end) infinite, blink .8s infinite;
+    }
+
+    /* الكتابة الحمراء المتحركة */
+    .red-text {
+      font-size: 26px;
+      color: red;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+      margin-top: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid red;
+      display: inline-block;
+      animation: typing 8s steps(60, end) infinite, blink .8s infinite;
     }
 
     /* مربع البحث */
     .search-box {
-      display: flex;
-      align-items: center;
-      background: #222;
-      border-radius: 50px;
-      padding: 20px 40px;
+      margin: 30px auto;
       width: 90%;
-      max-width: 700px;
-      box-shadow: 0 0 20px #00fff2;
+      max-width: 750px;
+      display: flex;
+      background: #111;
+      border-radius: 50px;
+      padding: 15px;
+      box-shadow: 0 0 25px cyan;
     }
 
     .search-box input {
-      border: none;
-      outline: none;
       flex: 1;
-      font-size: 4vw;
-      padding: 15px;
+      padding: 18px;
+      font-size: 22px;
+      border: none;
       border-radius: 50px;
-      background: #000000;
-      color: white;
+      outline: none;
+      background: black;
+      color: cyan;
     }
 
     .search-box button {
-      background: #00fff2;
+      background: cyan;
       border: none;
-      padding: 20px 30px;
       border-radius: 50%;
+      width: 60px;
+      height: 60px;
       cursor: pointer;
-      font-size: 5vw;
+      font-size: 22px;
+      color: black;
+      margin-left: 10px;
+      transition: 0.3s;
     }
 
     .search-box button:hover {
-      background: #00e0d0;
+      background: lime;
+      color: black;
     }
 
     /* الأزرار */
-    .engines {
-      margin-top: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+    .buttons {
+      margin: 20px 0;
     }
 
-    .engines button {
-      background: #00fff2;
+    .buttons button {
+      margin: 5px;
+      padding: 12px 22px;
       border: none;
-      padding: 20px 30px;
-      border-radius: 15px;
-      font-size: 4vw;
-      font-weight: bold;
+      border-radius: 25px;
+      background: cyan;
+      color: black;
+      font-size: 18px;
       cursor: pointer;
-      box-shadow: 0 0 15px #00fff2;
+      box-shadow: 0 0 15px cyan;
       transition: 0.3s;
     }
 
-    .engines button:hover {
-      background: #00e0d0;
-      transform: scale(1.1);
+    .buttons button:hover {
+      background: lime;
+      box-shadow: 0 0 25px lime;
     }
 
-    /* الكتابة المتحركة مثل الهكرز */
-    .incognito-mode {
-      margin-top: 40px;
-      background-color: #444;
-      padding: 25px;
-      width: 80%;
-      border-radius: 8px;
+    /* زر تور */
+    .tor-btn {
+      margin-top: 25px;
+      padding: 15px 35px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      background: lime;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0 0 20px lime;
+    }
+
+    .tor-btn:hover {
+      background: red;
       color: white;
-      font-size: 2.5vw;
-      white-space: nowrap;
-      overflow: hidden;
+      box-shadow: 0 0 25px red;
     }
 
-    /* الكتابة المتحركة بشكل حرف بحرف */
+    /* الأنيميشن */
     @keyframes typing {
-      from {
-        width: 0;
-      }
-      to {
-        width: 100%;
-      }
+      from { width: 0; }
+      to { width: 100%; }
     }
 
-    .incognito-mode p {
-      font-size: 5vw;
-      font-weight: bold;
-      display: inline-block;
-      animation: typing 12s steps(50) infinite;
-      color: red;
-      text-shadow: 0 0 5px red, 0 0 10px red, 0 0 20px red;
-    }
-
-    /* إعدادات زر تنزيل تور */
-    .download-btn {
-      font-size: 4vw;
-      padding: 20px 40px;
-      background-color: #00fff2;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 0 15px #00fff2;
-      margin-top: 20px;
-      transition: 0.3s;
-    }
-
-    .download-btn:hover {
-      background-color: #00e0d0;
-      transform: scale(1.1);
-    }
-
-    /* إعدادات الاستجابة */
-    @media (max-width: 768px) {
-      .logo {
-        font-size: 16vw;
-      }
-
-      .search-box {
-        padding: 15px;
-        width: 90%;
-      }
-
-      .search-box input {
-        font-size: 5vw;
-      }
-
-      .search-box button {
-        font-size: 6vw;
-      }
-
-      .engines button {
-        font-size: 6vw;
-        padding: 12px 25px;
-      }
-
-      .incognito-mode {
-        font-size: 5vw;
-      }
-
-      .download-btn {
-        font-size: 6vw;
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .logo {
-        font-size: 18vw;
-      }
-
-      .search-box {
-        padding: 12px;
-        width: 85%;
-      }
-
-      .search-box input {
-        font-size: 6vw;
-      }
-
-      .search-box button {
-        font-size: 7vw;
-      }
-
-      .engines button {
-        font-size: 7vw;
-        padding: 15px 30px;
-      }
-
-      .incognito-mode {
-        font-size: 7vw;
-      }
-
-      .download-btn {
-        font-size: 7vw;
-        padding: 25px;
-      }
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
   </style>
 </head>
 <body>
-
+  <!-- الشعار الكبير -->
   <div class="logo">Youcef.Farsi</div>
 
+  <!-- النص الأبيض المتحرك -->
+  <div class="subtext">Hello Youcef Farsi Cheria</div>
+
+  <!-- مربع البحث -->
   <div class="search-box">
-    <input type="text" id="query" placeholder="ابحث عن طريق Youcef Farsi...">
-    <button onclick="searchDuckDuckGo()">🔍</button>
+    <input type="text" placeholder="إبحث عن طريق Youcef Farsi...">
+    <button>🔍</button>
   </div>
 
-  <div class="engines">
-    <button onclick="search('https://www.google.com/search?q=')">Google</button>
-    <button onclick="search('https://www.bing.com/search?q=')">Bing</button>
-    <button onclick="search('https://search.brave.com/search?q=')">Brave</button>
-    <button onclick="search('https://yandex.com/search/?text=')">Yandex</button>
-    <button onclick="search('https://duckduckgo.com/?q=')">DuckDuckGo</button>
-    <!-- محركات بحث الإنترنت العميق -->
-    <button onclick="search('https://3g2upl4pq6kufc4m.onion/?q=')">DuckDuckGo (Tor)</button>
-    <button onclick="search('https://ahmia.fi/search/?q=')">Ahmia (Tor)</button>
-    <button onclick="search('https://candle.xyz/?q=')">Candle (Tor)</button>
-    <button onclick="search('https://www.startpage.com/sp/search?q=')">StartPage</button>
-    <button onclick="search('https://www.ecosia.org/search?q=')">Ecosia</button>
-    <button onclick="search('https://www.qwant.com/?q=')">Qwant</button>
-    <!-- محركات بحث Tor و Onion -->
-    <button onclick="search('https://www.torchsearch.com/?q=')">Torch</button>
-    <button onclick="search('http://onion.city/?q=')">Onion</button>
+  <!-- الأزرار -->
+  <div class="buttons">
+    <button>Google</button>
+    <button>Bing</button>
+    <button>Brave</button>
+    <button>Yandex</button>
+    <button>DuckDuckGo</button>
   </div>
 
-  <div class="incognito-mode">
-    <p>نزل تطبيق تور واستخدم متصفح Youcef للوصول إلى الإنترنت المظلم.</p>
-  </div>
+  <!-- النص الأحمر المتحرك -->
+  <div class="red-text">نزل تطبيق تور وإستخدم متصفح youcef من أجل الوصول إلى الداب ويب. الأنترنات المظلم</div>
 
-  <button class="download-btn" onclick="downloadTor()">تنزيل تطبيق تور</button>
-
-  <script>
-    function searchDuckDuckGo() {
-      let query = document.getElementById("query").value;
-      if (query) window.open("https://duckduckgo.com/?q=" + encodeURIComponent(query), "_blank");
-    }
-
-    function search(url) {
-      let query = document.getElementById("query").value;
-      if (query) window.open(url + encodeURIComponent(query), "_blank");
-    }
-
-    function downloadTor() {
-      window.open("https://www.torproject.org/download/");
-    }
-  </script>
-
+  <!-- زر تور -->
+  <button class="tor-btn">⬇ تنزيل Tor Browser</button>
 </body>
 </html>
