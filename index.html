@@ -93,7 +93,7 @@
       transform: scale(1.1);
     }
 
-    /* النص في الأسفل */
+    /* الكتابة المتحركة مثل الهكرز */
     .incognito-mode {
       margin-top: 40px;
       background-color: #444;
@@ -102,9 +102,11 @@
       border-radius: 8px;
       color: white;
       font-size: 2.5vw;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
-    /* الكتابة المتحركة مثل الهكرز */
+    /* الكتابة المتحركة بشكل حرف بحرف */
     @keyframes typing {
       from {
         width: 0;
@@ -114,10 +116,13 @@
       }
     }
 
-    /* الكتابة المتحركة */
     .incognito-mode p {
-      font-size: 3vw;
-      animation: typing 8s steps(60) infinite;
+      font-size: 5vw;
+      font-weight: bold;
+      display: inline-block;
+      animation: typing 12s steps(50) infinite;
+      color: red;
+      text-shadow: 0 0 5px red, 0 0 10px red, 0 0 20px red;
     }
 
     /* إعدادات زر تنزيل تور */
@@ -136,18 +141,6 @@
     .download-btn:hover {
       background-color: #00e0d0;
       transform: scale(1.1);
-    }
-
-    /* إعدادات وضع الضوء أو الظلام */
-    .toggle-mode {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: #00fff2;
-      padding: 15px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 2.5vw;
     }
 
     /* إعدادات الاستجابة */
