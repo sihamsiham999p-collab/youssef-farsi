@@ -1,169 +1,271 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Youcef Farsi Search</title>
   <style>
-    :root{
-      --accent:#06fde7;          /* لون أزرار المحركات والشعار */
-      --glow:  #06fde7;
-      --bg:#000000;
-      --tor:#25ff00;
-      --danger:#ff2a2a;
-      --box-h: clamp(64px, 12vw, 120px);   /* ارتفاع صندوق البحث (كبير) */
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; background:var(--bg); color:#fff; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:4vh 3vw;
-    }
-    .wrap{ width:min(1100px, 96vw); display:flex; flex-direction:column; align-items:center; gap:clamp(12px,2.5vh,22px); }
-
-    /* الشعار الكبير */
-    .logo{
-      font-weight:900;
-      font-size: clamp(42px, 9vw, 120px);
-      letter-spacing:.06em;
-      color:var(--accent);
-      text-shadow: 0 0 14px var(--glow), 0 0 30px var(--glow), 0 0 60px var(--glow);
-    }
-
-    /* الكتابة البيضاء (حرف بحرف) */
-    .hacker{
-      font-size: clamp(18px, 4.2vw, 38px);
-      line-height:1.2;
-      color:#eaffff;
-      min-height: 1.3em; /* يمنع القفز أثناء المسح */
-      text-shadow: 0 0 10px rgba(6,253,231,.35);
-      white-space: nowrap;
+    /* إعدادات الصفحة */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
-      border-inline-end: 3px solid #eaffff;
     }
 
-    /* صندوق البحث الضخم */
-    .search{
-      width:100%;
-      display:flex; align-items:center;
-      background: rgba(0,0,0,.7);
-      border-radius: 999px;
-      box-shadow: 0 0 24px var(--glow);
-      border:2px solid var(--accent);
-      padding: clamp(6px,1.2vw,10px);
-      height: var(--box-h);
-      gap: clamp(8px,1.5vw,14px);
-    }
-    .search input{
-      flex:1; height:100%;
-      background: #0a0a0a;
-      border: none; outline: none;
-      color:#e7ffff;
-      border-radius: 999px;
-      padding: 0 clamp(16px, 3vw, 28px);
-      font-size: clamp(18px, 3.6vw, 28px);
-      caret-color: var(--accent);
-    }
-    .search input::placeholder{ color:#9fe; opacity:.65; }
-    .go{
-      flex:0 0 auto;
-      height: calc(var(--box-h) - clamp(10px,2vw,16px));
-      aspect-ratio: 1/1;
-      border-radius: 999px; border:0;
-      background: var(--accent); color:#021;
-      font-weight:900; font-size: clamp(14px, 2.8vw, 20px);
-      padding:0 22px; cursor:pointer;
-      box-shadow: 0 0 18px var(--glow), inset 0 0 10px rgba(255,255,255,.25);
-    }
-    .go:active{transform:scale(.98)}
-
-    /* أزرار المحركات */
-    .engines{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(10px,1.6vw,16px); }
-    .engines button{
-      background:#000;
-      color:var(--accent);
-      border:2px solid var(--accent);
-      box-shadow:0 0 12px var(--glow);
-      border-radius:999px;
-      padding: clamp(10px, 1.6vw, 14px) clamp(16px, 3vw, 26px);
-      font-size: clamp(14px, 2.6vw, 20px);
-      font-weight:700; cursor:pointer; transition:.2s transform, .2s background, .2s color;
-    }
-    .engines button:hover{ background:var(--accent); color:#001; transform:translateY(-2px) }
-
-    /* الجملة الثابتة بالأسفل (كبيرة) */
-    .tor-line{
-      margin-top: clamp(14px, 3vh, 28px);
-      font-size: clamp(16px, 3.4vw, 26px);
-      color: var(--danger);
-      text-shadow: 0 0 10px rgba(255,42,42,.6), 0 0 28px rgba(255,42,42,.4);
+    /* الشعار */
+    .logo {
+      font-size: 12vw;
+      font-weight: bold;
+      color: #00fff2;
+      text-shadow: 0 0 20px #00fff2, 0 0 40px #00fff2;
+      margin-bottom: 20px;
+      font-family: 'Trebuchet MS', sans-serif;
+      letter-spacing: 3px;
     }
 
-    /* زر تنزيل تور */
-    .tor-btn{
-      margin-top: clamp(12px, 2.4vh, 18px);
-      display:inline-block;
-      background: var(--tor);
-      color:#061a00; text-decoration:none; font-weight:900;
-      padding: clamp(10px,1.6vw,14px) clamp(20px,4.4vw,34px);
-      border-radius: 999px;
-      box-shadow: 0 0 18px rgba(37,255,0,.7), inset 0 0 10px rgba(255,255,255,.25);
-      font-size: clamp(14px, 2.8vw, 20px);
+    /* مربع البحث */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #222;
+      border-radius: 50px;
+      padding: 20px 40px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 0 20px #00fff2;
     }
 
-    /* مسافات عامة */
-    .sp-lg{ margin-top: clamp(12px,2.8vh,22px); }
+    .search-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 4vw;
+      padding: 15px;
+      border-radius: 50px;
+      background: #000000;
+      color: white;
+    }
+
+    .search-box button {
+      background: #00fff2;
+      border: none;
+      padding: 20px 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 5vw;
+    }
+
+    .search-box button:hover {
+      background: #00e0d0;
+    }
+
+    /* الأزرار */
+    .engines {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .engines button {
+      background: #00fff2;
+      border: none;
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 4vw;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00fff2;
+      transition: 0.3s;
+    }
+
+    .engines button:hover {
+      background: #00e0d0;
+      transform: scale(1.1);
+    }
+
+    /* النص في الأسفل */
+    .incognito-mode {
+      margin-top: 40px;
+      background-color: #444;
+      padding: 25px;
+      width: 80%;
+      border-radius: 8px;
+      color: white;
+      font-size: 2.5vw;
+    }
+
+    /* الكتابة المتحركة مثل الهكرز */
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    /* الكتابة المتحركة */
+    .incognito-mode p {
+      font-size: 3vw;
+      animation: typing 8s steps(60) infinite;
+    }
+
+    /* إعدادات زر تنزيل تور */
+    .download-btn {
+      font-size: 4vw;
+      padding: 20px 40px;
+      background-color: #00fff2;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00fff2;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    .download-btn:hover {
+      background-color: #00e0d0;
+      transform: scale(1.1);
+    }
+
+    /* إعدادات وضع الضوء أو الظلام */
+    .toggle-mode {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #00fff2;
+      padding: 15px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 2.5vw;
+    }
+
+    /* إعدادات الاستجابة */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 16vw;
+      }
+
+      .search-box {
+        padding: 15px;
+        width: 90%;
+      }
+
+      .search-box input {
+        font-size: 5vw;
+      }
+
+      .search-box button {
+        font-size: 6vw;
+      }
+
+      .engines button {
+        font-size: 6vw;
+        padding: 12px 25px;
+      }
+
+      .incognito-mode {
+        font-size: 5vw;
+      }
+
+      .download-btn {
+        font-size: 6vw;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 18vw;
+      }
+
+      .search-box {
+        padding: 12px;
+        width: 85%;
+      }
+
+      .search-box input {
+        font-size: 6vw;
+      }
+
+      .search-box button {
+        font-size: 7vw;
+      }
+
+      .engines button {
+        font-size: 7vw;
+        padding: 15px 30px;
+      }
+
+      .incognito-mode {
+        font-size: 7vw;
+      }
+
+      .download-btn {
+        font-size: 7vw;
+        padding: 25px;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1 class="logo">Youcef.Farsi</h1>
 
-    <div id="hacker" class="hacker"></div>
+  <div class="logo">Youcef.Farsi</div>
 
-    <div class="search sp-lg">
-      <input id="query" type="text" placeholder="إبحث عن طريق Youcef Farsi..." />
-      <button class="go" id="goBtn" title="بحث">Search</button>
-    </div>
+  <div class="search-box">
+    <input type="text" id="query" placeholder="ابحث عن طريق Youcef Farsi...">
+    <button onclick="searchDuckDuckGo()">🔍</button>
+  </div>
 
-    <div class="engines sp-lg">
-      <button onclick="search('https://duckduckgo.com/?q=')">DuckDuckGo</button>
-      <button onclick="search('https://www.google.com/search?q=')">Google</button>
-      <button onclick="search('https://www.bing.com/search?q=')">Bing</button>
-      <button onclick="search('https://search.brave.com/search?q=')">Brave</button>
-      <button onclick="search('https://yandex.com/search/?text=')">Yandex</button>
-    </div>
+  <div class="engines">
+    <button onclick="search('https://www.google.com/search?q=')">Google</button>
+    <button onclick="search('https://www.bing.com/search?q=')">Bing</button>
+    <button onclick="search('https://search.brave.com/search?q=')">Brave</button>
+    <button onclick="search('https://yandex.com/search/?text=')">Yandex</button>
+    <button onclick="search('https://duckduckgo.com/?q=')">DuckDuckGo</button>
+    <!-- محركات بحث الإنترنت العميق -->
+    <button onclick="search('https://3g2upl4pq6kufc4m.onion/?q=')">DuckDuckGo (Tor)</button>
+    <button onclick="search('https://ahmia.fi/search/?q=')">Ahmia (Tor)</button>
+    <button onclick="search('https://candle.xyz/?q=')">Candle (Tor)</button>
+    <button onclick="search('https://www.startpage.com/sp/search?q=')">StartPage</button>
+    <button onclick="search('https://www.ecosia.org/search?q=')">Ecosia</button>
+    <button onclick="search('https://www.qwant.com/?q=')">Qwant</button>
+    <!-- محركات بحث Tor و Onion -->
+    <button onclick="search('https://www.torchsearch.com/?q=')">Torch</button>
+    <button onclick="search('http://onion.city/?q=')">Onion</button>
+  </div>
 
-    <div class="tor-line">نزل تطبيق تور واستخدم هذا المتصفح للدخول إلى الداب ويب</div>
-    <a class="tor-btn" href="https://www.torproject.org/download/" target="_blank" rel="noopener">⬇ تنزيل تطبيق تور</a>
-  </main>
+  <div class="incognito-mode">
+    <p>نزل تطبيق تور واستخدم متصفح Youcef للوصول إلى الإنترنت المظلم.</p>
+  </div>
+
+  <button class="download-btn" onclick="downloadTor()">تنزيل تطبيق تور</button>
 
   <script>
-    // بحث افتراضي بـ DuckDuckGo
-    function doDuck() {
-      const q = document.getElementById('query').value.trim();
-      if(q) window.open('https://duckduckgo.com/?q=' + encodeURIComponent(q), '_blank');
-    }
-    document.getElementById('goBtn').addEventListener('click', doDuck);
-    document.getElementById('query').addEventListener('keydown', e=>{
-      if(e.key === 'Enter') doDuck();
-    });
-    function search(base){
-      const q = document.getElementById('query').value.trim();
-      if(q) window.open(base + encodeURIComponent(q), '_blank');
+    function searchDuckDuckGo() {
+      let query = document.getElementById("query").value;
+      if (query) window.open("https://duckduckgo.com/?q=" + encodeURIComponent(query), "_blank");
     }
 
-    // كتابة حرف بحرف للنص الأبيض وتكراره
-    const line = "Welcome — youcef farsi cheria";
-    const el = document.getElementById('hacker');
-    let i = 0, dir = 1;
-    function loopType(){
-      el.textContent = line.slice(0, i);
-      i += dir;
-      if(i > line.length){ dir = -1; setTimeout(loopType, 900); return; } // توقف قصير بعد الاكتمال
-      if(i < 0){ dir = 1; setTimeout(loopType, 450); return; }           // توقف قصير بعد المسح
-      setTimeout(loopType, 85); // سرعة الطباعة (أبطأ قليلاً)
+    function search(url) {
+      let query = document.getElementById("query").value;
+      if (query) window.open(url + encodeURIComponent(query), "_blank");
     }
-    loopType();
+
+    function downloadTor() {
+      window.open("https://www.torproject.org/download/");
+    }
   </script>
+
 </body>
 </html>
