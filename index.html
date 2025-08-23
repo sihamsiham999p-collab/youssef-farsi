@@ -1,605 +1,271 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>farsi youcef • مشغل فيديوهات يوتيوب</title>
-  <style>
-    /*
-      ======================
-      CSS Reset & Variables
-      ======================
-    */
-    :root {
-      --bg-dark: #0a192f;
-      --bg-light: #112240;
-      --text-main: #e6f1ff;
-      --text-sub: #8892b0;
-      --accent-green: #64ffda;
-      --shadow: rgba(0, 0, 0, 0.2);
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    body, h1, h2, h3, p, ul, ol, li, figure, figcaption, blockquote, dl, dd { margin: 0; }
-    ul, ol { list-style: none; padding: 0; }
-    a { text-decoration: none; color: inherit; }
-    img, picture, video, canvas, svg { display: block; max-width: 100%; }
-    input, button, textarea, select { font: inherit; }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-main);
-      line-height: 1.6;
-      transition: background-color 0.3s;
-    }
-    
-    /*
-      ======================
-      Layout & General Styling
-      ======================
-    */
-    header {
-      background: var(--bg-light);
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 10px var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    header .brand {
-      font-weight: 900;
-      font-size: 40px;
-      background: linear-gradient(45deg, var(--accent-green), #60d2b0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-      flex-shrink: 0;
-    }
-    .search-container {
-      position: relative;
-      width: min(760px, 100%);
-      margin-inline: auto;
-    }
-    .search {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-    }
-    .search input {
-      flex: 1;
-      padding: 12px 18px;
-      border: 1px solid var(--text-sub);
-      border-radius: 12px;
-      font-size: 16px;
-      background: var(--bg-light);
-      color: var(--text-main);
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .search input:focus {
-      outline: none;
-      border-color: var(--accent-green);
-      box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.5);
-    }
-    .search button {
-      border: none;
-      background: var(--accent-green);
-      color: var(--bg-dark);
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-    .search button:hover {
-      transform: translateY(-2px);
-      background: #50e8c0;
-      box-shadow: 0 4px 8px rgba(100, 255, 218, 0.3);
-    }
-    .app {
-      display: grid;
-      grid-template-columns: 2.5fr 1.5fr;
-      gap: 20px;
-      padding: 20px;
-      align-items: start;
-    }
-    .player-section {
-      background: var(--bg-light);
-      border-radius: 16px;
-      padding: 20px;
-      position: relative;
-      box-shadow: 0 4px 15px var(--shadow);
-      display: flex;
-      flex-direction: column;
-    }
-    .player-placeholder {
-      width: 100%;
-      height: 70vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 12px;
-      background: #000;
-      color: var(--text-sub);
-      font-size: 1.2em;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
-    .player-placeholder:hover { opacity: 0.8; }
-    .player-frame {
-      width: 100%;
-      height: 70vh;
-      border: 0;
-      border-radius: 12px;
-      background: #000;
-      display: none;
-    }
-    .player-frame.active { display: block; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farsi Youcef Search</title>
+<style>
+  :root{
+    --neon:#00ffd5;          /* أزرق مُخضَر (نيون) */
+    --text:#e8f8ff;
+    --bg:#0b0c0e;
+    --white:#fff;
+    --red:#ff3b3b;
+    --purple:#8a2be2;        /* بنفسجي زر تور */
+  }
 
-    /*
-      ======================
-      Player Controls & Metadata
-      ======================
-    */
-    .player-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 18px;
-    }
-    .player-info {
-      flex: 1;
-    }
-    .now-title {
-      font-weight: 700;
-      font-size: 24px;
-      color: var(--text-main);
-      line-height: 1.3;
-    }
-    .now-meta {
-      opacity: .85;
-      font-size: 16px;
-      color: var(--text-sub);
-    }
-    .player-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .player-btn, .quality-select {
-      background: rgba(100, 255, 218, 0.1);
-      color: var(--accent-green);
-      border: 1px solid var(--accent-green);
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s, color 0.3s;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-    .player-btn:hover, .quality-select:hover {
-      background: rgba(100, 255, 218, 0.2);
-    }
-    .quality-select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364ffda'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: left 10px center;
-      padding-left: 30px;
-    }
-    
-    /*
-      ======================
-      Video List & Items
-      ======================
-    */
-    .list {
-      background: var(--bg-light);
-      border-radius: 16px;
-      padding: 16px;
-      max-height: calc(100vh - 120px);
-      overflow-y: auto;
-      box-shadow: 0 4px 15px var(--shadow);
-      position: relative;
-    }
-    .list::-webkit-scrollbar { width: 8px; }
-    .list::-webkit-scrollbar-thumb { background: var(--text-sub); border-radius: 10px; }
-    .list::-webkit-scrollbar-track { background: transparent; }
-    .item {
-      display: flex;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      align-items: flex-start;
-      background: transparent;
-      transition: background .2s, transform .1s;
-      margin-bottom: 8px;
-    }
-    .item:hover { background: rgba(100, 255, 218, 0.1); transform: scale(1.01); }
-    .item.active { background: rgba(100, 255, 218, 0.2); outline: 2px solid rgba(100, 255, 218, 0.4); transform: scale(1.01); }
-    .thumb {
-      width: 160px;
-      aspect-ratio: 16/9;
-      border-radius: 10px;
-      object-fit: cover;
-      background: var(--bg-dark);
-      flex-shrink: 0;
-    }
-    .itxt {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
-    .ititle {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.4;
-      color: var(--text-main);
-    }
-    .ichannel, .idate {
-      font-size: 14px;
-      opacity: .85;
-      color: var(--text-sub);
-    }
-    .status-message {
-      padding: 12px;
-      border-radius: 10px;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .status-message.empty { background: rgba(136, 146, 176, 0.2); color: var(--text-sub); }
-    .status-message.error { background: rgba(178, 59, 59, 0.5); color: #fff; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; min-height:100vh; background:
+    radial-gradient(1200px 800px at 50% 15%, #111416 0%, #0c0e10 55%, #000 100%);
+    color:var(--text); font-family: "Segoe UI", Roboto, Tahoma, "Cairo", system-ui, sans-serif;
+    display:flex; flex-direction:column; align-items:center;
+  }
 
-    /*
-      ======================
-      AI Smart Suggestions
-      ======================
-    */
-    .suggestions-box {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      background: var(--bg-light);
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 8px 15px var(--shadow);
-      z-index: 500;
-      display: none;
-      padding: 10px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .suggestions-box.visible { display: block; }
-    .suggestion-item {
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background 0.2s;
-    }
-    .suggestion-item:hover {
-      background: rgba(100, 255, 218, 0.1);
-    }
-    .suggestion-item:not(:last-child) {
-      margin-bottom: 5px;
-    }
+  /* حاوية بعرض ثابت لعدم تداخل العناصر */
+  .container{width:min(980px, 92vw); padding:28px 0 40px}
 
-    /*
-      ======================
-      Responsive Design
-      ======================
-    */
-    @media (max-width: 900px) {
-      .app { grid-template-columns: 1fr; }
-      .list { max-height: none; }
-      .player-controls { flex-direction: column; align-items: stretch; gap: 10px; }
-      .player-actions { justify-content: space-around; }
-    }
-  </style>
+  /* الشعار */
+  .logo{
+    font-family: "Courier New", ui-monospace, monospace;
+    font-weight:800; letter-spacing:2px; line-height:1.05;
+    font-size: clamp(40px, 9vw, 84px);
+    color: #00c9b8;
+    text-shadow:
+      0 0 10px rgba(0,255,213,.8),
+      0 0 25px rgba(0,255,213,.5),
+      0 0 40px rgba(0,255,213,.3);
+    text-align:center; margin:8px 0 10px;
+  }
+
+  /* العنوان المتحرك */
+  .typewrap{display:flex; justify-content:center; margin:10px 0 24px}
+  .typing{
+    font-size: clamp(18px, 4.6vw, 32px); font-weight:700; color:var(--white);
+    text-shadow:0 0 14px rgba(255,255,255,.45); white-space:nowrap
+  }
+  .typing::after{
+    content:""; display:inline-block; width:2px; height:1.05em; margin-inline-start:6px;
+    background:var(--white); animation:blink .8s steps(1,end) infinite; vertical-align:-2px;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  /* صندوق البحث */
+  .search-wrap{display:flex; justify-content:center}
+  .search-box{
+    width:min(760px, 100%); display:flex; align-items:center; background:#0e1214;
+    border-radius:999px; padding:6px; gap:6px;
+    box-shadow: inset 0 0 0 2px rgba(0,255,213,.6), 0 0 28px rgba(0,255,213,.35);
+  }
+  .search-input{
+    flex:1; padding:16px 18px; border:0; outline:0; font-size:18px; color:#dff; background:transparent;
+  }
+  .search-input::placeholder{color:#9fd; opacity:.7}
+  .search-btn{
+    border:0; outline:0; cursor:pointer; font-weight:800;
+    background:var(--neon); color:#001b1b; padding:14px 22px; font-size:18px; border-radius:999px;
+    transition:.25s transform, .25s filter;
+  }
+  .search-btn:hover{filter:brightness(1.08); transform:translateY(-1px)}
+
+  /* عناوين الأقسام */
+  .section{
+    margin-top:26px;
+    border-top:1px solid rgba(0,255,213,.22);
+    padding-top:16px;
+  }
+  .section h3{
+    margin:0 0 12px; display:flex; align-items:center; gap:8px; justify-content:center;
+    font-weight:800; letter-spacing:.3px; color:#cffff9
+  }
+  .section h3 .icon{font-size:22px}
+
+  /* شبكة الأزرار: منظمة ولا تختفي */
+  .engines-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:12px; width:100%;
+  }
+  .chip{
+    width:100%; padding:12px 14px; border-radius:16px; font-weight:700; cursor:pointer;
+    border:2px solid var(--neon);
+    background:rgba(0,255,213,.08); color:var(--text);
+    box-shadow:0 0 14px rgba(0,255,213,.28);
+    transition:.2s transform, .2s background, .2s color;
+  }
+  .chip:hover{transform:translateY(-1px)}
+  .chip.active{background:var(--neon); color:#001b1b}
+
+  /* النص السفلي */
+  .footwrap{margin:28px auto 16px; max-width:900px; text-align:center}
+  .typing-ar{
+    font-size: clamp(14px, 3.4vw, 20px); font-weight:800; color:var(--red);
+    text-shadow:0 0 8px var(--red), 0 0 18px #ff6b6b;
+  }
+  .typing-ar::after{
+    content:""; display:inline-block; width:2px; height:1.05em; margin-inline-start:6px;
+    background:var(--red); animation:blink .8s steps(1,end) infinite; vertical-align:-2px;
+  }
+
+  /* زر تنزيل تور */
+  .cta{
+    position:sticky; bottom:16px; display:flex; justify-content:center; margin-top:14px;
+  }
+  .tor-btn{
+    font-size:20px; font-weight:900; letter-spacing:.3px;
+    color:#fff; background:linear-gradient(180deg, var(--purple), #6f1bd6);
+    border:none; border-radius:50px; padding:16px 30px; cursor:pointer;
+    box-shadow:0 0 26px rgba(138,43,226,.8), 0 0 50px rgba(138,43,226,.45);
+    transition:.25s transform, .25s filter;
+  }
+  .tor-btn:hover{transform:scale(1.05); filter:brightness(1.05)}
+  @media (prefers-reduced-motion:no-preference){
+    .tor-btn{animation:pulse 2.3s ease-in-out infinite}
+    @keyframes pulse{ 0%,100%{box-shadow:0 0 22px rgba(138,43,226,.7)}
+                      50%{box-shadow:0 0 44px rgba(138,43,226,.95)} }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">farsi youcef</div>
-    <div class="search-container">
-      <form class="search" id="searchForm">
-        <input id="q" type="text" placeholder="ابحث عن فيديو... (مثال: كرة قدم، برمجة، قرآن)" autocomplete="off" />
-        <button type="submit">بحث</button>
-      </form>
-      <div id="suggestions" class="suggestions-box"></div>
-    </div>
-  </header>
+  <div class="container">
 
-  <main class="app">
-    <section class="player-section" id="playerBox">
-      <div id="playerPlaceholder" class="player-placeholder">
-        <p>▶️ انقر على فيديو للتشغيل</p>
+    <!-- الشعار -->
+    <div class="logo">Farsi<br/>Youcef</div>
+
+    <!-- العنوان المتحرك -->
+    <div class="typewrap">
+      <span class="typing" id="headline"></span>
+    </div>
+
+    <!-- صندوق البحث -->
+    <div class="search-wrap">
+      <form class="search-box" id="searchForm" autocomplete="off">
+        <input id="q" class="search-input" type="text" name="q"
+               placeholder="… إبحث عبر Farsi Youcef" />
+        <button class="search-btn" type="submit">🔍 بحث</button>
+      </form>
+    </div>
+
+    <!-- محركات البحث العالمية -->
+    <section class="section">
+      <h3><span class="icon">🌐</span> محركات البحث</h3>
+      <div class="engines-grid" id="global-engines">
+        <button class="chip active" data-engine="duck">DuckDuckGo</button>
+        <button class="chip" data-engine="google">Google</button>
+        <button class="chip" data-engine="bing">Bing</button>
+        <button class="chip" data-engine="yahoo">Yahoo</button>
+        <button class="chip" data-engine="brave">Brave</button>
+        <button class="chip" data-engine="yandex">Yandex</button>
+        <button class="chip" data-engine="startpage">Startpage</button>
+        <button class="chip" data-engine="ecosia">Ecosia</button>
+        <button class="chip" data-engine="qwant">Qwant</button>
+        <button class="chip" data-engine="baidu">Baidu</button>
+        <button class="chip" data-engine="naver">Naver</button>
       </div>
-      <iframe id="player" class="player-frame" title="Youcef Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <div class="player-controls">
-        <div class="player-info">
-          <div class="now-title" id="nowTitle">—</div>
-          <div class="now-meta" id="nowMeta"></div>
-        </div>
-        <div class="player-actions">
-          <select id="qualitySelector" class="quality-select" title="جودة الفيديو" style="display: none;">
-            <option value="default">جودة تلقائية</option>
-            <option value="highres">أعلى جودة</option>
-            <option value="hd1080">1080p HD</option>
-            <option value="hd720">720p HD</option>
-            <option value="large">480p</option>
-            <option value="medium">360p</option>
-          </select>
-          <button class="player-btn" onclick="toggleFullscreen()">⛶ تكبير</button>
-        </div>
-      </div>
-      <div id="playerError" class="status-message error" style="display:none"></div>
     </section>
 
-    <aside class="list" id="results">
-      <div class="status-message empty">
-        <p>لا توجد فيديوهات للعرض. ابحث عن شيء ما!</p>
+    <!-- محركات الداب ويب -->
+    <section class="section">
+      <h3><span class="icon">🕵️</span> محركات الداب ويب</h3>
+      <div class="engines-grid" id="dark-engines">
+        <button class="chip" data-engine="torch">Torch</button>
+        <button class="chip" data-engine="ahmia">Ahmia</button>
+        <button class="chip" data-engine="onion">Onion Search</button>
+        <button class="chip" data-engine="ducktor">DuckDuckGo (Tor)</button>
       </div>
-    </aside>
-  </main>
+    </section>
 
-  <script>
-    // ⚠️ تنبيه: هذا المفتاح مكشوف. لا تستخدمه في تطبيق حقيقي.
-    const API_KEY = "AIzaSyAuOyCEzMgnjGbRqlECI9HU5TgIRs8a4Bw";
+    <!-- نص سفلي -->
+    <div class="footwrap">
+      <span class="typing-ar" id="footline"></span>
+    </div>
 
-    const els = {
-      form: document.getElementById('searchForm'),
-      q: document.getElementById('q'),
-      results: document.getElementById('results'),
-      playerPlaceholder: document.getElementById('playerPlaceholder'),
-      player: document.getElementById('player'),
-      nowTitle: document.getElementById('nowTitle'),
-      nowMeta: document.getElementById('nowMeta'),
-      playerError: document.getElementById('playerError'),
-      qualitySelector: document.getElementById('qualitySelector'),
-      suggestionsBox: document.getElementById('suggestions')
-    };
+    <!-- زر تنزيل تور -->
+    <div class="cta">
+      <a href="https://www.torproject.org/download/" target="_blank" rel="noopener">
+        <button class="tor-btn" aria-label="تنزيل تطبيق تور">⬇ تنزيل تطبيق تور</button>
+      </a>
+    </div>
 
-    let currentVideoId = null;
-    let nextPageToken = null;
-    let currentQuery = null;
-    let fetching = false;
-    let currentVideoMeta = null;
+  </div>
 
-    // AI Feature: Smart Search Suggestions
-    const debounce = (func, delay) => {
-      let timeout;
-      return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func(...args), delay);
-      };
-    };
-
-    const fetchSuggestions = debounce(async (query) => {
-      if (!query) {
-        els.suggestionsBox.classList.remove('visible');
-        return;
-      }
-      try {
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(query)}&key=${API_KEY}`;
-        const data = await fetch(url).then(res => res.json());
-        if (data.items && data.items.length) {
-          els.suggestionsBox.innerHTML = data.items.map(item => `
-            <div class="suggestion-item" data-title="${item.snippet.title}">
-              ${item.snippet.title}
-            </div>
-          `).join('');
-          els.suggestionsBox.classList.add('visible');
-        } else {
-          els.suggestionsBox.classList.remove('visible');
-        }
-      } catch (e) {
-        console.error("Failed to fetch suggestions:", e);
-        els.suggestionsBox.classList.remove('visible');
-      }
-    }, 300);
-
-    els.q.addEventListener('input', (ev) => fetchSuggestions(ev.target.value));
-    document.addEventListener('click', (ev) => {
-      if (!els.search.contains(ev.target)) {
-        els.suggestionsBox.classList.remove('visible');
-      }
-    });
-    els.suggestionsBox.addEventListener('click', (ev) => {
-      const item = ev.target.closest('.suggestion-item');
-      if (item) {
-        els.q.value = item.dataset.title;
-        els.suggestionsBox.classList.remove('visible');
-        doSearch(els.q.value);
-      }
-    });
-
-    function play(video, quality = 'default') {
-      if (!video || !video.videoId) return;
-
-      currentVideoId = video.videoId;
-      currentVideoMeta = video;
-
-      // Lazy load player
-      els.playerPlaceholder.style.display = 'none';
-      els.player.classList.add('active');
-      
-      let playerURL = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&modestbranding=1&rel=0`;
-      if (quality !== 'default') {
-        playerURL += `&vq=${quality}`;
-      }
-      
-      els.player.src = playerURL;
-      els.nowTitle.textContent = video.title || "فيديو";
-      els.nowMeta.textContent = [video.channelTitle, formatDate(video.publishedAt)].filter(Boolean).join(" • ");
-      els.playerError.style.display = "none";
-      els.qualitySelector.style.display = 'block';
-
-      highlightActive(video.videoId);
-      if (matchMedia("(max-width: 900px)").matches) {
-        scrollTo({ top: 0, behavior: 'smooth' });
-      }
+<script>
+  /* ====== كتابة العنوان بالإنجليزية ====== */
+  const headText = "Welcome — Farsi Youcef Search";
+  const headline = document.getElementById("headline");
+  let hi = 0, del = false;
+  (function typeHeader(){
+    if(!del && hi <= headText.length){
+      headline.textContent = headText.slice(0, hi++);
+      setTimeout(typeHeader, 90);
+    }else if(del && hi >= 0){
+      headline.textContent = headText.slice(0, hi--);
+      setTimeout(typeHeader, 45);
     }
+    if(hi === headText.length){ del = true; setTimeout(typeHeader, 900); }
+    if(del && hi === 0){ del = false; setTimeout(typeHeader, 600); }
+  })();
 
-    els.qualitySelector.addEventListener('change', (ev) => {
-      if (currentVideoId && currentVideoMeta) {
-        play(currentVideoMeta, ev.target.value);
-      }
-    });
+  /* ====== كتابة السطر العربي السفلي ====== */
+  const arText = "نَزّل تطبيق تور واستعمل متصفح Farsi Youcef للوصول الآمن إلى بعض خدمات الشبكة المظلمة (يتطلب Tor).";
+  const foot = document.getElementById("footline");
+  let aj = 0;
+  (function typeAr(){
+    foot.textContent = arText.slice(0, aj++);
+    if(aj <= arText.length) setTimeout(typeAr, 80);
+  })();
 
-    function highlightActive(id){
-      document.querySelectorAll('.item').forEach(el => {
-        el.classList.toggle('active', el.dataset.id === id);
-      });
+  /* ====== بناء الروابط لكل محرك ====== */
+  const buildUrl = (engine, q) => {
+    const s = encodeURIComponent(q.trim());
+    switch(engine){
+      // عالمية
+      case "google":    return `https://www.google.com/search?q=${s}`;
+      case "bing":      return `https://www.bing.com/search?q=${s}`;
+      case "yahoo":     return `https://search.yahoo.com/search?p=${s}`;
+      case "brave":     return `https://search.brave.com/search?q=${s}`;
+      case "yandex":    return `https://yandex.com/search/?text=${s}`;
+      case "startpage": return `https://www.startpage.com/do/search?q=${s}`;
+      case "ecosia":    return `https://www.ecosia.org/search?q=${s}`;
+      case "qwant":     return `https://www.qwant.com/?q=${s}&t=web`;
+      case "baidu":     return `https://www.baidu.com/s?wd=${s}`;
+      case "naver":     return `https://search.naver.com/search.naver?query=${s}`;
+      // الافتراضي
+      case "duck":      return `https://duckduckgo.com/?q=${s}`;
+      // الداب ويب (ملاحظة: روابط .onion تعمل داخل متصفح Tor فقط)
+      case "torch":     return `http://xmh57jrzrnw6insl.onion/search?q=${s}`;
+      case "ahmia":     return `https://ahmia.fi/search/?q=${s}`;
+      case "onion":     return `https://onionsearchengine.com/search?q=${s}`;
+      case "ducktor":   return `https://ahmia.fi/search/?q=${s}%20site:duckduckgo.com`; // بوابة بديلة آمنة
+      default:          return `https://duckduckgo.com/?q=${s}`;
     }
+  };
 
-    function formatDate(iso){
-      try {
-        const d = new Date(iso);
-        if (isNaN(d)) return "";
-        return d.toLocaleDateString('ar-DZ', { year: 'numeric', month: 'short', day: 'numeric' });
-      } catch { return ""; }
-    }
+  /* ====== التفعيل والتبديل ====== */
+  let current = "duck";
+  // تفعيل زر افتراضي (أول زر في الشبكة العالمية)
+  document.querySelector('#global-engines .chip').classList.add('active');
 
-    function renderList(items, append = false){
-      const listContainer = els.results;
-      if (!items || !items.length) {
-        if (!append) {
-          listContainer.innerHTML = `<div class="status-message empty">⚠️ لا توجد نتائج.</div>`;
-        }
-        return;
-      }
-      
-      const fragment = document.createDocumentFragment();
-      items.forEach(v => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'item';
-        itemEl.dataset.id = v.videoId;
-        itemEl.innerHTML = `
-          <img class="thumb" src="${v.thumbnail}" alt="${v.title}" loading="lazy">
-          <div class="itxt">
-            <div class="ititle">${v.title}</div>
-            <div class="ichannel">${v.channelTitle || ""}</div>
-            <div class="idate">${formatDate(v.publishedAt) || ""}</div>
-          </div>
-        `;
-        itemEl.addEventListener('click', () => play(v));
-        fragment.appendChild(itemEl);
-      });
+  // تفويض نقر لكل الشبكات
+  document.addEventListener("click", (e)=>{
+    const btn = e.target.closest(".chip");
+    if(!btn) return;
 
-      if (!append) {
-        listContainer.innerHTML = '';
-      }
-      listContainer.appendChild(fragment);
+    // إزالة التحديد من كل الأزرار ثم تفعيل الحالي
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    btn.classList.add("active");
+    current = btn.dataset.engine || "duck";
+  });
 
-      if (!currentVideoId && items.length > 0) {
-        play(items[0]);
-      } else if (currentVideoId) {
-        highlightActive(currentVideoId);
-      }
-    }
-
-    function showStatus(message, type = 'empty') {
-      els.results.innerHTML = `<div class="status-message ${type}">${message}</div>`;
-    }
-
-    async function fetchJSON(url) {
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message || "API error");
-      return data;
-    }
-
-    async function doSearch(q, append = false) {
-      if (fetching) return;
-      fetching = true;
-      try {
-        if (!append) showStatus("جارِ البحث...", 'empty');
-        
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=15&q=${encodeURIComponent(q)}&key=${API_KEY}${nextPageToken ? `&pageToken=${nextPageToken}` : ""}`;
-        const data = await fetchJSON(url);
-        nextPageToken = data.nextPageToken || null;
-        
-        const items = data.items.filter(it => it.id && it.id.videoId).map(it => ({
-          videoId: it.id.videoId,
-          title: it.snippet?.title || "",
-          channelTitle: it.snippet?.channelTitle || "",
-          publishedAt: it.snippet?.publishedAt || "",
-          thumbnail: it.snippet?.thumbnails?.medium?.url || ""
-        }));
-
-        window.__lastItems = append ? (window.__lastItems || []).concat(items) : items;
-        renderList(window.__lastItems, append);
-        currentQuery = q;
-      } catch(e) {
-        showStatus(`⚠️ خطأ: ${e.message}`, 'error');
-      } finally {
-        fetching = false;
-      }
-    }
-
-    async function loadPopular(append = false) {
-      if (fetching) return;
-      fetching = true;
-      try {
-        if (!append) showStatus("جارِ تحميل الفيديوهات الأكثر شعبية...", 'empty');
-
-        const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=15&regionCode=DZ&key=${API_KEY}${nextPageToken ? `&pageToken=${nextPageToken}` : ""}`;
-        const data = await fetchJSON(url);
-        nextPageToken = data.nextPageToken || null;
-
-        const items = data.items.map(it => ({
-          videoId: it.id,
-          title: it.snippet?.title || "",
-          channelTitle: it.snippet?.channelTitle || "",
-          publishedAt: it.snippet?.publishedAt || "",
-          thumbnail: it.snippet?.thumbnails?.medium?.url || ""
-        }));
-
-        window.__lastItems = append ? (window.__lastItems || []).concat(items) : items;
-        renderList(window.__lastItems, append);
-        currentQuery = null;
-      } catch(e) {
-        showStatus(`⚠️ خطأ: ${e.message}`, 'error');
-      } finally {
-        fetching = false;
-      }
-    }
-
-    els.form.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      const q = els.q.value.trim();
-      if (!q) { els.q.focus(); return; }
-      doSearch(q);
-      els.suggestionsBox.classList.remove('visible');
-    });
-
-    document.getElementById('results').addEventListener('scroll', () => {
-      const el = document.getElementById('results');
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
-        if (nextPageToken && !fetching) {
-          if (currentQuery) doSearch(currentQuery, true);
-          else loadPopular(true);
-        }
-      }
-    });
-
-    loadPopular();
-
-    function toggleFullscreen() {
-      const playerBox = document.getElementById('playerBox');
-      const player = document.getElementById('player');
-      if (!document.fullscreenElement) {
-        playerBox.requestFullscreen().catch(err => {
-          alert("خطأ في وضع ملء الشاشة: " + err);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    }
-  </script>
+  // إرسال البحث
+  const form = document.getElementById("searchForm");
+  const input = document.getElementById("q");
+  form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const q = input.value.trim();
+    const url = buildUrl(current, q || "");
+    window.open(url, "_blank");
+  });
+</script>
 </body>
 </html>
