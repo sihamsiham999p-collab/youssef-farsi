@@ -1,271 +1,123 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Farsi Youcef Search</title>
-<style>
-  :root{
-    --neon:#00ffd5;          /* أزرق مُخضَر (نيون) */
-    --text:#e8f8ff;
-    --bg:#0b0c0e;
-    --white:#fff;
-    --red:#ff3b3b;
-    --purple:#8a2be2;        /* بنفسجي زر تور */
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; min-height:100vh; background:
-    radial-gradient(1200px 800px at 50% 15%, #111416 0%, #0c0e10 55%, #000 100%);
-    color:var(--text); font-family: "Segoe UI", Roboto, Tahoma, "Cairo", system-ui, sans-serif;
-    display:flex; flex-direction:column; align-items:center;
-  }
+  <!-- SEO -->
+  <title>الموقع الرسمي لـ يوسف بن قاسة فارسي</title>
+  <meta name="description" content="الموقع الرسمي لـ يوسف بن قاسة فارسي: خبير في المعلوميات والتقنية من الجزائر.">
+  <meta name="keywords" content="يوسف بن قاسة فارسي, يوسف فارسي, بن قاسة, مطور ويب, التقنية, التكنولوجيا, الفيزياء, الإلكترونيات, الفلسفة, الشريعة, تبسة, الجزائر">
+  <meta name="robots" content="index, follow">
 
-  /* حاوية بعرض ثابت لعدم تداخل العناصر */
-  .container{width:min(980px, 92vw); padding:28px 0 40px}
+  <!-- Open Graph -->
+  <meta property="og:title" content="الموقع الرسمي لـ يوسف بن قاسة فارسي">
+  <meta property="og:description" content="خبير في المعلوميات، التقنية، التكنولوجيا والفيزياء.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/profile.jpg">
 
-  /* الشعار */
-  .logo{
-    font-family: "Courier New", ui-monospace, monospace;
-    font-weight:800; letter-spacing:2px; line-height:1.05;
-    font-size: clamp(40px, 9vw, 84px);
-    color: #00c9b8;
-    text-shadow:
-      0 0 10px rgba(0,255,213,.8),
-      0 0 25px rgba(0,255,213,.5),
-      0 0 40px rgba(0,255,213,.3);
-    text-align:center; margin:8px 0 10px;
-  }
+  <!-- CSS -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0a0f1f, #1a253b);
+      color: #fff;
+      text-align: center;
+      line-height: 1.8;
+    }
 
-  /* العنوان المتحرك */
-  .typewrap{display:flex; justify-content:center; margin:10px 0 24px}
-  .typing{
-    font-size: clamp(18px, 4.6vw, 32px); font-weight:700; color:var(--white);
-    text-shadow:0 0 14px rgba(255,255,255,.45); white-space:nowrap
-  }
-  .typing::after{
-    content:""; display:inline-block; width:2px; height:1.05em; margin-inline-start:6px;
-    background:var(--white); animation:blink .8s steps(1,end) infinite; vertical-align:-2px;
-  }
-  @keyframes blink{50%{opacity:0}}
+    header {
+      padding: 50px 20px;
+    }
 
-  /* صندوق البحث */
-  .search-wrap{display:flex; justify-content:center}
-  .search-box{
-    width:min(760px, 100%); display:flex; align-items:center; background:#0e1214;
-    border-radius:999px; padding:6px; gap:6px;
-    box-shadow: inset 0 0 0 2px rgba(0,255,213,.6), 0 0 28px rgba(0,255,213,.35);
-  }
-  .search-input{
-    flex:1; padding:16px 18px; border:0; outline:0; font-size:18px; color:#dff; background:transparent;
-  }
-  .search-input::placeholder{color:#9fd; opacity:.7}
-  .search-btn{
-    border:0; outline:0; cursor:pointer; font-weight:800;
-    background:var(--neon); color:#001b1b; padding:14px 22px; font-size:18px; border-radius:999px;
-    transition:.25s transform, .25s filter;
-  }
-  .search-btn:hover{filter:brightness(1.08); transform:translateY(-1px)}
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #4fc3f7;
+    }
 
-  /* عناوين الأقسام */
-  .section{
-    margin-top:26px;
-    border-top:1px solid rgba(0,255,213,.22);
-    padding-top:16px;
-  }
-  .section h3{
-    margin:0 0 12px; display:flex; align-items:center; gap:8px; justify-content:center;
-    font-weight:800; letter-spacing:.3px; color:#cffff9
-  }
-  .section h3 .icon{font-size:22px}
+    header p {
+      font-size: 1.2em;
+      color: #ddd;
+    }
 
-  /* شبكة الأزرار: منظمة ولا تختفي */
-  .engines-grid{
-    display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap:12px; width:100%;
-  }
-  .chip{
-    width:100%; padding:12px 14px; border-radius:16px; font-weight:700; cursor:pointer;
-    border:2px solid var(--neon);
-    background:rgba(0,255,213,.08); color:var(--text);
-    box-shadow:0 0 14px rgba(0,255,213,.28);
-    transition:.2s transform, .2s background, .2s color;
-  }
-  .chip:hover{transform:translateY(-1px)}
-  .chip.active{background:var(--neon); color:#001b1b}
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-  /* النص السفلي */
-  .footwrap{margin:28px auto 16px; max-width:900px; text-align:center}
-  .typing-ar{
-    font-size: clamp(14px, 3.4vw, 20px); font-weight:800; color:var(--red);
-    text-shadow:0 0 8px var(--red), 0 0 18px #ff6b6b;
-  }
-  .typing-ar::after{
-    content:""; display:inline-block; width:2px; height:1.05em; margin-inline-start:6px;
-    background:var(--red); animation:blink .8s steps(1,end) infinite; vertical-align:-2px;
-  }
+    section h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #fbc02d;
+    }
 
-  /* زر تنزيل تور */
-  .cta{
-    position:sticky; bottom:16px; display:flex; justify-content:center; margin-top:14px;
-  }
-  .tor-btn{
-    font-size:20px; font-weight:900; letter-spacing:.3px;
-    color:#fff; background:linear-gradient(180deg, var(--purple), #6f1bd6);
-    border:none; border-radius:50px; padding:16px 30px; cursor:pointer;
-    box-shadow:0 0 26px rgba(138,43,226,.8), 0 0 50px rgba(138,43,226,.45);
-    transition:.25s transform, .25s filter;
-  }
-  .tor-btn:hover{transform:scale(1.05); filter:brightness(1.05)}
-  @media (prefers-reduced-motion:no-preference){
-    .tor-btn{animation:pulse 2.3s ease-in-out infinite}
-    @keyframes pulse{ 0%,100%{box-shadow:0 0 22px rgba(138,43,226,.7)}
-                      50%{box-shadow:0 0 44px rgba(138,43,226,.95)} }
-  }
-</style>
+    .contact {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    .contact p {
+      margin: 10px 0;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: #0d152b;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    a {
+      color: #4fc3f7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- الشعار -->
-    <div class="logo">Farsi<br/>Youcef</div>
+  <header>
+    <h1>يوسف بن قاسة فارسي</h1>
+    <p>الموقع الرسمي - أنت الآن في المكان الصحيح</p>
+  </header>
 
-    <!-- العنوان المتحرك -->
-    <div class="typewrap">
-      <span class="typing" id="headline"></span>
-    </div>
+  <section>
+    <h2>من أنا؟</h2>
+    <p>
+      مرحبًا بك 👋، أنا <strong>يوسف بن قاسة فارسي</strong>، من مواليد 
+      <strong>10 نوفمبر 1988</strong> بمدينة <strong>الشريعة</strong>، ولاية <strong>تبسة</strong> - الجزائر.
+    </p>
+    <p>
+      أنا خبير في <strong>المعلوميات</strong>، مهتم بعوالم <strong>التقنية، التكنولوجيا، الفيزياء، الإلكترونيات والفلسفة</strong>.
+      أسعى إلى مشاركة المعرفة والتجارب مع كل من يبحث عن التميز في هذا المجال.
+    </p>
+    <p>
+      إذا كنت تبحث عن المعلومة الصحيحة، أو تريد التواصل مع شخص عاشق للتكنولوجيا 
+      💡 فأنت هنا في الموقع الصحيح ✔️.
+    </p>
+  </section>
 
-    <!-- صندوق البحث -->
-    <div class="search-wrap">
-      <form class="search-box" id="searchForm" autocomplete="off">
-        <input id="q" class="search-input" type="text" name="q"
-               placeholder="… إبحث عبر Farsi Youcef" />
-        <button class="search-btn" type="submit">🔍 بحث</button>
-      </form>
-    </div>
+  <section class="contact">
+    <h2>معلومات التواصل</h2>
+    <p>📞 الهاتف: <a href="tel:0559263922">0559263922</a></p>
+    <p>📧 البريد الإلكتروني: <a href="mailto:Youceffarsi.Cheria@gmail.com">Youceffarsi.Cheria@gmail.com</a></p>
+  </section>
 
-    <!-- محركات البحث العالمية -->
-    <section class="section">
-      <h3><span class="icon">🌐</span> محركات البحث</h3>
-      <div class="engines-grid" id="global-engines">
-        <button class="chip active" data-engine="duck">DuckDuckGo</button>
-        <button class="chip" data-engine="google">Google</button>
-        <button class="chip" data-engine="bing">Bing</button>
-        <button class="chip" data-engine="yahoo">Yahoo</button>
-        <button class="chip" data-engine="brave">Brave</button>
-        <button class="chip" data-engine="yandex">Yandex</button>
-        <button class="chip" data-engine="startpage">Startpage</button>
-        <button class="chip" data-engine="ecosia">Ecosia</button>
-        <button class="chip" data-engine="qwant">Qwant</button>
-        <button class="chip" data-engine="baidu">Baidu</button>
-        <button class="chip" data-engine="naver">Naver</button>
-      </div>
-    </section>
+  <footer>
+    <p>© 2025 يوسف بن قاسة فارسي - جميع الحقوق محفوظة</p>
+  </footer>
 
-    <!-- محركات الداب ويب -->
-    <section class="section">
-      <h3><span class="icon">🕵️</span> محركات الداب ويب</h3>
-      <div class="engines-grid" id="dark-engines">
-        <button class="chip" data-engine="torch">Torch</button>
-        <button class="chip" data-engine="ahmia">Ahmia</button>
-        <button class="chip" data-engine="onion">Onion Search</button>
-        <button class="chip" data-engine="ducktor">DuckDuckGo (Tor)</button>
-      </div>
-    </section>
-
-    <!-- نص سفلي -->
-    <div class="footwrap">
-      <span class="typing-ar" id="footline"></span>
-    </div>
-
-    <!-- زر تنزيل تور -->
-    <div class="cta">
-      <a href="https://www.torproject.org/download/" target="_blank" rel="noopener">
-        <button class="tor-btn" aria-label="تنزيل تطبيق تور">⬇ تنزيل تطبيق تور</button>
-      </a>
-    </div>
-
-  </div>
-
-<script>
-  /* ====== كتابة العنوان بالإنجليزية ====== */
-  const headText = "Welcome — Farsi Youcef Search";
-  const headline = document.getElementById("headline");
-  let hi = 0, del = false;
-  (function typeHeader(){
-    if(!del && hi <= headText.length){
-      headline.textContent = headText.slice(0, hi++);
-      setTimeout(typeHeader, 90);
-    }else if(del && hi >= 0){
-      headline.textContent = headText.slice(0, hi--);
-      setTimeout(typeHeader, 45);
-    }
-    if(hi === headText.length){ del = true; setTimeout(typeHeader, 900); }
-    if(del && hi === 0){ del = false; setTimeout(typeHeader, 600); }
-  })();
-
-  /* ====== كتابة السطر العربي السفلي ====== */
-  const arText = "نَزّل تطبيق تور واستعمل متصفح Farsi Youcef للوصول الآمن إلى بعض خدمات الشبكة المظلمة (يتطلب Tor).";
-  const foot = document.getElementById("footline");
-  let aj = 0;
-  (function typeAr(){
-    foot.textContent = arText.slice(0, aj++);
-    if(aj <= arText.length) setTimeout(typeAr, 80);
-  })();
-
-  /* ====== بناء الروابط لكل محرك ====== */
-  const buildUrl = (engine, q) => {
-    const s = encodeURIComponent(q.trim());
-    switch(engine){
-      // عالمية
-      case "google":    return `https://www.google.com/search?q=${s}`;
-      case "bing":      return `https://www.bing.com/search?q=${s}`;
-      case "yahoo":     return `https://search.yahoo.com/search?p=${s}`;
-      case "brave":     return `https://search.brave.com/search?q=${s}`;
-      case "yandex":    return `https://yandex.com/search/?text=${s}`;
-      case "startpage": return `https://www.startpage.com/do/search?q=${s}`;
-      case "ecosia":    return `https://www.ecosia.org/search?q=${s}`;
-      case "qwant":     return `https://www.qwant.com/?q=${s}&t=web`;
-      case "baidu":     return `https://www.baidu.com/s?wd=${s}`;
-      case "naver":     return `https://search.naver.com/search.naver?query=${s}`;
-      // الافتراضي
-      case "duck":      return `https://duckduckgo.com/?q=${s}`;
-      // الداب ويب (ملاحظة: روابط .onion تعمل داخل متصفح Tor فقط)
-      case "torch":     return `http://xmh57jrzrnw6insl.onion/search?q=${s}`;
-      case "ahmia":     return `https://ahmia.fi/search/?q=${s}`;
-      case "onion":     return `https://onionsearchengine.com/search?q=${s}`;
-      case "ducktor":   return `https://ahmia.fi/search/?q=${s}%20site:duckduckgo.com`; // بوابة بديلة آمنة
-      default:          return `https://duckduckgo.com/?q=${s}`;
-    }
-  };
-
-  /* ====== التفعيل والتبديل ====== */
-  let current = "duck";
-  // تفعيل زر افتراضي (أول زر في الشبكة العالمية)
-  document.querySelector('#global-engines .chip').classList.add('active');
-
-  // تفويض نقر لكل الشبكات
-  document.addEventListener("click", (e)=>{
-    const btn = e.target.closest(".chip");
-    if(!btn) return;
-
-    // إزالة التحديد من كل الأزرار ثم تفعيل الحالي
-    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
-    btn.classList.add("active");
-    current = btn.dataset.engine || "duck";
-  });
-
-  // إرسال البحث
-  const form = document.getElementById("searchForm");
-  const input = document.getElementById("q");
-  form.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const q = input.value.trim();
-    const url = buildUrl(current, q || "");
-    window.open(url, "_blank");
-  });
-</script>
 </body>
 </html>
