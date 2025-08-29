@@ -58,7 +58,7 @@
     .input-wrapper {
       position: relative;
       width: 100%;
-      margin-bottom: 12px;
+      margin-bottom: 30px; /* نزيد مسافة باش يكون مكان للرسالة */
     }
 
     .login-box input {
@@ -71,7 +71,7 @@
 
     .popup {
       position: absolute;
-      top: -28px;
+      bottom: -28px;   /* بدلنا من top إلى bottom */
       left: 10px;
       background: #000;
       color: #fff;
@@ -84,11 +84,11 @@
     .popup::after {
       content: "";
       position: absolute;
-      bottom: -6px;
+      top: -6px; /* السهم يبان فوق الرسالة */
       left: 15px;
       border-width: 6px;
       border-style: solid;
-      border-color: #000 transparent transparent transparent;
+      border-color: transparent transparent #000 transparent;
     }
 
     .login-box button {
