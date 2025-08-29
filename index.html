@@ -58,7 +58,7 @@
     .input-wrapper {
       position: relative;
       width: 100%;
-      margin-bottom: 30px; /* نزيد مسافة باش يكون مكان للرسالة */
+      margin-bottom: 12px;
     }
 
     .login-box input {
@@ -71,7 +71,7 @@
 
     .popup {
       position: absolute;
-      bottom: -28px;   /* بدلنا من top إلى bottom */
+      bottom: -28px;
       left: 10px;
       background: #000;
       color: #fff;
@@ -84,11 +84,19 @@
     .popup::after {
       content: "";
       position: absolute;
-      top: -6px; /* السهم يبان فوق الرسالة */
+      top: -6px;
       left: 15px;
       border-width: 6px;
       border-style: solid;
       border-color: transparent transparent #000 transparent;
+    }
+
+    .error-text {
+      font-size: 12px;
+      color: red;
+      text-align: right;
+      margin-top: 4px;
+      display: none;
     }
 
     .login-box button {
@@ -162,6 +170,7 @@
         <div class="input-wrapper">
           <input type="text" id="emailInput" placeholder="البريد الإلكتروني أو رقم الهاتف">
           <div class="popup" id="emailPopup"></div>
+          <div class="error-text" id="emailErrorText"></div>
         </div>
 
         <div class="input-wrapper">
@@ -191,6 +200,7 @@
     const passwordPopup = document.getElementById("passwordPopup");
     const msg = document.getElementById("msg");
     const langSwitcher = document.getElementById("languageSwitcher");
+    const emailErrorText = document.getElementById("emailErrorText");
 
     const translations = {
       ar: {
@@ -201,7 +211,8 @@
         noAccount: "ليس لديك حساب؟",
         create: "إنشاء حساب جديد",
         emailError: "أدخل رقم أو إيميل صحيح",
-        passError: "يرجى إدخال كلمة المرور الصحيحة"
+        passError: "يرجى إدخال كلمة المرور الصحيحة",
+        emailWrong: "رقم أو إيميل خاطئ"
       },
       fr: {
         email: "E-mail ou numéro de téléphone",
@@ -211,7 +222,8 @@
         noAccount: "Vous n'avez pas de compte ?",
         create: "Créer un nouveau compte",
         emailError: "Veuillez entrer un email ou numéro valide",
-        passError: "Veuillez entrer un mot de passe correct"
+        passError: "Veuillez entrer un mot de passe correct",
+        emailWrong: "Email ou numéro incorrect"
       },
       en: {
         email: "Email or Phone",
@@ -221,7 +233,8 @@
         noAccount: "Don't have an account?",
         create: "Create New Account",
         emailError: "Enter a valid email or phone",
-        passError: "Please enter the correct password"
+        passError: "Please enter the correct password",
+        emailWrong: "Wrong email or phone"
       }
     };
 
@@ -238,6 +251,7 @@
 
       emailPopup.style.display = "none";
       passwordPopup.style.display = "none";
+      emailErrorText.style.display = "none";
 
       document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
       document.documentElement.lang = lang;
@@ -247,12 +261,10 @@
       changeLanguage(e.target.value);
     });
 
-    function showPopup(popup, message) {
-      popup.innerText = message;
-      popup.style.display = "block";
-      setTimeout(() => {
-        popup.style.display = "none";
-      }, 3000); // يختفي بعد 3 ثواني
+    function isValidEmailOrPhone(value) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^[0-9]{6,15}$/;
+      return emailRegex.test(value) || phoneRegex.test(value);
     }
 
     form.addEventListener("submit", e => {
@@ -260,14 +272,23 @@
       let valid = true;
 
       if (emailInput.value.trim() === "") {
-        showPopup(emailPopup, translations[currentLang].emailError);
+        emailPopup.innerText = translations[currentLang].emailError;
+        emailPopup.style.display = "block";
+        setTimeout(() => emailPopup.style.display = "none", 3000);
+        valid = false;
+      } else if (!isValidEmailOrPhone(emailInput.value.trim())) {
+        emailErrorText.innerText = translations[currentLang].emailWrong;
+        emailErrorText.style.display = "block";
         valid = false;
       } else {
         emailPopup.style.display = "none";
+        emailErrorText.style.display = "none";
       }
 
       if (passwordInput.value.trim() === "") {
-        showPopup(passwordPopup, translations[currentLang].passError);
+        passwordPopup.innerText = translations[currentLang].passError;
+        passwordPopup.style.display = "block";
+        setTimeout(() => passwordPopup.style.display = "none", 3000);
         valid = false;
       } else {
         passwordPopup.style.display = "none";
