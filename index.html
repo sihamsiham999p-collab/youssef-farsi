@@ -247,21 +247,27 @@
       changeLanguage(e.target.value);
     });
 
+    function showPopup(popup, message) {
+      popup.innerText = message;
+      popup.style.display = "block";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 3000); // يختفي بعد 3 ثواني
+    }
+
     form.addEventListener("submit", e => {
       e.preventDefault();
       let valid = true;
 
       if (emailInput.value.trim() === "") {
-        emailPopup.innerText = translations[currentLang].emailError;
-        emailPopup.style.display = "block";
+        showPopup(emailPopup, translations[currentLang].emailError);
         valid = false;
       } else {
         emailPopup.style.display = "none";
       }
 
       if (passwordInput.value.trim() === "") {
-        passwordPopup.innerText = translations[currentLang].passError;
-        passwordPopup.style.display = "block";
+        showPopup(passwordPopup, translations[currentLang].passError);
         valid = false;
       } else {
         passwordPopup.style.display = "none";
